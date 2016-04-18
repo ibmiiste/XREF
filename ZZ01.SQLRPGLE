@@ -3684,7 +3684,7 @@ E01    EndIf;
        SpaceName = 'USERSPACE';
        SpaceLib = 'QTEMP';
        FormatName = 'PGML0110';
-       Object = %Subst(Tab_Get('Objet':Id_Ile_Premier):1:10) + '*LIBL';
+       Object = %Subst(Tab_Get('Objet':Id_Ile_Premier):1:10) + F01Bib;
        QBnlPgmi(UserSpace:FormatName:Object:ApiError);
       //---Retrieve Header Information---------------------------------------//
        StartPosit = 1;
@@ -3725,7 +3725,7 @@ E01    EndIf;
        SpaceName = 'USERSPACE';
        SpaceLib = 'QTEMP';
        FormatName = 'PGML0200';
-       Object = %Subst(Tab_Get('Objet':Id_Ile_Premier):1:10) + '*LIBL';
+       Object = %Subst(Tab_Get('Objet':Id_Ile_Premier):1:10) + F01Bib;
        QBnlPgmi(UserSpace:FormatName:Object:ApiError);
       //---Retrieve Header Information---------------------------------------//
        StartPosit = 1;
@@ -3778,7 +3778,7 @@ E01    EndIf;
                 SpaceAuth:SpaceText:SpaceReplc:ApiError);
 
       //---Call the API------------------------------------------------------//
-       Object = %Subst(Tab_Get('Objet':Id_Ile_Premier):1:10) + '*LIBL';
+       Object = %Subst(Tab_Get('Objet':Id_Ile_Premier):1:10) + F01Bib;
        SpaceName = 'USERSPACE';
        SpaceLib  = 'QTEMP';
        Format    = 'MODL0300';
@@ -3837,7 +3837,7 @@ E01    EndIf;
                 SpaceAuth:SpaceText:SpaceReplc:ApiError);
 
       //---Call the API------------------------------------------------------//
-       Object = %Subst(Tab_Get('Objet':Id_Ile_Premier):1:10) + '*LIBL';
+       Object = %Subst(Tab_Get('Objet':Id_Ile_Premier):1:10) + F01Bib;
        SpaceName = 'USERSPACE';
        SpaceLib  = 'QTEMP';
        Format    = 'MODL0100';
@@ -3896,7 +3896,7 @@ E01    EndIf;
                 SpaceAuth:SpaceText:SpaceReplc:ApiError);
 
       //---Call the API------------------------------------------------------//
-       Object = %Subst(Tab_Get('Objet':Id_Ile_Premier):1:10) + '*LIBL';
+       Object = %Subst(Tab_Get('Objet':Id_Ile_Premier):1:10) + F01Bib;
        SpaceName = 'USERSPACE';
        SpaceLib  = 'QTEMP';
        Format    = 'MODL0200';
@@ -3955,7 +3955,7 @@ E01    EndIf;
                 SpaceAuth:SpaceText:SpaceReplc:ApiError);
 
       //---Call the API------------------------------------------------------//
-       Object = %Subst(Tab_Get('Objet':Id_Ile_Premier):1:10) + '*LIBL';
+       Object = %Subst(Tab_Get('Objet':Id_Ile_Premier):1:10) + F01Bib;
        SpaceName = 'USERSPACE';
        SpaceLib  = 'QTEMP';
        Format    = 'MODL0400';
@@ -4022,7 +4022,7 @@ E01    EndIf;
        SpaceName = 'USERSPACE';
        SpaceLib = 'QTEMP';
        FormatName = 'SPGL0110';
-       Object = %Subst(Tab_Get('Objet':Id_Ile_Premier):1:10) + '*LIBL';
+       Object = %Subst(Tab_Get('Objet':Id_Ile_Premier):1:10) + F01Bib;
        QBnlSPgm(UserSpace:FormatName:Object:ApiError);
       //---Retrieve Header Information---------------------------------------//
        StartPosit = 1;
