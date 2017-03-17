@@ -1,6 +1,6 @@
              CMD        PROMPT('X-REF : ANALYSE ISERIES V1.9.0')
              PARM       KWD(COMPOSANT) TYPE(L1) PASSVAL(*DFT) +
-                          PROMPT('COMPOSANT Ã€ ANALYSER')
+                          PROMPT('COMPOSANT À ANALYSER')
              PARM       KWD(TYPE) TYPE(*CHAR) LEN(7) RSTD(*YES) +
                           DFT(*ALL) VALUES(*ALL *PGM *FILE *SRVPGM +
                           *DTAARA *MODULE) PROMPT('TYPE D''OBJET')
@@ -10,7 +10,7 @@
                           *CARTOPGM *CARTOSRC *CARTOSRC2 *RECZONE +
                           *RECPROC *DESCOBJ *CARTOILE *LIBRARY +
                           *RUNQRY *WRKSPLF *CMD *ANALYSE *PGMREF) +
-                          PROMPT('FONCTIONNALITÃ‰')
+                          PROMPT('FONCTIONNALITÉ')
              PARM       KWD(OUTPUT) TYPE(*CHAR) LEN(8) RSTD(*YES) +
                           DFT(*DISPLAY) VALUES(*DISPLAY *OUTFILE +
                           *PRINTER) MIN(0) CHOICE('*DISPLAY, +
@@ -21,7 +21,7 @@
                           *BATCH *NOPROMPT) PMTCTL(*PMTRQS) +
                           PROMPT('MODE D''ANALYSE')
              PARM       KWD(SOURCE) TYPE(L2) PMTCTL(L0) +
-                          PROMPT('SOURCE Ã€ ANALYSER')
+                          PROMPT('SOURCE À ANALYSER')
              PARM       KWD(TEXTE) TYPE(*CHAR) LEN(50) PMTCTL(L3) +
                           PROMPT('TEXTE')
  L0:         PMTCTL     CTL(FONCTION) COND((*EQ *CARTOSRC) (*EQ +
@@ -30,13 +30,13 @@
  L1:         QUAL       TYPE(*GENERIC) LEN(10) DFT(*NONE) MIN(0) +
                           CHOICE('OBJET')
              QUAL       TYPE(*CHAR) LEN(10) DFT(*LIBL) CHOICE('NOM, +
-                          *LIBL') PROMPT('BIBLIOTHÃˆQUE')
+                          *LIBL') PROMPT('BIBLIOTHÈQUE')
  L2:         ELEM       TYPE(*CHAR) LEN(10) DFT(*NONE) MIN(0) +
                           CASE(*MIXED) CHOICE('NOM, *NONE') +
                           PROMPT('FICHIER SOURCE')
              ELEM       TYPE(*CHAR) LEN(10) DFT(*LIBOBJ) MIN(0) +
-                          CHOICE('NOM, *LIBOBJ') PROMPT('BIBLIOTHÃˆQUE')
+                          CHOICE('NOM, *LIBOBJ') PROMPT('BIBLIOTHÈQUE')
              ELEM       TYPE(*CHAR) LEN(10) DFT(*OBJ) MIN(0) +
                           CHOICE('NOM, *OBJ') PROMPT('MEMBRE')
  L3:         PMTCTL     CTL(FONCTION) COND((*EQ *RECDESC) (*EQ +
-                          *RECPROC)) NBRTRUE(*GE 1) 
+                          *RECPROC)) NBRTRUE(*GE 1)
