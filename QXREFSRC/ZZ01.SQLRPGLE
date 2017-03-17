@@ -1,5 +1,5 @@
      h Debug Option( *SrcStmt: *NoDebugIO )
-     h CopyRight('©Sh!rl0ck 2003-2009 X-Ref <Version v1.9.2>')
+     h copyright('Olivier Drubigny 2017-2017 X-Ref <Version v1.9.3>')
      h DatFmt(*EUR) TimFmt(*HMS) DatEdit(*YMD) ActGrp(*New) DftActGrp(*No)
 
      ?**----------------------------------------------------------------------**
@@ -435,7 +435,7 @@
      d                                4b 0                                      List_OffProc
      d                                4b 0                                      List_SizProc
      d                               10a                                        List_ArgProc
-     d  List_ProcName         47     80a
+     d  List_ProcName         47    128a
      ?**---List Data Program--------------------------------------------------**
      d Lst_dta_Bnd     Ds
      d  Lst_BndSize                   8b 0
@@ -5295,7 +5295,7 @@ E01    EndIf;
      d                                4b 0                                      List_OffProc
      d                                4b 0                                      List_SizProc
      d                               10a                                        List_ArgProc
-     d  List_ProcName         47    100a
+     d  List_ProcName         47    128a
      ?**---Déclaration des variables------------------------------------------**
      d SpaceAttr       s             10a
      d SpaceAuth       s             10a
