@@ -1,3 +1,19 @@
+      * >>PRE-COMPILER<<                                              */
+      *   >>CRTCMD<<  CRTSQLRPGI SRCFILE(&SL/&SF) SRCMBR(&SM);        */
+      *   >>IMPORTANT<<                                               */
+      *     >>PARM<<  OBJ(&LI/&OB);                                   */
+      *     >>PARM<<  COMMIT(*NONE);                                  */
+      *     >>PARM<<  OBJTYPE(*PGM);                                  */
+      *     >>PARM<<  OPTION(*EVENTF);                                */
+      *     >>PARM<<  RPGPPOPT(*LVL2);                                */
+      *     >>PARM<<  CLOSQLCSR(*ENDACTGRP);                          */
+      *     >>PARM<<  DATFMT(*ISO);                                   */
+      *     >>PARM<<  TIMFMT(*ISO);                                   */
+      *     >>PARM<<  COMPILEOPT('OPTIMIEZ(*FULL)');                  */
+      *   >>END-IMPORTANT<<                                           */
+
+      *   >>EXECUTE<<                                                 */
+      * >>END-PRE-COMPILER<<                                          */
      h Debug Option( *SrcStmt: *NoDebugIO )
      h copyright('Olivier Drubigny 2017-2017 X-Ref <Version v1.9.3>')
      h DatFmt(*EUR) TimFmt(*HMS) DatEdit(*YMD) ActGrp(*New) DftActGrp(*No)
@@ -32,7 +48,7 @@
 
      ?**---Définition des Constantes------------------------------------------**
      d mdf             c                   Const(300)                           Longueur Texte
-     d Version         c                   Const('v1.9.2 ')                     N° Version
+     d Version         c                   Const('v1.9.3 ')                     N° Version
      d lo              c                   Const('abcdefghijklmnopqrstuvwxyz')  Minuscules
      d up              c                   Const('ABCDEFGHIJKLMNOPQRSTUVWXYZ')  Majuscules
      d Clibl           c                   Const('*LIBL')                       Liste Utilisateur
