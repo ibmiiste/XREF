@@ -456,7 +456,7 @@
      A          R F14
      A*%%TS  SD  20090721  114031  PELTIERI    REL-V5R4M0  5722-WDS
      A                                      WINDOW(5 2 10 50)
-     A                                  1  4'Paramètres supllémentaires'
+     A                                  1  4'Paramètres supplémentaires'
      A                                      COLOR(WHT)
      A            F14_OUT        2Y 0B  3  2SNGCHCFLD
      A                                      CHOICE(1 'Fichier en mise à jour')

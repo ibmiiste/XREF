@@ -1,4 +1,4 @@
-             CMD        PROMPT('X-REF : ANALYSE ISERIES V1.9.0')
+             CMD        PROMPT('X-REF : ANALYSE ISERIES V1.9.3')
              PARM       KWD(COMPOSANT) TYPE(L1) PASSVAL(*DFT) +
                           PROMPT('COMPOSANT À ANALYSER')
              PARM       KWD(TYPE) TYPE(*CHAR) LEN(7) RSTD(*YES) +

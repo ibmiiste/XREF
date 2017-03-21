@@ -9,7 +9,7 @@
       *     >>PARM<<  CLOSQLCSR(*ENDACTGRP);                          */
       *     >>PARM<<  DATFMT(*ISO);                                   */
       *     >>PARM<<  TIMFMT(*ISO);                                   */
-      *     >>PARM<<  COMPILEOPT('OPTIMIEZ(*FULL)');                  */
+      *     >>PARM<<  COMPILEOPT('OPTIMIZE(*FULL)');                  */
       *   >>END-IMPORTANT<<                                           */
 
       *   >>EXECUTE<<                                                 */
@@ -2130,7 +2130,7 @@
 ?      //---Affichage Info du jour--------------------------------------------//
        DateduJour = %Date;
        Heure = %Time;
-       F01Info = 'Date:' + x'20' + %char(DateduJour);
+       F01Info = 'Date:' + x'20' + %char(DateduJour:*DMY);
        F01Info = %Trim(F01Info) + x'22' + ' ' + 'Heure:'+ x'20' + %char(Heure);
        F01Info = %Trim(F01Info) + x'22' +'Travail:' + x'20';
        F01Info = %Trim(F01Info) + '(' +%Trim(Travail) + '/'  ;
@@ -2144,7 +2144,7 @@
          F01Info = %Trim(F01Info) +  x'20';
        Else;
          F01Info = %Trim(F01Info) + '  ' + x'23' +
-?        'http://shirlock.free.fr' + x'20';
+?        'http://github.com/ibmiiste/XREF' + x'20';
        EndIf;
 
 ?      //---Choix des options disponibles-------------------------------------//
@@ -7060,7 +7060,7 @@ B02      If %Error;
            Except head2;
 ?      //---Affichage du message pour la résolution---------------------------//
            hd03 = 'Modifier votre résolution écran sinon allez sur ' +
-                  'http://shirlock.free.fr';
+                  'https://github.com/ibmiiste/XREF';
            Except head3;
 ?      //---Fermeture des fichiers et sortie du programme---------------------//
            Close ££zz01d;
