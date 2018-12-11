@@ -731,7 +731,7 @@
         *n int(10) inz(0); // ErrProv
        end-ds;
      ?**---Récupération de la version d'OS/400--------------------------------**
-       dcl-ds Os400 dtaara(*auto:'QSS1MRI'); // DTAARA OS/400
+       dcl-ds Os400 dtaara(*auto:*USRCTL:'QSS1MRI'); // DTAARA OS/400
         Version_Os char(6) pos(1); // Version OS/400
         *n char(750) pos(1); // Dummy
        end-ds;
