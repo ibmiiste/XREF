@@ -14,64 +14,57 @@
 
       *   >>EXECUTE<<                                                 */
       * >>END-PRE-COMPILER<<                                          */
-     h Debug Option( *SrcStmt: *NoDebugIO )
-     h copyright('Olivier Drubigny 2017-2018 X-Ref <Version v1.9.3>')
-     h DatFmt(*EUR) TimFmt(*HMS) DatEdit(*YMD) ActGrp(*New) DftActGrp(*No)
+       ctl-opt debug option( *srcstmt: *nodebugio )
+       copyright('Olivier Drubigny 2017-2018 X-Ref <Version v1.9.3>')
+       datfmt(*eur) timfmt(*hms) datedit(*ymd) actgrp(*new) dftactgrp(*no);
 
      ?**----------------------------------------------------------------------**
      ?**---ZZ01 : outils d'analyse iSeries------------------------------------**
      ?**----------------------------------------------------------------------**
 
      ?**---Définition du fichier écran----------------------------------------**
-     fzz01d     cf   e             WorkStn Sfile(FzzSfl:FzzRrn)                 Sfl Principal
-     f                                     Sfile(F02Sfl:F02Rrn)                 Liste Composant
-     f                                     Sfile(F03Sfl:F03Rrn)                 Liste des Modificati
-     f                                     Sfile(F04Sfl:F04Rrn)                 Liste des Modificati
-     f                                     Sfile(F05Sfl:F05Rrn)                 Liste Plugin
-     f                                     Sfile(F06Sfl:F06Rrn)                 Liste Bibliothèque
-     f                                     Sfile(F12Sfl:F12Rrn)                 Liste Zones
-     f                                     IndDs(Indicators)                    Indicateurs Ecran
-     f                                     UsrOpn                               Contrôle ouverture
+       dcl-f ZZ01D workstn sfile(fzzsfl:fzzrrn) sfile(f02sfl:f02rrn)  // Sfl Principal
+       sfile(f03sfl:f03rrn) sfile(f04sfl:f04rrn) sfile(f05sfl:f05rrn)
+       sfile(f06sfl:f06rrn) sfile(f12sfl:f12rrn) indds(indicators) usropn;
 
      ?**---Fichier à description interne--------------------------------------**
-     ffile      if a f32766        Disk    UsrOpn InfDs(PsDs)
+       dcl-f FILE disk(32766) usage(*input: *output) usropn infds(psds);
 
      ?**---Définition du fichier Dump du Query--------------------------------**
-     fDmpFil    if   f  528        Disk    UsrOpn Block(*No)
+       dcl-f DMPFIL disk(528) usropn block(*no);
 
      ?**---Définition du fichier imprimante en interne------------------------**
-     fqsysprt   o    f  132        Printer OflInd(*InOa) FormOfl(66)
-     f                                     FormLen(66) UsrOpn
+       dcl-f QSYSPRT printer(132) oflind(*inoa) formofl(66) formlen(66) usropn;
 
      ?**---Définition du fichier écran en interne-----------------------------**
-     f££zz01d   o    f   80        Workstn UsrOpn
+       dcl-f ££ZZ01D workstn(80) usage(*output) usropn;
 
      ?**---Définition des Constantes------------------------------------------**
-     d mdf             c                   Const(300)                           Longueur Texte
-     d Version         c                   Const('v1.9.3 ')                     N° Version
-     d lo              c                   Const('abcdefghijklmnopqrstuvwxyz')  Minuscules
-     d up              c                   Const('ABCDEFGHIJKLMNOPQRSTUVWXYZ')  Majuscules
-     d Clibl           c                   Const('*LIBL')                       Liste Utilisateur
-     d Cfile           c                   Const('*FILE')                       Type fichier
-     d Czz01pf         c                   Const('ZZ01PF    ')                  Fichier paramètre
-     d Czz01ot         c                   Const('ZZ01OUT   ')                  Fichier paramètre
-     d CPgmRef         c                   Const('PGMREF    ')                  Fichier PgmRef
-     d CPgmRef1        c                   Const('PGMREF1   ')                  Vue 1 sur Pgmref
-     d CPgmRef2        c                   Const('PGMREF2   ')                  Vue 2 sur Pgmref
-     d CPgmRef3        c                   Const('PGMREF3   ')                  Vue 3 sur Pgmref
-     d Cobjd0200       c                   Const('OBJD0200')                    Description Objet
-     d Cobjd0400       c                   Const('OBJD0400')                    Description Objet
-     d EndOfFile       c                   Const(100)                           Fin de fichier SQL
-     d InitAlloc       c                   Const(100)                           Taille Initiale Allo
-     d SubsAlloc       c                   Const(100)                           Taille Allouée suppl
-     d MaxTab          c                   Const(32767)                         Taille Max tableau
-     d Auth_None       c                   x'0000'                              Autorisation objet
+       dcl-c mdf const(300); // Longueur Texte
+       dcl-c Version const('v1.9.3 '); // N° Version
+       dcl-c lo const('abcdefghijklmnopqrstuvwxyz'); // Minuscules
+       dcl-c up const('ABCDEFGHIJKLMNOPQRSTUVWXYZ'); // Majuscules
+       dcl-c Clibl const('*LIBL'); // Liste Utilisateur
+       dcl-c Cfile const('*FILE'); // Type fichier
+       dcl-c Czz01pf const('ZZ01PF    '); // Fichier paramètre
+       dcl-c Czz01ot const('ZZ01OUT   '); // Fichier paramètre
+       dcl-c CPgmRef const('PGMREF    '); // Fichier PgmRef
+       dcl-c CPgmRef1 const('PGMREF1   '); // Vue 1 sur Pgmref
+       dcl-c CPgmRef2 const('PGMREF2   '); // Vue 2 sur Pgmref
+       dcl-c CPgmRef3 const('PGMREF3   '); // Vue 3 sur Pgmref
+       dcl-c Cobjd0200 const('OBJD0200'); // Description Objet
+       dcl-c Cobjd0400 const('OBJD0400'); // Description Objet
+       dcl-c EndOfFile const(100); // Fin de fichier SQL
+       dcl-c InitAlloc const(100); // Taille Initiale Allo
+       dcl-c SubsAlloc const(100); // Taille Allouée suppl
+       dcl-c MaxTab const(32767); // Taille Max tableau
+       dcl-c Auth_None x'0000'; // Autorisation objet
      ?**---Tableau chargé à la compilation------------------------------------**
-     d Tb_Plugin       s             55a   dim(20) ctdata
-     d Nouv_Tab        s            100a   dim(20) ctdata
-     d Modifencours    s            100a   dim(Mdf) ctdata
-     d F04desTab       s             80a   dim(24) ctdata
-     d Desc_Entete     s             60a   dim(48) ctdata
+       dcl-s Tb_Plugin char(55) dim(20) ctdata;
+       dcl-s Nouv_Tab char(100) dim(20) ctdata;
+       dcl-s Modifencours char(100) dim(mdf) ctdata;
+       dcl-s F04desTab char(80) dim(24) ctdata;
+       dcl-s Desc_Entete char(60) dim(48) ctdata;
 
      ?**---Autorisation par type d'objet--------------------------------------**
 ?    ?**   31 - 02|F02 - X-Ref                    |                           **
@@ -84,1023 +77,934 @@
 ?    ?**   38 - 20|F20 - Carto. Ile               ||||||||                    **
 ?    ?**   39 -                                   |||||||||                   **
 ?    ?**   40 - 06|F06 - Lancement d'une requête  ||||||||||                  **
-     d OptFile         c                   Const('0111100001')                  Autorisation fichier
-     d OptPgm          c                   Const('1100111100')                  Autorisation prog.
-     d OptSrvPgm       c                   Const('1110111100')                  Autorisation srvpgm
-     d OptModule       c                   Const('1000101100')                  Autorisation module
-     d OptDtaara       c                   Const('0100100000')                  Autorisation Dtaara
-     d OptVide         c                   Const('0000111000')                  Autorisation Analyse
-     d OptQuery        c                   Const('1100100001')                  Autorisation Query
+       dcl-c OptFile const('0111100001'); // Autorisation fichier
+       dcl-c OptPgm const('1100111100'); // Autorisation prog.
+       dcl-c OptSrvPgm const('1110111100'); // Autorisation srvpgm
+       dcl-c OptModule const('1000101100'); // Autorisation module
+       dcl-c OptDtaara const('0100100000'); // Autorisation Dtaara
+       dcl-c OptVide const('0000111000'); // Autorisation Analyse
+       dcl-c OptQuery const('1100100001'); // Autorisation Query
 
 ?    ?**---Variables Types----------------------------------------------------**
-     d £SysPtr         s               *   ProcPtr  Based(Dummy)
-     d £Dyna           s            128a                                        Type de tableau
-     d £Heap           s             10i 0                                      Heap Id
-     d £Index          s             10i 0                                      Index de tableau
-     d £MasterTaille   s             20i 0                                      Taille du tableau Ma
-     d £StIndex        s              5i 0                                      Index de sous-tablea
-     d £Tab            s             10a                                        Nom de tableau
-     d £StTab          s             20a                                        Nom de sous-tableau
-     d £FeedBack       s             12a                                        Message d'erreur
+       dcl-s £SysPtr pointer(*proc) based(dummy);
+       dcl-s £Dyna char(128); // Type de tableau
+       dcl-s £Heap int(10); // Heap Id
+       dcl-s £Index int(10); // Index de tableau
+       dcl-s £MasterTaille int(20); // Taille du tableau Ma
+       dcl-s £StIndex int(5); // Index de sous-tablea
+       dcl-s £Tab char(10); // Nom de tableau
+       dcl-s £StTab char(20); // Nom de sous-tableau
+       dcl-s £FeedBack char(12); // Message d'erreur
      ?**---Attributs d'un User Space------------------------------------------**
-     d £QUsAttr        Ds
-     d                               10i 0 Inz(1)                               QUsNumRec
-     d                               10i 0 Inz(3)                               QUsKey
-     d                               10i 0 Inz(1)                               QUsRecLen
-     d                                1a   Inz('1')                             QUsRecData
+       dcl-ds £QUsAttr;
+        *n int(10) inz(1); // QUsNumRec
+        *n int(10) inz(3); // QUsKey
+        *n int(10) inz(1); // QUsRecLen
+        *n char(1) inz('1'); // QUsRecData
+       end-ds;
 
      ?**---Définition des variables globales----------------------------------**
       **---Pointeur-----------------------------------------------------------**
-     d PtrPlug         s               *   ProcPtr
+       dcl-s PtrPlug pointer(*proc);
       **---Booléen------------------------------------------------------------**
-     d Bib_Ok          s               n                                        Liste Ok
-     d Bib_Ok_Sav      s               n                                        Liste Ok
-     d Bib_Ok_Init     s               n   Inz(*On)                             Liste Ok
-     d Ctl_Fonct       s               n
-     d Car_Carte_C     s               n
-     d Car_Carte_D     s               n
-     d Car_Carte_F     s               n
-     d Car_Carte_P     s               n
-     d Car_Free        s               n
-     d Car_Proto       s               n
-     d F06_Obj         s               n
-     d F06_Src         s               n
-     d F06_Ref         s               n
-     d F06_Lig_Obj     s               n
-     d F06_Lig_Src     s               n
-     d F06_Lig_Ref     s               n
-     d F06ClrRef       s               n
-     d First           s               n
-     d First_Chk       s               n   inz('1')
+       dcl-s Bib_Ok ind; // Liste Ok
+       dcl-s Bib_Ok_Sav ind; // Liste Ok
+       dcl-s Bib_Ok_Init ind inz(*on); // Liste Ok
+       dcl-s Ctl_Fonct ind;
+       dcl-s Car_Carte_C ind;
+       dcl-s Car_Carte_D ind;
+       dcl-s Car_Carte_F ind;
+       dcl-s Car_Carte_P ind;
+       dcl-s Car_Free ind;
+       dcl-s Car_Proto ind;
+       dcl-s F06_Obj ind;
+       dcl-s F06_Src ind;
+       dcl-s F06_Ref ind;
+       dcl-s F06_Lig_Obj ind;
+       dcl-s F06_Lig_Src ind;
+       dcl-s F06_Lig_Ref ind;
+       dcl-s F06ClrRef ind;
+       dcl-s First ind;
+       dcl-s First_Chk ind inz('1');
       **---Date/Heure/Timestamp-----------------------------------------------**
-     d Datedujour      s               d
-     d Heure           s               t
-     d Zztmst          s               z
+       dcl-s Datedujour date;
+       dcl-s Heure time;
+       dcl-s Zztmst timestamp;
       **---Alphanumérique-----------------------------------------------------**
-     d OverRide        s              1a
-     d Stat            s              1a
-     d SpaceValue      s              1a   inz(X'00')                           Valeur du User Space
-     d Spkg            s              1a                                        Sql : WhSpkg
-     d TrslScan        s              1a
-     d TrimScan        s              1a
-     d WildScan        s              1a
-     d SfRule          s              1a
-     d SfCompare       s              2a
-     d Lib_Temp        s              6a
-     d FormatName      s              8a
-     d FileFmt         s              8a   inz('FILD0100')
-     d LstOutFmt       s              8a   inz('DBRL0100')
-     d CJobI0700       s              8a   inz('JOBI0700')
-     d Outputsv        s              8a
-     d Qry             s             10a
-     d LZone           s             10a
-     d fmt             s             10a
-     d ObjEntry_Sav    s             10a
-     d ZzComp          s             10a
-     d ZzBib           s             10a
-     d ZzType          s             10a
-     d ZzFonc          s             10a                                        Fonction utilisée
-     d JobEntry        s             10a
-     d SpaceAuth       s             10a   inz('*USE')                          Autorisation User Sp
-     d SpaceReplc      s             10a   inz('*YES')                          Remplacement du User
-     d ObjectType      s             10a   inz('*ALL')                          Type d'objet
-     d SpaceAttr       s             10a   inz                                  Attribut du User Spa
-     d CLPgmRef        s             10a                                        Bibliothèque PgmRef
-     d Nom_Comp        s             10a
-     d Bib             s             10a                                        Bilbiothèque
-     d Fnam            s             10a                                        Objet Référencé
-     d Pnam            s             10a                                        Programme appelant
-     d Lnam            s             10a                                        Biblitohèque du réfé
-     d Otyp            s             10a                                        Type du référencé
-     d Rfnm            s             10a                                        Sql : WhRfnm
-     d System          s             10a   inz('*LCL')                          Système
-     d ObjChk          s             10a
-     d Format          s             10a
-     d XFile           s             10a
-     d XLib            s             10a
-     d Type            s             10a
-     d TypChk          s             10a
-     d LibChk          s             10a
-     d FmtType         s             10a   inz('*EXT')
-     d Ignore          s             10a   inz
-     d RecordFmt       s             10a   inz('*FIRST')
-     d LibRef          s             10a
-     d ListeBib        s             10a
-     d SrclibW         s             11a
-     d Trt             s             12a
-     d Rfsn            s             13a                                        Sql : WhRfsn
-     d Usage           s             14a                                        Usage du fichier
-     d Max_Date        s             13a
-     d Desc            s             15a                                        Sql : WhText
-     d Blan            s             16a   inz
-     d Object          s             20a
-     d Procedure       s             20a
-     d SFileLib        s             20a
-     d Proto_Name      s             20a                                        nom du prototype
-     d Proc_Encours    s             20a                                        nom du prototype
-     d RFileLib        s             20a
-     d Output          s             30a
-     d SfValue         s             50a
-     d Etoile          s             26a   inz('*')
-     d InputDs         s             28a
-     d SavComp         s             30a
-     d SpaceText       s             50a   inz('User Space Temporaire')         Libellé User Space
-     d Text            s             50a
-     d Lst_Bnd         s             50a
-     d hd02            s             80a
-     d hd03            s             80a
-     d Ent01           s            132a                                        Ligne de l'Entête
-     d Ent02           s            132a                                        Ligne de l'Entête
-     d Ent03           s            132a                                        Ligne de l'Entête
-     d Ent04           s            132a                                        Ligne de l'Entête
-     d Ent05           s            132a                                        Ligne de l'Entête
-     d Lig01           s            132a                                        Ligne de l'Entête
-     d Det01           s            132a                                        Ligne de l'Entête
-     d OvrCmd          s            200a                                        Commande AS400
-     d Fld             s            256a
-     d Req_Crt         s           1000a
-     d Req_Sql         s           1000a
-     d Requete0        s           1000a                                        Requête SQL
-     d Requete1        s           1000a                                        Requête SQL
-     d Requete2        s           1000a                                        Requête SQL
-     d Requete4        s           1000a                                        Requête SQL
-     d Requete5        s           1000a                                        Requête SQL
-     d Requete6        s           1000a                                        Requête SQL
-     d InPut           s           1280a
-     d SqlDefn         s          10000a
-     d All_File        s          32767a
+       dcl-s OverRide char(1);
+       dcl-s Stat char(1);
+       dcl-s SpaceValue char(1) inz(x'00'); // Valeur du User Space
+       dcl-s Spkg char(1); // Sql : WhSpkg
+       dcl-s TrslScan char(1);
+       dcl-s TrimScan char(1);
+       dcl-s WildScan char(1);
+       dcl-s SfRule char(1);
+       dcl-s SfCompare char(2);
+       dcl-s Lib_Temp char(6);
+       dcl-s FormatName char(8);
+       dcl-s FileFmt char(8) inz('FILD0100');
+       dcl-s LstOutFmt char(8) inz('DBRL0100');
+       dcl-s CJobI0700 char(8) inz('JOBI0700');
+       dcl-s Outputsv char(8);
+       dcl-s Qry char(10);
+       dcl-s LZone char(10);
+       dcl-s fmt char(10);
+       dcl-s ObjEntry_Sav char(10);
+       dcl-s ZzComp char(10);
+       dcl-s ZzBib char(10);
+       dcl-s ZzType char(10);
+       dcl-s ZzFonc char(10); // Fonction utilisée
+       dcl-s JobEntry char(10);
+       dcl-s SpaceAuth char(10) inz('*USE'); // Autorisation User Sp
+       dcl-s SpaceReplc char(10) inz('*YES'); // Remplacement du User
+       dcl-s ObjectType char(10) inz('*ALL'); // Type d'objet
+       dcl-s SpaceAttr char(10) inz; // Attribut du User Spa
+       dcl-s CLPgmRef char(10); // Bibliothèque PgmRef
+       dcl-s Nom_Comp char(10);
+       dcl-s Bib char(10); // Bilbiothèque
+       dcl-s Fnam char(10); // Objet Référencé
+       dcl-s Pnam char(10); // Programme appelant
+       dcl-s Lnam char(10); // Biblitohèque du réfé
+       dcl-s Otyp char(10); // Type du référencé
+       dcl-s Rfnm char(10); // Sql : WhRfnm
+       dcl-s System char(10) inz('*LCL'); // Système
+       dcl-s ObjChk char(10);
+       dcl-s Format char(10);
+       dcl-s XFile char(10);
+       dcl-s XLib char(10);
+       dcl-s Type char(10);
+       dcl-s TypChk char(10);
+       dcl-s LibChk char(10);
+       dcl-s FmtType char(10) inz('*EXT');
+       dcl-s Ignore char(10) inz;
+       dcl-s RecordFmt char(10) inz('*FIRST');
+       dcl-s LibRef char(10);
+       dcl-s ListeBib char(10);
+       dcl-s SrclibW char(11);
+       dcl-s Trt char(12);
+       dcl-s Rfsn char(13); // Sql : WhRfsn
+       dcl-s Usage char(14); // Usage du fichier
+       dcl-s Max_Date char(13);
+       dcl-s Desc char(15); // Sql : WhText
+       dcl-s Blan char(16) inz;
+       dcl-s Object char(20);
+       dcl-s Procedure char(20);
+       dcl-s SFileLib char(20);
+       dcl-s Proto_Name char(20); // nom du prototype
+       dcl-s Proc_Encours char(20); // nom du prototype
+       dcl-s RFileLib char(20);
+       dcl-s Output char(30);
+       dcl-s SfValue char(50);
+       dcl-s Etoile char(26) inz('*');
+       dcl-s InputDs char(28);
+       dcl-s SavComp char(30);
+       dcl-s SpaceText char(50) inz('User Space Temporaire'); // Libellé User Space
+       dcl-s Text char(50);
+       dcl-s Lst_Bnd char(50);
+       dcl-s hd02 char(80);
+       dcl-s hd03 char(80);
+       dcl-s Ent01 char(132); // Ligne de l'Entête
+       dcl-s Ent02 char(132); // Ligne de l'Entête
+       dcl-s Ent03 char(132); // Ligne de l'Entête
+       dcl-s Ent04 char(132); // Ligne de l'Entête
+       dcl-s Ent05 char(132); // Ligne de l'Entête
+       dcl-s Lig01 char(132); // Ligne de l'Entête
+       dcl-s Det01 char(132); // Ligne de l'Entête
+       dcl-s OvrCmd char(200); // Commande AS400
+       dcl-s Fld char(256);
+       dcl-s Req_Crt char(1000);
+       dcl-s Req_Sql char(1000);
+       dcl-s Requete0 char(1000); // Requête SQL
+       dcl-s Requete1 char(1000); // Requête SQL
+       dcl-s Requete2 char(1000); // Requête SQL
+       dcl-s Requete4 char(1000); // Requête SQL
+       dcl-s Requete5 char(1000); // Requête SQL
+       dcl-s Requete6 char(1000); // Requête SQL
+       dcl-s InPut char(1280);
+       dcl-s SqlDefn char(10000);
+       dcl-s All_File char(32767);
       **---Packé--------------------------------------------------------------**
-     d StrScan         s              3p 0
-     d LenSrcDta       s              3p 0
-     d LenF01Obj       s              3p 0
-     d SrcRet          s              3p 0
-     d NbrL            s              5p 0
-     d Rec             s              5p 0
+       dcl-s StrScan packed(3);
+       dcl-s LenSrcDta packed(3);
+       dcl-s LenF01Obj packed(3);
+       dcl-s SrcRet packed(3);
+       dcl-s NbrL packed(5);
+       dcl-s Rec packed(5);
       **---Etendu-------------------------------------------------------------**
-     d Fusg            s              2  0                                      Usage du fichier
-     d I1              s              4  0
-     d I2              s              4  0
-     d NbrLogics       s              4  0
-     d FzzRrn          s              5  0 inz(0)                               Rang d'enreg. FZZ
-     d F02Rrn          s              5  0 inz(0)                               Rang d'enreg. F02
-     d F03Rrn          s              5  0 inz(0)                               Rang d'enreg. F02
-     d F04Rrn          s              5  0 inz(0)                               Rang d'enreg. F02
-     d F05Rrn          s              5  0 inz(0)                               Rang d'enreg. F05
-     d F06Rrn          s              5  0 inz(0)                               Rang d'enreg. F06
-     d F12rrn          s              5  0 inz(0)                               Rang d'enreg. F12
-     d i               s              5  0 inz(1)                               Compteur
-     d CptF22          s              5  0 inz(1)                               Compteur
-     d Index_X         s              5  0
-     d SqlCpt          s              5  0 inz(1)                               Compteur
-     d IOff            s              5  0 inz(1)                               Compteur
-     d j               s              5  0 inz                                  Compteur
-     d k               s              5  0 inz                                  Compteur
-     d Nbr             s              5  0
-     d NbrMbr          s              5  0
-     d NbrFmt          s              5  0
-     d Pos_Comp        s              5  0
-     d Ind_Rappel      s              5  0
-     d IndRapWrk       s              5  0
-     d Cpt1            s              5  0                                      Compteur 1
-     d Cpt2            s              5  0                                      Compteur 2
-     d Cpt3            s              5  0                                      Compteur 3
-     d Cpt4            s              5  0                                      Compteur 4
-     d Cpt6            s              5  0                                      Compteur 6
-     d Cpt7            s              5  0                                      Compteur 7
-     d Cpt8            s              5  0                                      Compteur 8
-     d Cpt_I           s              5  0                                      Compteur 8
-     d Id_Ile          s              5  0
-     d I_Ile           s              5  0
-     d Id_Ile_Premier  s              5  0
-     d Cpt_Ile         s              5  0
-     d prctage         s              5  2
-     d Cpt_Ligne       s              8  0
-     d S               s             10  0
-     d OvrCmdLen       s             15  5                                      Longueur de la comma
+       dcl-s Fusg packed(2); // Usage du fichier
+       dcl-s I1 packed(4);
+       dcl-s I2 packed(4);
+       dcl-s NbrLogics packed(4);
+       dcl-s FzzRrn packed(5) inz(0); // Rang d'enreg. FZZ
+       dcl-s F02Rrn packed(5) inz(0); // Rang d'enreg. F02
+       dcl-s F03Rrn packed(5) inz(0); // Rang d'enreg. F02
+       dcl-s F04Rrn packed(5) inz(0); // Rang d'enreg. F02
+       dcl-s F05Rrn packed(5) inz(0); // Rang d'enreg. F05
+       dcl-s F06Rrn packed(5) inz(0); // Rang d'enreg. F06
+       dcl-s F12rrn packed(5) inz(0); // Rang d'enreg. F12
+       dcl-s i packed(5) inz(1); // Compteur
+       dcl-s CptF22 packed(5) inz(1); // Compteur
+       dcl-s Index_X packed(5);
+       dcl-s SqlCpt packed(5) inz(1); // Compteur
+       dcl-s IOff packed(5) inz(1); // Compteur
+       dcl-s j packed(5) inz; // Compteur
+       dcl-s k packed(5) inz; // Compteur
+       dcl-s Nbr packed(5);
+       dcl-s NbrMbr packed(5);
+       dcl-s NbrFmt packed(5);
+       dcl-s Pos_Comp packed(5);
+       dcl-s Ind_Rappel packed(5);
+       dcl-s IndRapWrk packed(5);
+       dcl-s Cpt1 packed(5); // Compteur 1
+       dcl-s Cpt2 packed(5); // Compteur 2
+       dcl-s Cpt3 packed(5); // Compteur 3
+       dcl-s Cpt4 packed(5); // Compteur 4
+       dcl-s Cpt6 packed(5); // Compteur 6
+       dcl-s Cpt7 packed(5); // Compteur 7
+       dcl-s Cpt8 packed(5); // Compteur 8
+       dcl-s Cpt_I packed(5); // Compteur 8
+       dcl-s Id_Ile packed(5);
+       dcl-s I_Ile packed(5);
+       dcl-s Id_Ile_Premier packed(5);
+       dcl-s Cpt_Ile packed(5);
+       dcl-s prctage packed(5: 2);
+       dcl-s Cpt_Ligne packed(8);
+       dcl-s S packed(10);
+       dcl-s OvrCmdLen packed(15: 5); // Longueur de la comma
       **---Entier signé-------------------------------------------------------**
-     d lenmat          s              5i 0
-     d lenmatp         s              5i 0
-     d x               s              5i 0
-     d y               s              5i 0
-     d f               s             10i 0
-     d g               s             10i 0
-     d IndRef          s             10i 0
-     d Nbr_Poste       s             10i 0
+       dcl-s lenmat int(5);
+       dcl-s lenmatp int(5);
+       dcl-s x int(5);
+       dcl-s y int(5);
+       dcl-s f int(10);
+       dcl-s g int(10);
+       dcl-s IndRef int(10);
+       dcl-s Nbr_Poste int(10);
       **---Binaire------------------------------------------------------------**
-     d Date_Null       s              4b 0
-     d jobilen         s              4b 0 inz(9999)
-     d SpaceLen        s              9b 0 inz(MaxTab)                          Longueur du User Spa
-     d StartPosit      s              9b 0                                      Position dans le Use
-     d StartLen        s              9b 0                                      Longueur dans le Use
-     d ReceiveLen      s              9b 0
-     d SaveLen         s              9b 0
-     d SaveStart       s              9b 0
+       dcl-s Date_Null bindec(4);
+       dcl-s jobilen bindec(4) inz(9999);
+       dcl-s SpaceLen bindec(9) inz(maxtab); // Longueur du User Spa
+       dcl-s StartPosit bindec(9); // Position dans le Use
+       dcl-s StartLen bindec(9); // Longueur dans le Use
+       dcl-s ReceiveLen bindec(9);
+       dcl-s SaveLen bindec(9);
+       dcl-s SaveStart bindec(9);
       **---Spécial Gestion Tableau--------------------------------------------**
-     d NameTab         s                   Dim(MaxTab) Like(£Tab)
-     d DynArrDsà       s               *   Dim(MaxTab)
-     d Mat_Matrice     s                   Dim(10) Like(MatriceDs) inz
-     d HeapTab         s                   Dim(MaxTab) Like(HeapDef)
-     d DynArr          s                   Dim(MaxTab) based(DynArrà)
-     d                                     Like(£Dyna)
-     d Name_Tab        s                   Dim(MaxTab) Like(£StTab)
-     d Master_Tab      s                   Dim(MaxTab) Like(£Tab)
-     d Master_Size     s                   Dim(MaxTab) Like(£Index)
-     d HeapMax         s                   Like(£Heap)
-     d Identifiant     s                   Like(£StIndex) Inz
-     d Heap_Tab        s                   Dim(MaxTab) Like(HeapDef)
+       dcl-s NameTab dim(maxtab) like(£tab);
+       dcl-s DynArrDsà pointer dim(maxtab);
+       dcl-s Mat_Matrice dim(10) like(matriceds) inz;
+       dcl-s HeapTab dim(maxtab) like(heapdef);
+       dcl-s DynArr dim(maxtab) based(dynarrà) like(£dyna);
+       dcl-s Name_Tab dim(maxtab) like(£sttab);
+       dcl-s Master_Tab dim(maxtab) like(£tab);
+       dcl-s Master_Size dim(maxtab) like(£index);
+       dcl-s HeapMax like(£heap);
+       dcl-s Identifiant like(£stindex) inz;
+       dcl-s Heap_Tab dim(maxtab) like(heapdef);
       **---Entier non signé---------------------------------------------------**
-     d Car_Copy        s              3u 0
-     d Car_Slash       s              3u 0
-     d Car_PtVirg      s              3u 0
-     d Car_FreeBegin   s              3u 0
-     d Car_FreeEnd     s              3u 0
-     d Car_Comment     s              3u 0
-     d Car_FiRoutine   s              3u 0
-     d Car_SsRoutine   s              3u 0
-     d Car_ExRoutine   s              3u 0
-     d Car_Libl        s              3u 0
-     d Car_Cas         s              3u 0
-     d Niveau          s              3u 0
-     d NbrProto        s              5u 0 Inz
-     d Cpt             s              5u 0
+       dcl-s Car_Copy uns(3);
+       dcl-s Car_Slash uns(3);
+       dcl-s Car_PtVirg uns(3);
+       dcl-s Car_FreeBegin uns(3);
+       dcl-s Car_FreeEnd uns(3);
+       dcl-s Car_Comment uns(3);
+       dcl-s Car_FiRoutine uns(3);
+       dcl-s Car_SsRoutine uns(3);
+       dcl-s Car_ExRoutine uns(3);
+       dcl-s Car_Libl uns(3);
+       dcl-s Car_Cas uns(3);
+       dcl-s Niveau uns(3);
+       dcl-s NbrProto uns(5) inz;
+       dcl-s Cpt uns(5);
 
      ?**---Définition fichiers en entrée--------------------------------------**
-     d  Lib_In         Ds                  Qualified
-     d   File                        10a
-     d   Lib                         10a
-     d                               10a                                        Mbr
-     d   Fmt                         10a
+       dcl-ds Lib_In qualified;
+        File char(10);
+        Lib char(10);
+        *n char(10); // Mbr
+        Fmt char(10);
+       end-ds;
      ?**---Définition fichier en sortie---------------------------------------**
-     d  Lib_Out        Ds                  Qualified
-     d   File                        10a
-     d   Lib                         10a
-     d                               10a                                        Mbr
+       dcl-ds Lib_Out qualified;
+        File char(10);
+        Lib char(10);
+        *n char(10); // Mbr
+       end-ds;
      ?**---DS du sous-fichier F06 : Gestion liste de bibliothèque-------------**
-     d F06Fld          s            132
-     d F06_Ds          Ds
-     d   F06Opt
-     d   F06Lib                      10a
-     d   F06Des
-     d   F06Maj
-     d   F06Date
+       dcl-s F06Fld char(132);
+       dcl-ds F06_Ds;
+        F06Opt;
+        F06Lib char(10);
+        F06Des;
+        F06Maj;
+        F06Date;
+       end-ds;
      ?**---DS du sous-fichier F04 : Gestion des analyses----------------------**
-     d F04_Ds          Ds
-     d  Obj04                        10a
-     d  Lib04                        10a
-     d  Type04                        7a
-     d  Fonc04                       10a
-     d  Tmst04                       26a
-     d  Mode04                       12a
-     d  Opt04                         1a
+       dcl-ds F04_Ds;
+        Obj04 char(10);
+        Lib04 char(10);
+        Type04 char(7);
+        Fonc04 char(10);
+        Tmst04 char(26);
+        Mode04 char(12);
+        Opt04 char(1);
+       end-ds;
      ?**---Affichage XREF : Ligne---------------------------------------------**
-     d LigXref         Ds
-     d   XrefNom               1     10
-     d   XrefTxtDsc           11     60
-     d   XrefUsage            63     77
-     d                        78     78    inz(X'20')
-     d   XrefRfnm             79     88
-     d   XrefOtyp             89     99
-     d   XrefLnam            101    111
-     d   XrefRfsn            112    125
+       dcl-ds LigXref;
+        XrefNom char(10) pos(1);
+        XrefTxtDsc char(50) pos(11);
+        XrefUsage char(15) pos(63);
+        *n char(1) inz(x'20') pos(78);
+        XrefRfnm char(10) pos(79);
+        XrefOtyp char(11) pos(89);
+        XrefLnam char(11) pos(101);
+        XrefRfsn char(14) pos(112);
+       end-ds;
      ?**---Affichage [F04] : Ligne--------------------------------------------**
-     d LigF04          Ds
-     d   F04Nom                1     10
-     d   F04Texte             11     60
-     d   F04Lib               61     70
+       dcl-ds LigF04;
+        F04Nom char(10) pos(1);
+        F04Texte char(50) pos(11);
+        F04Lib char(10) pos(61);
+       end-ds;
      ?**---Affichage de la description d'un fichier : Ligne-------------------**
-     d LigDescFile     ds
-     d   DescNom               1     10
-     d   DescDes              11     60
-     d   DescTyp              63     63
-     d   DescLon              64     70
-     d   DescDec              74     75
-     d   DescDeb              77     80
-     d   DescFin              81     87
-     d   DescInt              90     99
-     d   DescAlt             101    130
+       dcl-ds LigDescFile;
+        DescNom char(10) pos(1);
+        DescDes char(50) pos(11);
+        DescTyp char(1) pos(63);
+        DescLon char(7) pos(64);
+        DescDec char(2) pos(74);
+        DescDeb char(4) pos(77);
+        DescFin char(7) pos(81);
+        DescInt char(10) pos(90);
+        DescAlt char(30) pos(101);
+       end-ds;
      ?**---Affichage de la recherche de caractère : Ligne---------------------**
-     d LigScan         Ds
-     d  ScanPnam               1     10
-     d  ScanDes               11     60
-     d  ScanBib               63     72
-     d  ScanFil               75     84
+       dcl-ds LigScan;
+        ScanPnam char(10) pos(1);
+        ScanDes char(50) pos(11);
+        ScanBib char(10) pos(63);
+        ScanFil char(10) pos(75);
+       end-ds;
      ?**---DS Paramètres en entrée--------------------------------------------**
-     d ParmEntry1      Ds
-     d  Entry_Obj                    10a
-     d  Entry_Lib                    10a
-     d  Entry_typ                     7a
-     d  Entry_Fct                    10a
-     d  Entry_Output                  8a
-     d  Entry_Trt                    12a
-     d                                4b 0
-     d  Entry_FicSrc                 10a
-     d  Entry_BibSrc                 10a
-     d  Entry_MbrSrc                 10a
-     d  Entry_Text                   50a   overlay(Parmentry1:90)
+       dcl-ds ParmEntry1;
+        Entry_Obj char(10);
+        Entry_Lib char(10);
+        Entry_typ char(7);
+        Entry_Fct char(10);
+        Entry_Output char(8);
+        Entry_Trt char(12);
+        *n bindec(4);
+        Entry_FicSrc char(10);
+        Entry_BibSrc char(10);
+        Entry_MbrSrc char(10);
+        Entry_Text char(50) pos(90);
+       end-ds;
      ?**---DS Paramètre Plugin------------------------------------------------**
-     d DataPlugin      Ds          1024
-     d  x_Date                       10a                                        Date du jour
-     d  x_heure                       8a                                        Heure
-     d  x_User                       10a                                        Utilisateur
-     d  x_Job                        10a                                        Travail
-     d  x_NJob                        6a                                        N° de Job
-     d  x_Os400                       6a                                        OS/400
-     d  x_Version                     7a                                        Version X-Ref
-     d  x_Plugin                     35a                                        Nom du Plugin
-     d  x_SrvPgm                     10a                                        Programme de service
-     d  x_SrvLib                     10a                                        Bibliothèque du Prg
-     d  x_Mode                        1a                                        Mode de lancement
-     d  x_Output                      1a                                        Format de sortie
-     d  x_Objet                      10a                                        Nom du composant
-     d  x_Bib                        10a                                        Nom de la bibliothèq
-     d  x_Type                       10a                                        Type de l'objet
-     d  x_Texte                      50a                                        Texte de l'objet
-     d  x_FicSrc                     10a                                        Fichier Source
-     d  x_BibSrc                     10a                                        Bibliothèque source
-     d  x_MbrSrc                     10a                                        Membre source
-     d  x_NivSrc                      1a                                        Niveau d'analyse du
-     d  x_LastFunct                  10a                                        Dernière fonction ut
-     d  x_BibRef                     10a                                        bibliothèque du fich
+       dcl-ds DataPlugin len(1024);
+        x_Date char(10); // Date du jour
+        x_heure char(8); // Heure
+        x_User char(10); // Utilisateur
+        x_Job char(10); // Travail
+        x_NJob char(6); // N° de Job
+        x_Os400 char(6); // OS/400
+        x_Version char(7); // Version X-Ref
+        x_Plugin char(35); // Nom du Plugin
+        x_SrvPgm char(10); // Programme de service
+        x_SrvLib char(10); // Bibliothèque du Prg
+        x_Mode char(1); // Mode de lancement
+        x_Output char(1); // Format de sortie
+        x_Objet char(10); // Nom du composant
+        x_Bib char(10); // Nom de la bibliothèq
+        x_Type char(10); // Type de l'objet
+        x_Texte char(50); // Texte de l'objet
+        x_FicSrc char(10); // Fichier Source
+        x_BibSrc char(10); // Bibliothèque source
+        x_MbrSrc char(10); // Membre source
+        x_NivSrc char(1); // Niveau d'analyse du
+        x_LastFunct char(10); // Dernière fonction ut
+        x_BibRef char(10); // bibliothèque du fich
+       end-ds;
      ?**---List Data Program--------------------------------------------------**
-     d Lst_dta_Pgm     Ds
-     d  Lst_Size                      8b 0
-     d                               10a                                        Lst_Pgm
-     d                               10a                                        Lst_PgmLib
-     d  Lst_Mod                      10a
-     d                               10a                                        Lst_ModLib
+       dcl-ds Lst_dta_Pgm;
+        Lst_Size bindec(8);
+        *n char(10); // Lst_Pgm
+        *n char(10); // Lst_PgmLib
+        Lst_Mod char(10);
+        *n char(10); // Lst_ModLib
+       end-ds;
      ?**---List Data Program--------------------------------------------------**
-     d Lst_dta_Srv     Ds
-     d  Lst_Srv_Size                  8b 0
-     d                               10a                                        Lst_Srv_Pgm
-     d                               10a                                        Lst_Srv_PgmLi
-     d  Lst_Srv_Mod                  10a
-     d                               10a                                        Lst_Srv_ModLi
+       dcl-ds Lst_dta_Srv;
+        Lst_Srv_Size bindec(8);
+        *n char(10); // Lst_Srv_Pgm
+        *n char(10); // Lst_Srv_PgmLi
+        Lst_Srv_Mod char(10);
+        *n char(10); // Lst_Srv_ModLi
+       end-ds;
      ?**---List Data Service Program------------------------------------------**
-     d Lst_dta_SrvPgm  Ds
-     d  Program_name                 10a
-     d                               10a
-     d  Lst_Srv                      10a
-     d                               10a                                        Lst_SrvLib
-     d                               16a                                        Lst_SrvSign
+       dcl-ds Lst_dta_SrvPgm;
+        Program_name char(10);
+        *n char(10);
+        Lst_Srv char(10);
+        *n char(10); // Lst_SrvLib
+        *n char(16); // Lst_SrvSign
+       end-ds;
      ?**---List Data Module---------------------------------------------------**
-     d ListData        Ds
-     d  List_Size                     6b 0
-     d                               10a                                        List_Module
-     d                               10a                                        List_ModLib
-     d                                1a                                        List_ProcType
-     d                                4b 0                                      List_OffProc
-     d                                4b 0                                      List_SizProc
-     d                               10a                                        List_ArgProc
-     d  List_ProcName         47    128a
+       dcl-ds ListData;
+        List_Size bindec(6);
+        *n char(10); // List_Module
+        *n char(10); // List_ModLib
+        *n char(1); // List_ProcType
+        *n bindec(4); // List_OffProc
+        *n bindec(4); // List_SizProc
+        *n char(10); // List_ArgProc
+        List_ProcName char(82) pos(47);
+       end-ds;
      ?**---List Data Program--------------------------------------------------**
-     d Lst_dta_Bnd     Ds
-     d  Lst_BndSize                   8b 0
-     d                               10a                                        Lst_ModBnd
-     d                               10a                                        Lst_ModBndLib
-     d  Lst_BndTyp                   10a
-     d                               10a                                        Lst_BndLib
-     d  Lst_BndOffSet                 8b 0
-     d  Lst_BndLength                 8b 0
+       dcl-ds Lst_dta_Bnd;
+        Lst_BndSize bindec(8);
+        *n char(10); // Lst_ModBnd
+        *n char(10); // Lst_ModBndLib
+        Lst_BndTyp char(10);
+        *n char(10); // Lst_BndLib
+        Lst_BndOffSet bindec(8);
+        Lst_BndLength bindec(8);
+       end-ds;
      ?**---Rang d'enregistrement dans le fichier------------------------------**
-     d PsDs            Ds
-     d  NbrEnregs                    10i 0  overlay(PsDs:156)
-     d  Rrn                  397    400b 0
+       dcl-ds PsDs;
+        NbrEnregs int(10) pos(156);
+        Rrn int(10) pos(397);
+       end-ds;
      ?**---Définition d'un source---------------------------------------------**
-     d DSSource        Ds
-     d  SrcLib                       10a
-     d  SrcFil                       10a
-     d  SrcMbr                       10a
-     d  SrcRrn                        5  0
-     d  SrcMax                        5  0
+       dcl-ds DSSource;
+        SrcLib char(10);
+        SrcFil char(10);
+        SrcMbr char(10);
+        SrcRrn zoned(5);
+        SrcMax zoned(5);
+       end-ds;
      ?**---Ds statut du programme---------------------------------------------**
-     d WsPsDs         sDs
-     d  WsPsDs1                     256a
-     d  WsPsds2                     256a
-     d  Routine                       7a    overlay(WsPsDs:29)
-     d  Travail                      10a    overlay(WsPsDs:244)
-     d  Utilisateur                  10a    overlay(WsPsDs:254)
-     d  User                         10a    overlay(WsPsDs:254)
-     d  Numero                        6s 0  overlay(WsPsDs:264)
-     d                        40     46                                         Excp_MsgId
-     d                        91    170                                         Excp_Data
+       dcl-ds WsPsDs PSDS;
+        WsPsDs1 char(256);
+        WsPsds2 char(256);
+        Routine char(7) pos(29);
+        Travail char(10) pos(244);
+        Utilisateur char(10) pos(254);
+        User char(10) pos(254);
+        Numero zoned(6) pos(264);
+        *n char(7) pos(40); // Excp_MsgId
+        *n char(80) pos(91); // Excp_Data
+       end-ds;
      ?**---Ds pour la définition de la clé d'un fichier-----------------------**
-     d KeyData         Ds
-     d  DependKey              1     10
-     d  AscendDes             14     14
+       dcl-ds KeyData;
+        DependKey char(10) pos(1);
+        AscendDes char(1) pos(14);
+       end-ds;
      ?**---Ds pour la définition des sélection/ommissions d'un LF-------------**
-     d FindSelect      Ds         32767    inz
-     d  Physical              50     69
-     d  FindFormat            70     79
-     d  NbrKeys              117    118b 0
-     d  NbrSelOmit           130    131b 0
-     d  OffSelOmit           132    135b 0
-     d  OffSet               136    139b 0
+       dcl-ds FindSelect len(32767) inz;
+        Physical char(20) pos(50);
+        FindFormat char(10) pos(70);
+        NbrKeys int(5) pos(117);
+        NbrSelOmit int(5) pos(130);
+        OffSelOmit int(10) pos(132);
+        OffSet int(10) pos(136);
+       end-ds;
      ?**---Ds pour la définition des sélection/ommissions d'un LF-------------**
-     d KeySelect       Ds           150    inz
-     d  Rule                   3      3
-     d  Compare                4      5
-     d  CompName               6     15
-     d  NbrSO                 16     17b 0
-     d  OffsetSO              29     32b 0
+       dcl-ds KeySelect len(150) inz;
+        Rule char(1) pos(3);
+        Compare char(2) pos(4);
+        CompName char(10) pos(6);
+        NbrSO int(5) pos(16);
+        OffsetSO int(10) pos(29);
+       end-ds;
      ?**---Définition d'un Heap-----------------------------------------------**
-     d HeapDef         Ds
-     d  HeapId                       10i 0
-     d  HeapSize                     10i 0
-     d  HeapElems                    10i 0
+       dcl-ds HeapDef;
+        HeapId int(10);
+        HeapSize int(10);
+        HeapElems int(10);
+       end-ds;
      ?**---Définition d'une matrice-------------------------------------------**
-     d MatriceDs       Ds
-     d   Mat_Y                        5i 0 Dim(MaxTab) inz(0)
+       dcl-ds MatriceDs;
+        Mat_Y int(5) dim(maxtab) inz(0);
+       end-ds;
      ?**---Ds pour la définition des Clés d'un LF-----------------------------**
-     d KeySOS          Ds           150    inz
-     d  POffset                1      4b 0
-     d  NL                     5      6b 0
-     d  SelectVar             21     48
+       dcl-ds KeySOS len(150) inz;
+        POffset int(10) pos(1);
+        NL int(5) pos(5);
+        SelectVar char(28) pos(21);
+       end-ds;
      ?**---Ds pour la liste des LF d'un PF------------------------------------**
-     d ListDs          Ds
-     d  DependFil             21     30
-     d  DependLib             31     40
+       dcl-ds ListDs;
+        DependFil char(10) pos(21);
+        DependLib char(10) pos(31);
+       end-ds;
      ?**---Ds du récepteur pour le nombre de format par fichier---------------**
-     d Receiver        Ds          4096    inz
-     d  NbrFormats            62     63b 0
-     d  DBFileOffS           317    320b 0
-     d                       337    338                                         AccessType
+       dcl-ds Receiver len(4096) inz;
+        NbrFormats int(5) pos(62);
+        DBFileOffS int(10) pos(317);
+        *n char(2) pos(337); // AccessType
+       end-ds;
      ?**---Description d'un fichier source------------------------------------**
-     d RcdSrc          Ds         32766
-     d  SrcSeq                        6  2
-     d                                6  0                                      SrcDat
-     d  SrcDta                      150
+       dcl-ds RcdSrc len(32766);
+        SrcSeq zoned(6: 2);
+        *n zoned(6); // SrcDat
+        SrcDta char(150);
+       end-ds;
      ?**---Description d'un fichier Dump--------------------------------------**
-     d DmpFilDs        ds
-     d  SavfDta                1    512
-     d  NoOMH                257    512
-     d                       513    528                                         ChkSum
+       dcl-ds DmpFilDs;
+        SavfDta char(512) pos(1);
+        NoOMH char(256) pos(257);
+        *n char(16) pos(513); // ChkSum
+       end-ds;
      ?**---Description d'un scan----------------------------------------------**
-     d ScanDsRes       ds
-     d  SourcePgm              1     10
-     d                        11     20                                         SourceTyp
-     d  SourceTxt             47     95
+       dcl-ds ScanDsRes;
+        SourcePgm char(10) pos(1);
+        *n char(10) pos(11); // SourceTyp
+        SourceTxt char(49) pos(47);
+       end-ds;
      ?**---Description des logiques-------------------------------------------**
-     d AccPthDs        ds
-     d  SfLibrary                    10a
-     d  SfFilename                   10a
-     d  SfKeyField                   10a
-     d  SfFormat                     10a
-     d  SfAsendDec                    1
-     d  SfText                       50
+       dcl-ds AccPthDs;
+        SfLibrary char(10);
+        SfFilename char(10);
+        SfKeyField char(10);
+        SfFormat char(10);
+        SfAsendDec char(1);
+        SfText char(50);
+       end-ds;
      ?**---Description d'un fichier-------------------------------------------**
-     d                 ds                           based(pEntry)
-     d FieldName               1     10
-     d DataType               11     11
-     d                        12     12                                         Use
-     d OutBufPos              13     16i 0
-     d                        17     20i 0                                      InBufPos
-     d ByteLeng               21     24i 0
-     d Digits                 25     28i 0
-     d DecPos                 29     32i 0
-     d FieldText              33     82
-     d                        83     84                                         EditCode
-     d                        85     88i 0                                      EditWordLen
-     d                        89    152                                         EditWord
-     d                       153    172                                         ColHead1
-     d                       173    192                                         ColHead2
-     d                       193    212                                         ColHead3
-     d IntName               213    222
-     d AltName               223    252
-     d                       253    256i 0                                      LenAltFld
-     d                       257    260i 0                                      NumDBCS
-     d                       261    261n                                        AlwNull
-     d                       262    262n                                        HostVarInd
-     d                       263    266                                         DatTimFmt
-     d                       267    267                                         DatTimSep
-     d VaryingInd            268    268n
+       dcl-ds *n based(pentry);
+        FieldName char(10) pos(1);
+        DataType char(1) pos(11);
+        *n char(1) pos(12); // Use
+        OutBufPos int(10) pos(13);
+        *n int(10) pos(17); // InBufPos
+        ByteLeng int(10) pos(21);
+        Digits int(10) pos(25);
+        DecPos int(10) pos(29);
+        FieldText char(50) pos(33);
+        *n char(2) pos(83); // EditCode
+        *n int(10) pos(85); // EditWordLen
+        *n char(64) pos(89); // EditWord
+        *n char(20) pos(153); // ColHead1
+        *n char(20) pos(173); // ColHead2
+        *n char(20) pos(193); // ColHead3
+        IntName char(10) pos(213);
+        AltName char(30) pos(223);
+        *n int(10) pos(253); // LenAltFld
+        *n int(10) pos(257); // NumDBCS
+        *n ind pos(261); // AlwNull
+        *n ind pos(262); // HostVarInd
+        *n char(4) pos(263); // DatTimFmt
+        *n char(1) pos(267); // DatTimSep
+        VaryingInd ind pos(268);
+       end-ds;
      ?**---Description d'un objet---------------------------------------------**
-     d                 Ds
-     d  WLiblOk                      10a
-     d  TxtDscOk                     50a
-     d  SrcMbrOk                     10a
-     d  SrcFOk                       10a
-     d  SrcLibOk                     10a
+       dcl-ds *n;
+        WLiblOk char(10);
+        TxtDscOk char(50);
+        SrcMbrOk char(10);
+        SrcFOk char(10);
+        SrcLibOk char(10);
+       end-ds;
      ?**---Liste des Objets---------------------------------------------------**
-     d DsList          Ds                                                       Liste d'objet
-     d  DsListFile                   10                                         Objet
-     d  DsListLib                    10                                         Bibliothèque
-     d  DsListTyp                    10                                         Type d'objet
+       dcl-ds DsList; // Liste d'objet
+        DsListFile char(10); // Objet
+        DsListLib char(10); // Bibliothèque
+        DsListTyp char(10); // Type d'objet
+       end-ds;
      ?**---OBJD0400-----------------------------------------------------------**
-     d Objd0400        Ds
-     d                               10i 0                                      Bytes Returned
-     d                               10i 0                                      Bytes Available OdBy
-     d  OdObjNam                     10a                                        Object Name
-     d  OdObjLib                     10a                                        Object Library Name
-     d  OdObjTypRt                   10a                                        Object Type
-     d                               10a                                        Return Library
-     d  OdObjASP                     10i 0                                      Object ASP Number
-     d  OdObjOwn                     10a                                        Object Owner
-     d  OdObjDmn                      2a                                        Object Domain
-     d  OdObjCrtDts                  13a                                        Creat. Date and Time
-     d  OdObjChgDts                  13a                                        Chge Date and Time
-     d  OdObjExtAtt                  10a                                        External Attribute
-     d  OdObjTxtDes                  50a                                        Text Description
-     d  OdObjSrcFil                  10a                                        Source File
-     d  OdObjSrcLib                  10a                                        Source Library
-     d  OdObjSrcMbr                  10a                                        Source Member
-     d  OdObjLast            461    467                                         Date Last Used
+       dcl-ds Objd0400;
+        *n int(10); // Bytes Returned
+        *n int(10); // Bytes Available OdBy
+        OdObjNam char(10); // Object Name
+        OdObjLib char(10); // Object Library Name
+        OdObjTypRt char(10); // Object Type
+        *n char(10); // Return Library
+        OdObjASP int(10); // Object ASP Number
+        OdObjOwn char(10); // Object Owner
+        OdObjDmn char(2); // Object Domain
+        OdObjCrtDts char(13); // Creat. Date and Time
+        OdObjChgDts char(13); // Chge Date and Time
+        OdObjExtAtt char(10); // External Attribute
+        OdObjTxtDes char(50); // Text Description
+        OdObjSrcFil char(10); // Source File
+        OdObjSrcLib char(10); // Source Library
+        OdObjSrcMbr char(10); // Source Member
+        OdObjLast char(7) pos(461); // Date Last Used
+       end-ds;
      ?**---Indicateurs du fichier écran---------------------------------------**
-     d Indicators      Ds
-     d  OptAide               01     01n                                        Aide
-     d  OptXref               02     02n                                        XRef
-     d  AffSrc                02     02n                                        Touche de Fonction [
-     d  Exit                  03     03n                                        Exit
-     d  OptRecDesc            04     04n                                        Recherche Descriptio
-     d  OptPlugin             05     05n                                        Appel plugin
-     d  OptRunQry             06     06n                                        RunQry
-     d  OptDesc               07     07n                                        Description
-     d  OptAccpth             08     08n                                        Affichage des logiqu
-     d  OptRappel             09     09n                                        Rappel Analyse
-     d  OptRappelP            10     10n                                        Rappel Analyse En Av
-     d  OptRecProc            11     11n                                        Recherche Module
-     d  Retour                12     12n                                        Retour
-     d  OptImpr               13     13n                                        Impression du sous-f
-     d  OptWhereUsed          14     14n                                        Where Used
-     d  OptCarto              15     15n                                        Cartographie
-     d  OptCartoSrc           16     16n                                        Cartographie Source
-     d  OptRecZone            17     17n                                        Recherche d'une zone
-     d  OptSplf               18     18n                                        Wrksplf
-     d  OptAffObj             19     19n                                        Affichage de la desc
-     d  OptCartoIle           20     20n                                        CartoGraphie ILE
-     d  OptLigCmd             21     21n                                        Ligne de Commande
-     d  OptSrch               22     22n                                        Recherche de caractè
-     d  OptAnalyse            23     23n                                        Gestion Analyse
-     d  OptBib                24     24n                                        Gestion de la liste
-     d  DspPr                 41     41n                                        Zone protégée
-     d  DspNd                 42     42n                                        Zone non affichée
-     d  DspPc                 43     43n                                        Zone Positionnement
-     d  Dsp_Bib               44     44n                                        Couleur sur Biblioth
-     d  Dsp_Repro             45     45n                                        Appel Chk_Composant
-     d  SflDsp                48     48n                                        Affichage sous fichi
-     d  SflDspCtl             49     49n                                        Affichage sous fichi
-     d  SflClr                50     50n                                        Clear du sous fichie
-     d  SflInd                50     50n                                        Clear du sous fichie
-     d  AutRecDesc            60     60n                                        Autorisation recherc
-     d  OptDspMaj             72     72n                                        MàJ référence Biblio
-     d  OptDspPr              73     73n                                        blocage des zones
-     d  ClrRed                74     74n                                        Couleur Rouge
-     d  ClrBlu                75     75n                                        Couleur Bleu
-     d  ClrPnk                76     76n                                        Couleur Vert
-     d  AutObj                       10a   overlay(Indicators:31)               Liste Autorisation
-     d  Fonc_Ind                     24a   overlay(Indicators:1)                Touche de fonction u
+       dcl-ds Indicators;
+        OptAide ind pos(1); // Aide
+        OptXref ind pos(2); // XRef
+        AffSrc ind pos(2); // Touche de Fonction [
+        Exit ind pos(3); // Exit
+        OptRecDesc ind pos(4); // Recherche Descriptio
+        OptPlugin ind pos(5); // Appel plugin
+        OptRunQry ind pos(6); // RunQry
+        OptDesc ind pos(7); // Description
+        OptAccpth ind pos(8); // Affichage des logiqu
+        OptRappel ind pos(9); // Rappel Analyse
+        OptRappelP ind pos(10); // Rappel Analyse En Av
+        OptRecProc ind pos(11); // Recherche Module
+        Retour ind pos(12); // Retour
+        OptImpr ind pos(13); // Impression du sous-f
+        OptWhereUsed ind pos(14); // Where Used
+        OptCarto ind pos(15); // Cartographie
+        OptCartoSrc ind pos(16); // Cartographie Source
+        OptRecZone ind pos(17); // Recherche d'une zone
+        OptSplf ind pos(18); // Wrksplf
+        OptAffObj ind pos(19); // Affichage de la desc
+        OptCartoIle ind pos(20); // CartoGraphie ILE
+        OptLigCmd ind pos(21); // Ligne de Commande
+        OptSrch ind pos(22); // Recherche de caractè
+        OptAnalyse ind pos(23); // Gestion Analyse
+        OptBib ind pos(24); // Gestion de la liste
+        DspPr ind pos(41); // Zone protégée
+        DspNd ind pos(42); // Zone non affichée
+        DspPc ind pos(43); // Zone Positionnement
+        Dsp_Bib ind pos(44); // Couleur sur Biblioth
+        Dsp_Repro ind pos(45); // Appel Chk_Composant
+        SflDsp ind pos(48); // Affichage sous fichi
+        SflDspCtl ind pos(49); // Affichage sous fichi
+        SflClr ind pos(50); // Clear du sous fichie
+        SflInd ind pos(50); // Clear du sous fichie
+        AutRecDesc ind pos(60); // Autorisation recherc
+        OptDspMaj ind pos(72); // MàJ référence Biblio
+        OptDspPr ind pos(73); // blocage des zones
+        ClrRed ind pos(74); // Couleur Rouge
+        ClrBlu ind pos(75); // Couleur Bleu
+        ClrPnk ind pos(76); // Couleur Vert
+        AutObj char(10) pos(31); // Liste Autorisation
+        Fonc_Ind char(24) pos(1); // Touche de fonction u
+       end-ds;
      ?**---Description d'un composant-----------------------------------------**
-     d Composant       Ds                                                       Composant
-     d  Obj                          10a                                        Objet
-     d  Lib                          10a                                        Bibliothèque
+       dcl-ds Composant; // Composant
+        Obj char(10); // Objet
+        Lib char(10); // Bibliothèque
+       end-ds;
      ?**---Description du job-------------------------------------------------**
-     d Jobi            Ds
-     d  NCurLib               75     76b 0
+       dcl-ds Jobi;
+        NCurLib int(5) pos(75);
+       end-ds;
      ?**---User Space Générique-----------------------------------------------**
-     d UserSpace       Ds
-     d  SpaceName                    10a
-     d  SpaceLib                     10a
+       dcl-ds UserSpace;
+        SpaceName char(10);
+        SpaceLib char(10);
+       end-ds;
      ?**---Entête d'un User Space---------------------------------------------**
-     d GenHeadDs       Ds                  based(pUserSpace)
-     d  InputSize            113    116b 0                                      Taille de l'entête
-     d                       117    120i 0                                      Offset de l'entête H
-     d                       121    124i 0                                      Taille de l'entête H
-     d  ListOffset           125    128b 0                                      Offset des données
-     d                       129    132i 0                                      Taille de la liste L
-     d  NumberList           133    136b 0                                      Nombre de données
-     d  EntrySize            137    140b 0                                      Taille des données
+       dcl-ds GenHeadDs based(puserspace);
+        InputSize int(10) pos(113); // Taille de l'entête
+        *n int(10) pos(117); // Offset de l'entête H
+        *n int(10) pos(121); // Taille de l'entête H
+        ListOffset int(10) pos(125); // Offset des données
+        *n int(10) pos(129); // Taille de la liste L
+        NumberList int(10) pos(133); // Nombre de données
+        EntrySize int(10) pos(137); // Taille des données
+       end-ds;
      ?**---Code Erreur standard API : ERRC0100--------------------------------**
-     d ApiError        Ds
-     d                               10i 0 Inz(%Size(ApiError))                                  AeB
-     d  AeBytAvl                     10i 0 Inz                                  Bytes Available
-     d                                7a                                        Exception Id     AeM
-     d                                1a                                        Reserved
-     d                              128a                                        Exception Data   AeM
+       dcl-ds ApiError;
+        *n int(10) inz(%size(apierror)); // AeB
+        AeBytAvl int(10) inz; // Bytes Available
+        *n char(7); // Exception Id     AeM
+        *n char(1); // Reserved
+        *n char(128); // Exception Data   AeM
+       end-ds;
      ?**----------------------------------------------------------------------**
-     d RslvTemplt      Ds
-     d   Gen_Mat_Id                  32a
-     d     TypeSubtyp                 2a   Overlay(Gen_Mat_Id:1)
-     d     ObjectPtr                 30a   Overlay(Gen_Mat_Id:3)
-     d                                2a   Inz(Auth_None)                       Req_Auth
+       dcl-ds RslvTemplt;
+        Gen_Mat_Id char(32);
+        TypeSubtyp char(2) overlay(gen_mat_id:1);
+        ObjectPtr char(30) overlay(gen_mat_id:3);
+        *n char(2) inz(auth_none); // Req_Auth
+       end-ds;
      ?**----------------------------------------------------------------------**
-     d ABP_Info        Ds
-     d                               10i 0 Inz(%size(ABP_Info))                 ABP_Ret
-     d                               10i 0                                      ABP_Avail
-     d                                8a   Inz(*ALLX'00')
-     d                               10i 0                                      ABP_ActGrp
-     d                               10i 0                                      ABP_ActMark
-     d                                7a   Inz(*ALLX'00')
-     d                                1a                                        ABP_Flags
-     d                                1a   Inz(*ALLX'00')
+       dcl-ds ABP_Info;
+        *n int(10) inz(%size(abp_info)); // ABP_Ret
+        *n int(10); // ABP_Avail
+        *n char(8) inz(*allx'00');
+        *n int(10); // ABP_ActGrp
+        *n int(10); // ABP_ActMark
+        *n char(7) inz(*allx'00');
+        *n char(1); // ABP_Flags
+        *n char(1) inz(*allx'00');
+       end-ds;
      ?**---Code Erreur--------------------------------------------------------**
-     d ErrCode         Ds
-     d                               10i 0 Inz(0)                               ErrProv
+       dcl-ds ErrCode;
+        *n int(10) inz(0); // ErrProv
+       end-ds;
      ?**---Récupération de la version d'OS/400--------------------------------**
-     d Os400          uDs                  Dtaara(QSS1MRI)                      DTAARA OS/400
-     d  Version_Os             1      6a                                        Version OS/400
-     d                         1    750a                                        Dummy
+       dcl-ds Os400 dtaara(*auto:'QSS1MRI'); // DTAARA OS/400
+        Version_Os char(6) pos(1); // Version OS/400
+        *n char(750) pos(1); // Dummy
+       end-ds;
 
      ?**---Appel de ZZ01------------------------------------------------------**
-     d Zz01            Pr
-     d  parm                        150a                                        Paramètres Commandes
+       dcl-pr Zz01;
+        *n char(150); // parm  Paramètres Com
+       end-pr;
 
       **----------------------------------------------------------------------**
       **---Gestion des tableaux et des matrices-------------------------------**
       **----------------------------------------------------------------------**
      ?**---Get Heap Storage---------------------------------------------------**
-     d CeeGtSt         Pr
-     d  parm                               Like(£Heap)                          Heap Id
-     d  parm                               Like(£Index)                         Taille du Heap
-     d  parm                           *                                        Adresse Mémoire du H
-     d  parm                               Options(*Omit) Like(£FeedBack)       Retour
+       dcl-pr CeeGtSt;
+        *n like(£heap); // parm  Heap Id
+        *n like(£index); // parm  Taille du Heap
+        *n pointer; // parm  Adresse Mémoir
+        *n options(*omit) like(£feedback); // parm  Retour
+       end-pr;
      ?**---Create Heap--------------------------------------------------------**
-     d CeeCrHp         Pr
-     d  parm                               Like(£Heap)                          Heap Id
-     d  parm                               Like(£Index)                         Taille Initiale
-     d  parm                               Const Like(£Index)                   Incrément
-     d  parm                               Const Like(£Index)                   Stratégie de mémoire
-     d  parm                               Options(*Omit) Like(£FeedBack)       Retour
+       dcl-pr CeeCrHp;
+        *n like(£heap); // parm  Heap Id
+        *n like(£index); // parm  Taille Initial
+        *n const like(£index); // parm  Incrément
+        *n const like(£index); // parm  Stratégie de m
+        *n options(*omit) like(£feedback); // parm  Retour
+       end-pr;
      ?**---Discard Heap-------------------------------------------------------**
-     d CeeDsHp         Pr
-     d  parm                               Const Like(£Heap)                    Heap Id
-     d  parm                               Options(*Omit) Like(£FeedBack)       Retour
+       dcl-pr CeeDsHp;
+        *n const like(£heap); // parm  Heap Id
+        *n options(*omit) like(£feedback); // parm  Retour
+       end-pr;
      ?**---Initialisation du tableau------------------------------------------**
-     d Tab_Init        Pr
-     d  parm                         10a   Const                                Tab_Name
      ?**---Alimentation du tableau--------------------------------------------**
-     d Tab_Set         Pr
-     d  parm                         10a   Const                                Tab_Name
-     d  parm                         10i 0 Value                                Index
-     d  parm                               Value Like(£Dyna)                    Element
      ?**---Récupération du tableau--------------------------------------------**
-     d Tab_Get         Pr                  Like(£Dyna)
-     d  parm                         10a   Const                                Tab_Name
-     d  parm                         10i 0 Value                                Index
      ?**---Information sur le tableau-----------------------------------------**
-     d Tab_Inf         Pr            10i 0
-     d  parm                         10a   Const                                Tab_Name
      ?**---Longueur Maxi d'un élément-----------------------------------------**
-     d Tab_Len         Pr            10i 0
-     d  parm                         10a   Const                                Tab_Name
      ?**---Suppression du tableau---------------------------------------------**
-     d Tab_Term        Pr
-     d  parm                         10a   Const options(*omit)                 Nom du tableau
      ?**---Recherche dans le tableau------------------------------------------**
-     d Tab_Srch        Pr            10i 0
-     d  parm                         10a   Const                                Tab_Name
-     d  parm                               Value like(£Dyna)                    Element
-     d  parm                         10i 0 Value                                Index
      ?**---Transfert d'un tableau dans un autre tableau-----------------------**
-     d Tab_Trf         Pr
-     d  parm                         10a   Const                                Tab_Name
-     d  parm                         10a   Const                                Tab_Sav
      ?**---Incrément d'un élément---------------------------------------------**
-     d Tab_Incr        Pr
-     d  Parm                         10a   Const                                Tab_Name
-     d  parm                         10i 0 Const                                Index
      ?**---Allocation du Heap-------------------------------------------------**
-     d Tab_Init2       Pr                  Like(£Heap)                          Heap Id
      ?**---Fabrication du tableau---------------------------------------------**
-     d Tab_Make2       Pr                  Like(£Heap)                          Heap Id
-     d  parm                               Const Like(£Tab)                     Nom du tableau
-     d  parm                               Const Like(£Index)                   Index
-     d  parm                               Const Like(£StTab)                   Nom du Sous-Tableau
      ?**---Formatage du nom de tableau----------------------------------------**
-     d Tab_Format2     Pr                  Like(£StTab)                         Nom du Sous-Tableau
-     d  parm                               Const Like(£Tab)                     Nom du tableau
-     d  parm                               Value Like(£Index)                   Index
-     d  parm                               Like(£Index)                         Index réduit
-     d  parm                               Like(£StIndex)                       Numéro de sous-table
      ?**---Information sur le sous-tableau------------------------------------**
-     d Tab_StInf2      Pr                  Like(£Index)                         Taille du Sous-Table
-     d  parm                               Const Like (£StTab)                  Nom du Sous-Tableau
      ?**---Calcul Index réduit et numéro de sous-tableau----------------------**
-     d Tab_IdxRed2     Pr
-     d  parm                               Const Like(£Index)                   Index
-     d  parm                               Like(£Index)                         Index réduit
-     d  parm                               Like(£StIndex)                       Numéro de sous-table
      ?**---Longueur Maxi d'un élément-----------------------------------------**
-     d Tab_Len2        Pr                  Like(£Index)                         Longueur max. d'un p
-     d  parm                               Const Like(£Tab)                     nom du Tableau
      ?**---Information sur le tableau-----------------------------------------**
-     d Tab_Inf2        Pr                  Like(£Index)                         Taille du Tableau
-     d  parm                               Const Like(£Tab)                     Nom du Tableau
      ?**---Nom du Sous-Tableau------------------------------------------------**
-     d Tab_StName2     Pr                  Like(£StTab)                         Nom de Sous-Tableau
-     d  parm                               Const Like(£Tab)                     Nom du tableau
-     d  parm                               Const Like(£StIndex)                 Numéro de Sous-Table
      ?**---Alimentation du tableau--------------------------------------------**
-     d Tab_Set2        Pr
-     d  parm                               Const Like(£Tab)                     Nom du tableau
-     d  parm                               Value Like(£Index)                   Index
-     d  parm                               Value Like(£Dyna)                    Elément
      ?**---Récupération du tableau--------------------------------------------**
-     d Tab_Get2        Pr                  Like(£Dyna)                          Element
-     d  parm                               Const Like(£Tab)                     Nom du tableau
-     d  parm                               Value Like(£Index)                   Index
      ?**---Suppression du tableau---------------------------------------------**
-     d Tab_Term2       Pr
-     d  parm                               Like(£Tab) Value                     Nom du Tableau
      ?**---Recherche dans le tableau------------------------------------------**
-     d Tab_Srch2       Pr                  Like(£Index)                         Index
-     d  parm                               Const Like(£Tab)                     Nom du Tableau
-     d  parm                               Value Like(£Dyna)                    Elément
-     d  parm                               Value Like(£Index)                   Index de départ
      ?**---Transfert d'un tableau dans un autre tableau-----------------------**
-     d Tab_Trf2        Pr
-     d  parm                               Const Like(£Tab)                     Tableau d'origine
-     d  parm                               Const Like(£Tab)                     Tableau d'arrivée
      ?**---Incrément d'un élément---------------------------------------------**
-     d Tab_Incr2       Pr
-     d  parm                               Const Like(£Tab)                     Nom du tableau
-     d  parm                               Const Like(£Index)                   Index
      ?**---Alimentation de la matrice-----------------------------------------**
-     d Mat_Set         Pr
-     d  Parm                         10i 0 Const                                Matrice
-     d  Parm                         10i 0 Value                                X
-     d  Parm                         10i 0 Value                                Y
-     d  Parm                               Value Like(£Dyna)                    Element
      ?**---Récupération de la matrice-----------------------------------------**
-     d Mat_Get         Pr                  Like(£Dyna)
-     d  parm                         10i 0 Const                                Matrice
-     d  parm                         10i 0 Value                                X
-     d  parm                         10i 0 Value                                Y
      ?**---Taille de la matrice en X------------------------------------------**
-     d Mat_Infx        Pr            10i 0
-     d  parm                         10i 0 Const                                Matrice
      ?**---Taille de la matrice en Y------------------------------------------**
-     d Mat_Infy        Pr            10i 0
-     d  parm                         10i 0 Const                                Matrice
      ?**---Longueur Maxi d'un élément d'une matrice---------------------------**
-     d Mat_Len         Pr            10i 0
-     d  parm                         10i 0 Const                                Matrice
      ?**---Longueur Maxi d'un élément d'une matrice sur une colonne-----------**
-     d Mat_LenCol      Pr            10i 0
-     d  parm                         10i 0 Const                                Matrice
-     d  parm                         10i 0 Value                                Y
      ?**---Suppression de la matrice------------------------------------------**
-     d Mat_Term        Pr
-     d  parm                         10i 0 Const                                Matrice
      ?**---Tri Tableau--------------------------------------------------------**
-     d Tab_Tri2        Pr
-     d  Parm1                        10a   Value                                Tableau
-     d  Parm2                         5  0 Value                                Positon Début
-     d  Parm3                         5  0 Value                                Position Fin
 
       **----------------------------------------------------------------------**
       **---Analyse du source--------------------------------------------------**
       **----------------------------------------------------------------------**
      ?**---Procédure : Src_Analyse--------------------------------------------**
-     d Src_Analyse     Pr              n                                        Procédure Analyse
-     d  parm                         10a                                        Bibliothèque Source
-     d  parm                         10a                                        Fichier Source
-     d  parm                         10a                                        Membre Source
-     d  parm                          1a   Value                                Mode
      ?**---Procédure : Get_Caractere------------------------------------------**
-     d Get_Caractere   Pr                                                       Recherche des Blocs
-     d  parm                         80a                                        Ligne de Code
      ?**---Procédure : Get_Bloc-----------------------------------------------**
-     d Get_Bloc        Pr                                                       Recherche des Blocs
-     d  parm                         80a                                        Ligne de Code
      ?**---Procédure : Clr_Car------------------------------------------------**
-     d Clr_Car         Pr                                                       Init des indicateurs
      ?**---Procédure : Ovr_SrcFile--------------------------------------------**
-     d Ovr_SrcFile     Pr              n                                        Override des sources
-     d  parm                               LikeDs(DSSource)                     Source en cours
      ?**---Procédure : Get_OvrFile--------------------------------------------**
-     d Get_OvrFile     Pr                                                       Override des sources
-     d  parm                         80a                                        Ligne de Code
      ?**---Procédure : Get_SrcLib---------------------------------------------**
-     d Get_SrcLib      Pr            10a                                        Recherche bibliothèq
-     d  parm                         10a                                        Fichier Source
-     d  parm                         10a                                        Membre Source
 
       **----------------------------------------------------------------------**
       **---API OS/400---------------------------------------------------------**
       **----------------------------------------------------------------------**
      ?**---RTVQRYINF----------------------------------------------------------**
-     d RtvQryf         Pr
-     d  parm                         10a
-     d  parm                         10a
-     d  parm                       1280a
-     d  parm                         30a
-     d  parm                          1a
      ?**---List ILE Module  Information pour un programme de service----------**
-     d QbnlSpgm        Pr                  Extpgm('QBNLSPGM')
-     d  parm                         20a
-     d  parm                          8a
-     d  parm                         20a
-     d  parm                               Like(ApiError)
+       dcl-pr QbnlSpgm extpgm('QBNLSPGM');
+        *n char(20); // parm
+        *n char(8); // parm
+        *n char(20); // parm
+        *n like(apierror); // parm
+       end-pr;
      ?**---List ILE Module  Information pour un programme---------------------**
-     d QbnlPgmi        Pr                  Extpgm('QBNLPGMI')
-     d  parm                         20a
-     d  parm                          8a
-     d  parm                         20a
-     d  parm                               Like(ApiError)
+       dcl-pr QbnlPgmi extpgm('QBNLPGMI');
+        *n char(20); // parm
+        *n char(8); // parm
+        *n char(20); // parm
+        *n like(apierror); // parm
+       end-pr;
      ?**---List Procédures dans un module-------------------------------------**
-     d QbnlModi        Pr                  Extpgm('QBNLMODI')
-     d  parm                         20a
-     d  parm                          8a
-     d  parm                         20a
-     d  parm                               Like(ApiError)
+       dcl-pr QbnlModi extpgm('QBNLMODI');
+        *n char(20); // parm
+        *n char(8); // parm
+        *n char(20); // parm
+        *n like(apierror); // parm
+       end-pr;
      ?**---Liste des membres--------------------------------------------------**
-     d QUsLMbr         Pr                  ExtPgm('QUSLMBR')
-     d  parm                         20a
-     d  parm                          8a
-     d  parm                         20a
-     d  parm                         10a
-     d  parm                          1a
+       dcl-pr QUsLMbr extpgm('QUSLMBR');
+        *n char(20); // parm
+        *n char(8); // parm
+        *n char(20); // parm
+        *n char(10); // parm
+        *n char(1); // parm
+       end-pr;
      ?**---Liste des formats--------------------------------------------------**
-     d QUsLRcd         Pr                  ExtPgm('QUSLRCD')
-     d  parm                         20a
-     d  parm                          8a
-     d  parm                         20a
-     d  parm                          1a
+       dcl-pr QUsLRcd extpgm('QUSLRCD');
+        *n char(20); // parm
+        *n char(8); // parm
+        *n char(20); // parm
+        *n char(1); // parm
+       end-pr;
      ?**---Recherche des dépendances d'un fichier-----------------------------**
-     d Qdbldbr         Pr                  ExtPgm('QDBLDBR')
-     d  parm                         20a
-     d  parm                          8a
-     d  parm                         20a
-     d  parm                         10a
-     d  parm                         10a
-     d  parm                               like(ApiError)
+       dcl-pr Qdbldbr extpgm('QDBLDBR');
+        *n char(20); // parm
+        *n char(8); // parm
+        *n char(20); // parm
+        *n char(10); // parm
+        *n char(10); // parm
+        *n like(apierror); // parm
+       end-pr;
      ?**---Recherche de l'adresse d'un User Space-----------------------------**
-     d Qusptrus        Pr                  ExtPgm('QUSPTRUS')
-     d  parm                         20a
-     d  parm                           *
+       dcl-pr Qusptrus extpgm('QUSPTRUS');
+        *n char(20); // parm
+        *n pointer; // parm
+       end-pr;
      ?**---Lancement de Commande----------------------------------------------**
-     d QUsCmdLn        Pr                  ExtPgm('QUSCMDLN')
+       dcl-pr QUsCmdLn extpgm('QUSCMDLN') end-pr;
      ?**---Liste des objets---------------------------------------------------**
-     d QUsLObj         Pr                  ExtPgm('QUSLOBJ')
-     d  parm                         20a
-     d  parm                          8a
-     d  parm                         20a
-     d  parm                         10a
+       dcl-pr QUsLObj extpgm('QUSLOBJ');
+        *n char(20); // parm
+        *n char(8); // parm
+        *n char(20); // parm
+        *n char(10); // parm
+       end-pr;
      ?**---Description d'un objet---------------------------------------------**
-     d QusrObjd        Pr                  ExtPgm('QUSROBJD')
-     d  parm                      32767a   Options(*VarSize)                    Receiver Variable
-     d  parm                         10i 0 Const                                Length of Receiver
-     d  parm                          8a   Const                                Format Name
-     d  parm                         20a   Const                                Object and Library
-     d  parm                         10a   Const                                Object Type
-     d  parm                      32767a   Options(*VarSize)                    Api Error
+       dcl-pr QusrObjd extpgm('QUSROBJD');
+        *n char(32767) options(*varsize); // parm  Receiver Varia
+        *n int(10) const; // parm  Length of Rece
+        *n char(8) const; // parm  Format Name
+        *n char(20) const; // parm  Object and Lib
+        *n char(10) const; // parm  Object Type
+        *n char(32767) options(*varsize); // parm  Api Error
+       end-pr;
      ?**---Lancement de Commande----------------------------------------------**
-     d QCmdExc         Pr                  ExtPgm('QCMDEXC')
-     d  parm                        100a                                        Commande
-     d  parm                         15  5                                      Longueur de la Cde
+       dcl-pr QCmdExc extpgm('QCMDEXC');
+        *n char(100); // parm  Commande
+        *n packed(15: 5); // parm  Longueur de la
+       end-pr;
      ?**---Recherche de chaine  de caractères---------------------------------**
-     d QClScan         Pr                  ExtPgm('QCLSCAN')
-     d  parm                        150a
-     d  parm                          3p 0
-     d  parm                          3p 0
-     d  parm                         10a
-     d  parm                          3p 0
-     d  parm                          1a
-     d  parm                          1a
-     d  parm                          1a
-     d  parm                          3p 0
+       dcl-pr QClScan extpgm('QCLSCAN');
+        *n char(150); // parm
+        *n packed(3); // parm
+        *n packed(3); // parm
+        *n char(10); // parm
+        *n packed(3); // parm
+        *n char(1); // parm
+        *n char(1); // parm
+        *n char(1); // parm
+        *n packed(3); // parm
+       end-pr;
      ?**---Réception d'un User Space------------------------------------------**
-     d Qusrtvus        Pr                  ExtPgm('QUSRTVUS')
-     d  parm                         20a
-     d  parm                          9b 0
-     d  parm                          9b 0
-     d  parm                       2000a   Options(*Varsize)
+       dcl-pr Qusrtvus extpgm('QUSRTVUS');
+        *n char(20); // parm
+        *n bindec(9); // parm
+        *n bindec(9); // parm
+        *n char(2000) options(*varsize); // parm
+       end-pr;
      ?**---Affichage des zones d'un fichier-----------------------------------**
-     d Quslfld         Pr                  ExtPgm('QUSLFLD')
-     d  parm                         20a
-     d  parm                         10a
-     d  parm                         20a
-     d  parm                         10a
-     d  parm                          1a
+       dcl-pr Quslfld extpgm('QUSLFLD');
+        *n char(20); // parm
+        *n char(10); // parm
+        *n char(20); // parm
+        *n char(10); // parm
+        *n char(1); // parm
+       end-pr;
      ?**---Création d'un User Space-------------------------------------------**
-     d QusCrtUs        Pr                  ExtPgm('QUSCRTUS')
-     d  parm                         20a
-     d  parm                         10a
-     d  parm                          9b 0
-     d  parm                          1a
-     d  parm                         10a
-     d  parm                         50a
-     d  parm                         10a
-     d  parm                               like(ApiError)
+       dcl-pr QusCrtUs extpgm('QUSCRTUS');
+        *n char(20); // parm
+        *n char(10); // parm
+        *n bindec(9); // parm
+        *n char(1); // parm
+        *n char(10); // parm
+        *n char(50); // parm
+        *n char(10); // parm
+        *n like(apierror); // parm
+       end-pr;
      ?**---Changment des attributs d'un User Space----------------------------**
-     d QusCusAt        Pr                  ExtPgm('QUSCUSAT')
-     d  Parm                         10a
-     d  Parm                         20a
-     d  Parm                               Like(£QusAttr)
-     d  Parm                           *
+       dcl-pr QusCusAt extpgm('QUSCUSAT');
+        *n char(10); // Parm
+        *n char(20); // Parm
+        *n like(£qusattr); // Parm
+        *n pointer; // Parm
+       end-pr;
      ?**---Suppression d'un User Space----------------------------------------**
-     d QusdltUs        Pr                  ExtPgm('QUSDLTUS')
-     d  parm                         20a
-     d  parm                               like(ApiError)
+       dcl-pr QusdltUs extpgm('QUSDLTUS');
+        *n char(20); // parm
+        *n like(apierror); // parm
+       end-pr;
      ?**---Description d'un fichier-------------------------------------------**
-     d Qdbrtvfd        Pr                  ExtPgm('QDBRTVFD')
-     d  parm                         20a
-     d  parm                          9b 0
-     d  parm                         20a
-     d  parm                          8a
-     d  parm                         20a
-     d  parm                         10a
-     d  parm                          1a
-     d  parm                         10a
-     d  parm                         10a
-     d  parm                               like(ApiError)
+       dcl-pr Qdbrtvfd extpgm('QDBRTVFD');
+        *n char(20); // parm
+        *n bindec(9); // parm
+        *n char(20); // parm
+        *n char(8); // parm
+        *n char(20); // parm
+        *n char(10); // parm
+        *n char(1); // parm
+        *n char(10); // parm
+        *n char(10); // parm
+        *n like(apierror); // parm
+       end-pr;
      ?**---Prototype  de procédure information de job-------------------------**
-     d QUsrJobI        Pr                  ExtPgm('QUSRJOBI')
-     d  parm                      32767a   Options(*VarSize)
-     d  parm                          4b 0
-     d  parm                          8a
-     d  parm                         26a
-     d  parm                         16a
+       dcl-pr QUsrJobI extpgm('QUSRJOBI');
+        *n char(32767) options(*varsize); // parm
+        *n bindec(4); // parm
+        *n char(8); // parm
+        *n char(26); // parm
+        *n char(16); // parm
+       end-pr;
      ?**---Prototypes and templates for calling ResolveSystemPtr (RSLVSP.H)---**
-     d RslvSp2         Pr                  ExtProc('_RSLVSP2')
-     d  parm                               Like(£SysPtr)                        Ptr
-     d  parm                               Like(RslvTemplt) Const               Template
-     d RslvSp4         Pr                  ExtProc('_RSLVSP4')
-     d  parm                               Like(£SysPtr)                        Ptr
-     d  parm                               Like(RslvTemplt) Const               Template
-     d  parm                               LIKE(£SysPtr) Const                  LibPtr
-     d ActBndPgm       Pr                  ExtProc('QleActBndPgm')
-     d  parm                               Like(£SysPtr) Const                  SrvpgmPtr
-     d  parm                         10i 0                                      ActMark
-     d  parm                               Like(ABP_Info)                       ABPInfo
-     d  parm                         10i 0 Const                                ABPInfoLen
-     d  parm                               LIKE(ErrCode)                        ErrorCode
-     d GetExport       Pr                  ExtProc('QleGetExp')
-     d  parm                         10i 0                                      SrvpgmMark
-     d  parm                         10i 0 Const                                ExportId
-     d  parm                         10i 0 Const                                NameLen
-     d  parm                        100a   Const                                ExportName
-     d  parm                           *   ProcPtr Const                        ExportPtr
-     d  parm                         10i 0                                      ExportType
-     d  parm                               Like(ErrCode)                        ErrorCode
+       dcl-pr RslvSp2 extproc('_RSLVSP2');
+        *n like(£sysptr); // parm  Ptr
+        *n like(rslvtemplt) const; // parm  Template
+       end-pr;
+       dcl-pr RslvSp4 extproc('_RSLVSP4');
+        *n like(£sysptr); // parm  Ptr
+        *n like(rslvtemplt) const; // parm  Template
+        *n like(£sysptr) const; // parm  LibPtr
+       end-pr;
+       dcl-pr ActBndPgm extproc('QleActBndPgm');
+        *n like(£sysptr) const; // parm  SrvpgmPtr
+        *n int(10); // parm  ActMark
+        *n like(abp_info); // parm  ABPInfo
+        *n int(10) const; // parm  ABPInfoLen
+        *n like(errcode); // parm  ErrorCode
+       end-pr;
+       dcl-pr GetExport extproc('QleGetExp');
+        *n int(10); // parm  SrvpgmMark
+        *n int(10) const; // parm  ExportId
+        *n int(10) const; // parm  NameLen
+        *n char(100) const; // parm  ExportName
+        *n pointer(*proc) const; // parm  ExportPtr
+        *n int(10); // parm  ExportType
+        *n like(errcode); // parm  ErrorCode
+       end-pr;
 ?     **---Dump d'un objet Query----------------------------------------------**
-     d DmpQry          Pr
-     d  QueryName                    10a   Const
-     d  QueryLib                     10a   Const
-     d  QualUSName                   20a   Const
-     d  QryAut                        1N
      ?**---Définition de l'entête de sous-fichier-----------------------------**
-     d Rtv_Entete      Pr                  Like(FzzDesc)
-     d  parm                               Like(ZzFonc) Value                   Fonction
      ?**---Filtre des zones textes--------------------------------------------**
-     d Filtre          Pr         10000a
-     d  parm                      10000a   Value                                Texte
-     d  parm                      10000a   Options(*Omit)                       Valeur exclue
-     d  parm                      10000a   Options(*Omit)                       Valeur de remplaceme
      ?**---Gestion des analyses-----------------------------------------------**
-     d Gst_Analyse     Pr
      ?**---DSPPGMREF----------------------------------------------------------**
-     d DspPgmRef       Pr              n
-     d  parm                         10a   Value
      ?**---Decription d'un fichier--------------------------------------------**
-     d GetTxt          Pr
-     d  parm                         10a   Value                                RefObj
-     d  parm                         10a   Value                                RefLib
-     d  parm                         10a   Value Options(*Nopass)               RefFmt
      ?**---Outils XRef--------------------------------------------------------**
-     d RtvFd           Pr              n
-     d  parm                         20a                                        Composant
      ?**---Extraction des références------------------------------------------**
-     d Ext_Ref         Pr              n
-     d  parm                         10a   Value
      ?**---Algorithme de recherche--------------------------------------------**
-     d Algo            Pr
      ?**---Alimentation des tableaux de recherche-----------------------------**
-     d AlgoAlim        Pr
      ?**---Dessin de l'algorithme---------------------------------------------**
-     d AlgoDessin      Pr
      ?**---Prototype de recherche de procédures-------------------------------**
-     d Rec_Mod         Pr
-     d  Parm                         10a   Value
-     d  Parm                         50a   Value
      ?**---Mise à jour des références techniques------------------------------**
-     d Maj_Ref         Pr
-     d  parm                         10a   Value                                Libname
      ?**---Contrôle de la résolution del'écran--------------------------------**
-     d Ctl_Dsp         Pr              n
      ?**---Récupération pointeur de procédure---------------------------------**
-     d GetProcPtr      Pr              *   ProcPtr
-     d  parm                        100a   Varying Const                        Procedure
-     d  parm                         10a   Const                                SrvPgm
-     d  parm                         10a   Const                                Library
      ?**---Outils XRef--------------------------------------------------------**
-     d Taille_Bib      Pr
-     d  parm                       1024a
-     d Net_PgmRef      Pr
-     d  parm                       1024a
-     d Zone_Prog       Pr
-     d  parm                       1024a
-     d Arc_Trigg       Pr
-     d  parm                       1024a
-     d Rec_Avc         Pr
-     d  parm                       1024a
 
      ?**----------------------------------------------------------------------**
      ?**---M A I N------------------------------------------------------------**
      ?**----------------------------------------------------------------------**
-     d zz01            Pi
-     d  ParmEntry                   150a
+       dcl-pi zz01;
+        ParmEntry char(150);
+       end-pi;
 
-      /Free
 
        Monitor;
 ?      //---Initialisation----------------------------------------------------//
@@ -1289,14 +1193,12 @@
          10) Not Null With Default, ZzBib Char ( 10) Not Null With             -
          Default, ZzFonc Char ( 10) Not Null With Default, ZzMode Char (       -
          12) Not Null With Default, ZzFld Char ( 256) Not Null With Default)';
-      /End-Free
-     c/Exec Sql
-     c+ Execute immediate :Requete6
-     c/End-Exec
-     c/Exec Sql
-     c+ Label on Table Zz01Out is 'X-Ref - Fichier de Sortie'
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  EXECUTE IMMEDIATE :requete6
+     C/END-EXEC
+     C/EXEC SQL
+     C+  LABEL ON TABLE zz01out IS 'X-Ref - Fichier de Sortie'
+     C/END-EXEC
 
        EndIf;
 
@@ -1329,14 +1231,12 @@
        mn zzType Char(5) Not Null With Default, Valeur_Enregistrement For Colum-
        n ZzValeur Char(30) Not Null With Default, Primary Key                -
         (Type_Enregistrement, Valeur_Enregistrement))';
-      /End-Free
-     c/Exec Sql
-     c+ Execute immediate :Requete6
-     c/End-Exec
-     c/Exec Sql
-     c+ Label on Table Zz01pf is 'X-Ref - Fichier paramètre'
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  EXECUTE IMMEDIATE :requete6
+     C/END-EXEC
+     C/EXEC SQL
+     C+  LABEL ON TABLE zz01pf IS 'X-Ref - Fichier paramètre'
+     C/END-EXEC
 
        EndIf;
 
@@ -1446,11 +1346,9 @@
 
              If Not(Exit or Retour);
 ?      //---Suppression des enregistrements dans ZZ01PF-----------------------//
-      /End-Free
-     c/Exec Sql
-     c+ Delete from Zz01pf
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  DELETE FROM zz01pf
+     C/END-EXEC
 
 ?      //---Sauvegarde des enregistrements dans ZZ01PF------------------------//
                For i = 1 to Tab_Inf('ListeBib');
@@ -1467,24 +1365,19 @@
                      ListeBib = 'LIBRF';
 ?      //---Suppression de l'alias de QTEMP-----------------------------------//
        Req_Sql = 'DROP ALIAS QTEMP/PGMREF ';
-      /End-Free
-     c/exec sql
-     c+ Execute Immediate :Req_Sql
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  EXECUTE IMMEDIATE :req_sql
+     C/END-EXEC
 ?      //---Création Alias PGMREF dans QTEMP----------------------------------//
        Req_Sql = 'CREATE ALIAS QTEMP/PGMREF FOR ' + %Trim(Bib) + '/PGMREF';
-      /End-Free
-     c/exec sql
-     c+ Execute Immediate :Req_Sql
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  EXECUTE IMMEDIATE :req_sql
+     C/END-EXEC
                    EndSl;
-      /End-Free
-     c/Exec Sql
-     c+ Insert Into Zz01pf Values(:ListeBib, :Bib)
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  INSERT INTO zz01pf
+     C+    VALUES (:listebib, :bib)
+     C/END-EXEC
                  EndIf;
 ?      //---Mise à jour des références Technique------------------------------//
                  If %subst(Tab_Get('ListeBib':i):12:1) = 'X';
@@ -1562,12 +1455,12 @@
          i += 1;
          F06Lib = Tab_Get('OBLIB':j);
 ?      //---Recherche de la dernière date de MàJ des références---------------//
-      /End-Free
-     c/Exec Sql
-     c+ SELECT max(Whdttm) INTO :Max_Date:date_null FROM Qtemp/pgmref WHERE
-     c+ whlib = :F06Lib
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  SELECT MAX(whdttm)
+     C+    INTO :max_date:date_null
+     C+    FROM qtemp / pgmref
+     C+    WHERE whlib = :f06lib
+     C/END-EXEC
 ?      //---Si date non trouvée alors proposition de mise à jour--------------//
          If Max_Date = *Blanks;
            F06Maj = 'X';
@@ -1662,11 +1555,9 @@
          If AeBytAvl > *Zero;
            Req_Crt = 'CREATE INDEX '+CPgmref1+ ' ON '+%Trim(ClPgmRef) +'/' +
                      CPgmRef + '(WHFNAM ASC, WHOTYP ASC)';
-      /End-Free
-     c/Exec Sql
-     c+ Execute Immediate :Req_Crt
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  EXECUTE IMMEDIATE :req_crt
+     C/END-EXEC
            OvrCmd = 'CHGLF FILE(' + %Trim(ClPgmRef) + '/'+ CPgmref1 + ')       -
             TEXT(''X-Ref - Index PGMREF : WHFNAM/WHOTYP'')';
            OvrCmdLen = 200;
@@ -1679,11 +1570,9 @@
          If AeBytAvl > *Zero;
            Req_Crt='CREATE INDEX '+Cpgmref2+' ON '+%Trim(ClPgmRef)+'/'+CPgmRef +
                     '(WHSPKG ASC, WHPNAM ASC, WHLIB ASC)';
-      /End-Free
-     c/Exec Sql
-     c+ Execute Immediate :Req_Crt
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  EXECUTE IMMEDIATE :req_crt
+     C/END-EXEC
            OvrCmd = 'CHGLF FILE(' + %Trim(ClPgmRef) + '/'+ CPgmRef2 +')        -
             TEXT(''X-Ref - Index PGMREF : WHSPKG/WHPNAM/WHLIB'')';
            OvrCmdLen = 200;
@@ -1696,11 +1585,9 @@
          If AeBytAvl > *Zero;
            Req_Crt = 'CREATE INDEX '+CPgmRef3+ ' ON '+%Trim(ClPgmRef) +'/' +
            CPgmRef + ' (WHOBJT ASC, WHPNAM ASC)';
-      /End-Free
-     c/Exec Sql
-     c+ Execute Immediate :Req_Crt
-     c/end-Exec
-      /free
+     C/EXEC SQL
+     C+  EXECUTE IMMEDIATE :req_crt
+     C/END-EXEC
            OvrCmd = 'CHGLF FILE(' + %Trim(ClPgmRef) + '/'+CPgmRef3 +')         -
             TEXT(''X-Ref - Index PGMREF : WHOBJT/WHPNAM'')';
            OvrCmdLen = 200;
@@ -1733,11 +1620,9 @@
        Bib_Ok = *On;
        F06Rrn = 0;
        F06ClrRef = *Off;
-      /End-Free
-     c/Exec sql
-     c+ set :ZzTmst = Current_timestamp
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  SET :zztmst = CURRENT_TIMESTAMP
+     C/END-EXEC
 
 ?      //---Clear du sous-fichier---------------------------------------------//
        If Entry_OutPut = '*DISPLAY' or Entry_OutPut = '*PRINTER';
@@ -1819,12 +1704,10 @@
          Else;
 ?      //---Sortie fichier----------------------------------------------------//
            F06Fld = F06Opt+' '+F06Lib+' '+F06Des+' '+F06Maj+' '+F06Date;
-      /End-Free
-     c/Exec Sql
-     c+ Insert Into Zz01out Values(:zztmst, :zzcomp, :zztype,
-     c+ :zzbib, :zzfonc, :Trt, :F06Fld)
-     c/End-exec
-      /Free
+     C/EXEC SQL
+     C+  INSERT INTO zz01out
+     C+    VALUES (:zztmst, :zzcomp, :zztype, :zzbib, :zzfonc, :trt, :f06fld)
+     C/END-EXEC
          EndIf;
 
 ?      //---Contrôle Existence Bibliothèque Source----------------------------//
@@ -1881,21 +1764,19 @@
                   Order by zzValeur';
 
 ?      //---Préparation, déclaration, ouverture, ....-------------------------//
-      /End-Free
-     c/exec sql
-     c+ Prepare S2 From :Requete0
-     c/end-exec
-     c/exec sql
-     c+ Declare C2 Cursor For S2
-     c/end-exec
-     c/exec sql
-     c+ Open C2
-     c/end-exec
+     C/EXEC SQL
+     C+  PREPARE s2 FROM :requete0
+     C/END-EXEC
+     C/EXEC SQL
+     C+  DECLARE c2 CURSOR FOR s2
+     C/END-EXEC
+     C/EXEC SQL
+     C+  OPEN c2
+     C/END-EXEC
 
-     c/exec sql
-     c+ Fetch Next From C2 Into :lib
-     c/end-exec
-      /Free
+     C/EXEC SQL
+     C+  FETCH NEXT FROM c2 INTO :lib
+     C/END-EXEC
 
        i = 1;
        F06_Src = *Off;
@@ -1904,18 +1785,14 @@
          F06_Src = *On;
          Tab_Set('SCLIB':i:lib);
          i += 1;
-      /End-Free
-     c/exec sql
-     c+ Fetch Next From C2 INTO :lib
-     c/end-exec
-      /Free
+     C/EXEC SQL
+     C+  FETCH NEXT FROM c2 INTO :lib
+     C/END-EXEC
        EndDo;
 
-      /End-Free
-     c/Exec Sql
-     c+ Close C2
-     c/End-Exec
-      /free
+     C/EXEC SQL
+     C+  CLOSE c2
+     C/END-EXEC
 
        EndSr;
 
@@ -1929,20 +1806,18 @@
                   Order by zzValeur';
 
 ?      //---Préparation, déclaration, ouverture, ....-------------------------//
-      /End-Free
-     c/Exec Sql
-     c+ Prepare S1 From :Requete0
-     c/End-Exec
-     c/Exec Sql
-     c+ Declare C1 Cursor For S1
-     c/End-Exec
-     c/Exec Sql
-     c+ OPEN C1
-     c/End-Exec
-     c/Exec Sql
-     c+ Fetch Next From C1 INTO :lib
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  PREPARE s1 FROM :requete0
+     C/END-EXEC
+     C/EXEC SQL
+     C+  DECLARE c1 CURSOR FOR s1
+     C/END-EXEC
+     C/EXEC SQL
+     C+  OPEN c1
+     C/END-EXEC
+     C/EXEC SQL
+     C+  FETCH NEXT FROM c1 INTO :lib
+     C/END-EXEC
 
        i = 1;
        F06_Obj = *Off;
@@ -1951,18 +1826,14 @@
          F06_Obj = *On;
          Tab_Set('OBLIB':i:lib);
          i += 1;
-      /End-Free
-     c/Exec Sql
-     c+ Fetch Next From C1 INTO :lib
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  FETCH NEXT FROM c1 INTO :lib
+     C/END-EXEC
        EndDo;
 
-      /End-Free
-     c/Exec Sql
-     c+ CLOSE C1
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  CLOSE c1
+     C/END-EXEC
 
        EndSr;
 
@@ -1994,12 +1865,11 @@
 
        LibRef = *Blanks;
 
-      /End-Free
-     c/exec sql
-     c+ set :LibRef = (select substr(zzvaleur, 1 , 10) from zz01pf
-     c+ where zztype = 'LIBRF')
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  SET :libref = (SELECT SUBSTR(zzvaleur, 1, 10)
+     C+                   FROM zz01pf
+     C+                   WHERE zztype = 'LIBRF')
+     C/END-EXEC
        If LibRef <> *Blanks;
          F06_Ref = *On;
          ClPgmRef = LibRef;
@@ -2008,11 +1878,9 @@
        EndIf;
 ?      //---Création Alias PGMREF dans QTEMP----------------------------------//
        Req_Sql = 'CREATE ALIAS QTEMP/PGMREF FOR ' + %Trim(LibRef) + '/PGMREF';
-      /End-Free
-     c/exec sql
-     c+ Execute Immediate :Req_Sql
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  EXECUTE IMMEDIATE :req_sql
+     C/END-EXEC
 
        EndSr;
 
@@ -2242,11 +2110,9 @@
 
 ?      //---Suppression de l'alias de QTEMP-----------------------------------//
        Req_Sql = 'DROP ALIAS QTEMP/PGMREF ';
-      /End-Free
-     c/exec sql
-     c+ Execute Immediate :Req_Sql
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  EXECUTE IMMEDIATE :req_sql
+     C/END-EXEC
 
 ?      //---Fermeture du fichier écran----------------------------------------//
        If %Open(zz01d);
@@ -2593,11 +2459,10 @@ E01    EndIf;
          F15Bib = F01Bib;
          ExFmt F15;
          If Not Retour;
-      /End-Free
-     c/Exec Sql
-     C+ Insert Into ZZ01PF Values('OBLIB', :F01Bib)
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  INSERT INTO zz01pf
+     C+    VALUES ('OBLIB', :f01bib)
+     C/END-EXEC
            Maj_Ref(F01Bib);
            Tab_Term('OBLIB');
            ExSr Get_Bib_Obj;
@@ -2828,11 +2693,10 @@ E01    EndIf;
 ?      //---[Fxx]-------------------------------------------------------------//
          When Entry_Fct = '*PGMREF';
            If Tab_Srch('OBLIB':F01Obj:1) = 0;
-      /End-Free
-     c/Exec Sql
-     C+ InSERT INTO ZZ01PF VALUES('OBLIB', :F01Obj)
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  INSERT INTO zz01pf
+     C+    VALUES ('OBLIB', :f01obj)
+     C/END-EXEC
            EndIf;
            Maj_Ref(F01Obj);
            Ctl_Fonct = *Off;
@@ -3054,22 +2918,19 @@ E01    EndIf;
        ''' and whlib = ''' + %Trim(F01Bib) + ''' and whSpkg = ''' + Spkg + '''';
 
 ?      //---Préparation, Déclaration, Ouverture, ....-------------------------//
-      /End-Free
-     c/Exec Sql
-     c+ Prepare S1_PgmRef From :Requete1
-     c/End-Exec
-     c/Exec Sql
-     c+ Declare C1_PgmRef Cursor For S1_PgmRef
-     c/End-Exec
-     c/Exec Sql
-     c+ OPEN C1_PGMREF
-     c/End-Exec
+     C/EXEC SQL
+     C+  PREPARE s1_pgmref FROM :requete1
+     C/END-EXEC
+     C/EXEC SQL
+     C+  DECLARE c1_pgmref CURSOR FOR s1_pgmref
+     C/END-EXEC
+     C/EXEC SQL
+     C+  OPEN c1_pgmref
+     C/END-EXEC
 
-     c/Exec Sql
-     c+ Fetch Next From C1_PGMREF INTO :Fnam, :Lnam, :Fusg, :Otyp, :Rfsn,
-     c+ :Rfnm
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  FETCH NEXT FROM c1_pgmref INTO :fnam, :lnam, :fusg, :otyp, :rfsn, :rfnm
+     C/END-EXEC
 
        Cpt_I = 0;
        Dow SqlCod <> EndOfFile;
@@ -3093,19 +2954,14 @@ E01    EndIf;
          Cpt_I += 1;
          Tab_Set2('££WRK':Cpt_I:FzzZone);
 
-      /End-Free
-     c/Exec Sql
-     c+ Fetch Next From C1_PGMREF INTO :Fnam, :Lnam, :Fusg, :Otyp, :Rfsn,
-     c+ :Rfnm
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  FETCH NEXT FROM c1_pgmref INTO :fnam, :lnam, :fusg, :otyp, :rfsn, :rfnm
+     C/END-EXEC
        Enddo;
 
-      /End-Free
-     c/Exec Sql
-     C+ Close C1_PgmRef
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  CLOSE c1_pgmref
+     C/END-EXEC
 
        EndSr;
 
@@ -3297,22 +3153,20 @@ E01    EndIf;
                   'zz01pf where zztype=''OBLIB'' ) order by Whlib';
 
 ?      //---Préparation, déclaration, ouverture, ....-------------------------//
-      /End-Free
-     c/Exec Sql
-     c+ Prepare S2_PgmRef From :Requete0
-     c/end-exec
-     c/Exec Sql
-     c+ Declare C2_PgmRef Cursor For S2_PgmRef
-     c/end-exec
-     c/Exec Sql
-     c+ OPEN C2_PGMREF
-     c/end-exec
+     C/EXEC SQL
+     C+  PREPARE s2_pgmref FROM :requete0
+     C/END-EXEC
+     C/EXEC SQL
+     C+  DECLARE c2_pgmref CURSOR FOR s2_pgmref
+     C/END-EXEC
+     C/EXEC SQL
+     C+  OPEN c2_pgmref
+     C/END-EXEC
 
-     c/Exec Sql
-     c+ Fetch Next From C2_PGMREF INTO :Lib, :Pnam, :Fusg, :Spkg, :Desc,
-     c+ :Rfnm, :Rfsn
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  FETCH NEXT FROM c2_pgmref
+     C+    INTO :lib, :pnam, :fusg, :spkg, :desc, :rfnm, :rfsn
+     C/END-EXEC
 
        Cpt_I = 0;
        Dow SqlCod <> EndOfFile;
@@ -3352,19 +3206,15 @@ E01    EndIf;
          Cpt_I += 1;
          Tab_Set2('££WRK':Cpt_I:FzzZone);
 
-      /End-Free
-     C/Exec Sql
-     C+ Fetch Next From C2_PGMREF INTO :Lib, :Pnam, :Fusg, :Spkg, :Desc,
-     C+ :Rfnm, :Rfsn
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  FETCH NEXT FROM c2_pgmref
+     C+    INTO :lib, :pnam, :fusg, :spkg, :desc, :rfnm, :rfsn
+     C/END-EXEC
        Enddo;
 
-      /End-Free
-     C/Exec Sql
-     C+ CLOSE C2_PGMREF
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  CLOSE c2_pgmref
+     C/END-EXEC
 
 
        EndSr;
@@ -4490,12 +4340,13 @@ E01    EndIf;
          Else;
            XFile = %Subst(RfileLib:1:10);
            XLib  = %Subst(RfileLib:11:10);
-      /End-Free
-     c/exec sql
-     c+ Select View_Definition into :sqldefn from sysviews where
-     c+ system_View_Name = :xfile and System_View_Schema = :xlib
-     c/End-exec
-      /Free
+     C/EXEC SQL
+     C+  SELECT view_definition
+     C+    INTO :sqldefn
+     C+    FROM sysviews
+     C+    WHERE system_view_name = :xfile
+     C+          AND system_view_schema = :xlib
+     C/END-EXEC
            If SqlCod = *Zeros;
              SqlDefn = Filtre(SqlDefn:*Omit:*Omit);
              SqlDefn = %Xlate(x'25':x'40':SqlDefn);
@@ -4624,21 +4475,17 @@ E01    EndIf;
        ZzComp = F01Obj;
        ZzType = F01Typ;
        ZzBib = F01Bib;
-      /End-Free
-     c/Exec sql
-     c+ set :ZzTmst = Current_timestamp
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  SET :zztmst = CURRENT_TIMESTAMP
+     C/END-EXEC
 
        If Tab_Inf2('££WRK') > 0;
          For i = 1 To Tab_Inf2('££WRK');
             Fld = Tab_Get2('££WRK':i);
-      /End-Free
-     c/Exec Sql
-     c+ INSERT INTO ZZ01OUT VALUES(:zztmst, :zzcomp, :zztype,
-     c+ :zzbib, :zzfonc, :Trt, :Fld)
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  INSERT INTO zz01out
+     C+    VALUES (:zztmst, :zzcomp, :zztype, :zzbib, :zzfonc, :trt, :fld)
+     C/END-EXEC
          EndFor;
        EndIf;
 
@@ -4747,21 +4594,19 @@ E01    EndIf;
                   ' Order by whlib, whpnam, whtext' ;
 
 ?      //---Préparation, déclaration, ouverture, ....-------------------------//
-      /End-Free
-     c/Exec Sql
-     C+ Prepare S3_PgmRef From :Requete2
-     c/End-Exec
-     c/Exec Sql
-     C+ Declare C3_PgmRef Cursor For S3_PgmRef
-     c/End-Exec
-     c/Exec Sql
-     C+ OPEN C3_PGMREF
-     c/End-Exec
+     C/EXEC SQL
+     C+  PREPARE s3_pgmref FROM :requete2
+     C/END-EXEC
+     C/EXEC SQL
+     C+  DECLARE c3_pgmref CURSOR FOR s3_pgmref
+     C/END-EXEC
+     C/EXEC SQL
+     C+  OPEN c3_pgmref
+     C/END-EXEC
 
-     c/Exec Sql
-     C+ Fetch Next From C3_PGMREF INTO :Fnam, :Lib, :Text
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  FETCH NEXT FROM c3_pgmref INTO :fnam, :lib, :text
+     C/END-EXEC
 
        Dow SqlCod <> EndOfFile;
          ObjChk = Fnam;
@@ -4778,19 +4623,15 @@ E01    EndIf;
          Cpt_I += 1;
          Tab_Set2('££WRK':Cpt_I:FzzZone);
 
-      /End-Free
-     c/Exec Sql
-     C+ Fetch Next From C3_PGMREF INTO :Fnam, :Lib, :Text
-     c/End-exec
-      /Free
+     C/EXEC SQL
+     C+  FETCH NEXT FROM c3_pgmref INTO :fnam, :lib, :text
+     C/END-EXEC
 
        EndDo;
 
-      /End-Free
-     c/Exec Sql
-     C+ CLOSE C3_PGMREF
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  CLOSE c3_pgmref
+     C/END-EXEC
 
        EndIf;
 
@@ -4836,21 +4677,19 @@ E01    EndIf;
                   '%''';
 
 ?      //---Préparation, déclaration, ouverture, ....-------------------------//
-      /End-Free
-     c/Exec sql
-     C+ Prepare S1_RecZon From :Requete1
-     c/End-Exec
-     c/Exec sql
-     C+ Declare C1_RecZon Cursor For S1_RecZon
-     c/End-Exec
-     c/Exec sql
-     C+ OPEN C1_RECZON
-     c/End-Exec
+     C/EXEC SQL
+     C+  PREPARE s1_reczon FROM :requete1
+     C/END-EXEC
+     C/EXEC SQL
+     C+  DECLARE c1_reczon CURSOR FOR s1_reczon
+     C/END-EXEC
+     C/EXEC SQL
+     C+  OPEN c1_reczon
+     C/END-EXEC
 
-     c/Exec sql
-     C+ Fetch Next From C1_RECZON INTO :Fnam, :Lnam, :LZone
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  FETCH NEXT FROM c1_reczon INTO :fnam, :lnam, :lzone
+     C/END-EXEC
 
        Dow SqlCod <> EndOfFile;
          ObjChk = Fnam;
@@ -4870,17 +4709,13 @@ E01    EndIf;
          Cpt_I += 1;
          Tab_Set2('££WRK':Cpt_I:FzzZone);
 
-      /End-Free
-     c/Exec Sql
-     C+ Fetch Next From C1_RECZON INTO :Fnam, :Lnam, :LZone
-     c/end-Exec
-      /Free
+     C/EXEC SQL
+     C+  FETCH NEXT FROM c1_reczon INTO :fnam, :lnam, :lzone
+     C/END-EXEC
        Enddo;
-      /End-Free
-     c/Exec Sql
-     C+ CLOSE C1_RECZON
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  CLOSE c1_reczon
+     C/END-EXEC
 
        EndSr;
 
@@ -5012,28 +4847,25 @@ E01    EndIf;
        Trt = '*ERROR';
        Routine = '*CANCL';
        Dump(a);
-      /End-Free
-     c/Exec sql
-     c+ set :ZzTmst = Current_timestamp
-     c/End-Exec
+     C/EXEC SQL
+     C+  SET :zztmst = CURRENT_TIMESTAMP
+     C/END-EXEC
 
-     c/Exec Sql
-     c+ INSERT INTO ZZ01OUT VALUES(:zztmst, :zzcomp, :zztype,
-     c+ :zzbib, :zzfonc, :Trt, :WsPsDs1)
-     c/End-exec
+     C/EXEC SQL
+     C+  INSERT INTO zz01out
+     C+    VALUES (:zztmst, :zzcomp, :zztype, :zzbib, :zzfonc, :trt, :wspsds1)
+     C/END-EXEC
 
-     c/Exec Sql
-     c+ INSERT INTO ZZ01OUT VALUES(:zztmst, :zzcomp, :zztype,
-     c+ :zzbib, :zzfonc, :Trt, :WsPsDs2)
-     c/End-exec
-      /Free
+     C/EXEC SQL
+     C+  INSERT INTO zz01out
+     C+    VALUES (:zztmst, :zzcomp, :zztype, :zzbib, :zzfonc, :trt, :wspsds2)
+     C/END-EXEC
        If Not Ctl_Dsp() and F01Mode = 1;
          ExFmt F07;
        EndIf;
 
        endsr;
 
-      /End-Free
 
      ?**---Fichier Imprimante-------------------------------------------------**
      oQSysPrt   e    75                     1
@@ -5058,23 +4890,24 @@ E01    EndIf;
      ?**----------------------------------------------------------------------**
      ?**---Détermination fichier source---------------------------------------**
      ?**----------------------------------------------------------------------**
-     p RtvFd           b
+       dcl-proc RtvFd;
 
-     d RtvFd           Pi              n
-     d   Composant                   20a
+       dcl-pi RtvFd ind;
+        Composant char(20);
+       end-pi;
      ?**---Définition des variables-------------------------------------------**
-     d FdFormat        s             10a
-     d FdMember        s             10a
-     d FdOverride      s              1a
-     d FdSystem        s             10a
-     d FdType          s             10a
-     d Rtc             s               n
-     d SpaceLen        s              9b 0 inz(4096)
+       dcl-s FdFormat char(10);
+       dcl-s FdMember char(10);
+       dcl-s FdOverride char(1);
+       dcl-s FdSystem char(10);
+       dcl-s FdType char(10);
+       dcl-s Rtc ind;
+       dcl-s SpaceLen bindec(9) inz(4096);
      ?**---Description d'un fichier-------------------------------------------**
-     d RtvFdDs         ds
-     d FdSrc                   9      9a
-     d                        10     20a                                        dummy
-      /Free
+       dcl-ds RtvFdDs;
+        FdSrc char(1) pos(9);
+        *n char(11) pos(10); // dummy
+       end-ds;
        FdFormat = 'FILD0100';
        FdMember = '*FIRST';
        FdOverride = '0';
@@ -5091,20 +4924,19 @@ E01    EndIf;
 
        return Rtc;
 
-      /End-Free
-     p RtvFd           e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure Extraction des références--------------------------------**
      ?**----------------------------------------------------------------------**
-     p Ext_Ref         b
+       dcl-proc Ext_Ref;
      ?**---Prototype d'interface----------------------------------------------**
-     d Ext_Ref         Pi              n
-     d   RefObj                      10a   Value
+       dcl-pi Ext_Ref ind;
+        RefObj char(10) value;
+       end-pi;
      ?**---Définition des variables locales-----------------------------------**
-     d Indice          s              5p 0
-     d CodeRetour      s               n
-      /Free
+       dcl-s Indice packed(5);
+       dcl-s CodeRetour ind;
        If DspPgmRef(RefObj);
 
        Indice = 1;
@@ -5126,56 +4958,52 @@ E01    EndIf;
        Else;
          Return *Off;
        EndIf;
-      /End-Free
 
-     p Ext_Ref         e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure DSPPGMREF------------------------------------------------**
      ?**----------------------------------------------------------------------**
-     p DspPgmRef       b
+       dcl-proc DspPgmRef;
 
-     d DspPgmRef       Pi              n
-     d   RefObj                      10a   Value
+       dcl-pi DspPgmRef ind;
+        RefObj char(10) value;
+       end-pi;
      ?**---Déclaration des variables locales----------------------------------**
-     d Requete         s             80a
-     d WrkObj          s             10a
-     d LibRef          s             10a
-     d Nbr_Poste       s             10i 0
-     d z               s             10i 0
-     d zz              s             10i 0
+       dcl-s Requete char(80);
+       dcl-s WrkObj char(10);
+       dcl-s LibRef char(10);
+       dcl-s Nbr_Poste int(10);
+       dcl-s z int(10);
+       dcl-s zz int(10);
      ?**---Déclaration des constantes-----------------------------------------**
-     d EndOfFile       c                   Const(100)                           Fin de fichier SQL
-      /Free
+       dcl-c EndOfFile const(100); // Fin de fichier SQL
        LibRef = *Blanks;
 
-      /End-free
-     c/Exec Sql
-     c+ set :LibRef = (select substr(zzvaleur, 1 , 10) from zz01pf where
-     c+ zztype = 'LIBRF')
-     c/End-exec
-      /Free
+     C/EXEC SQL
+     C+  SET :libref = (SELECT SUBSTR(zzvaleur, 1, 10)
+     C+                   FROM zz01pf
+     C+                   WHERE zztype = 'LIBRF')
+     C/END-EXEC
 
 ?      //---Requete sur fichier paramètre pour bibliothèque objet-------------//
        Requete = 'select whfnam from ' + LibRef + '/pgmref where whpnam =''' +
                 RefObj + ''' and whobjt = ''P''';
 
 ?      //---Préparation, déclaration, ouverture, ....-------------------------//
-      /End-Free
-     c/Exec Sql
-     C+ Prepare S5 From :Requete
-     c/End-Exec
-     c/Exec Sql
-     C+ Declare C5 Cursor For S5
-     c/End-Exec
-     c/Exec Sql
-     C+ OPEN C5
-     c/End-Exec
+     C/EXEC SQL
+     C+  PREPARE s5 FROM :requete
+     C/END-EXEC
+     C/EXEC SQL
+     C+  DECLARE c5 CURSOR FOR s5
+     C/END-EXEC
+     C/EXEC SQL
+     C+  OPEN c5
+     C/END-EXEC
 
-     c/Exec Sql
-     C+ Fetch Next From C5 INTO :WrkObj
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  FETCH NEXT FROM c5 INTO :wrkobj
+     C/END-EXEC
 
        Dow Sqlcod <> EndOfFile;
          IndRef += 1;
@@ -5189,17 +5017,13 @@ E01    EndIf;
            Stat004 = %char(IndRef) + '/' + %char(Tab_Inf('1'));
            Write F13;
          EndIf;
-      /End-Free
-     c/Exec Sql
-     C+ Fetch Next From C5 INTO :WrkObj
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  FETCH NEXT FROM c5 INTO :wrkobj
+     C/END-EXEC
        EndDo;
-      /End-Free
-     c/Exec Sql
-     C+ CLOSE C5
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  CLOSE c5
+     C/END-EXEC
 
        If IndRef > 0;
          Return *on;
@@ -5240,19 +5064,18 @@ E01    EndIf;
          EndIf;
        EndFor;
 
-      /End-Free
-     p DspPgmRef       e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure description des champs-----------------------------------**
      ?**----------------------------------------------------------------------**
-     p GetTxt          b
+       dcl-proc GetTxt;
 
-     d GetTxt          Pi
-     d   RefObj                      10a   Value
-     d   RefLib                      10a   Value
-     d   RefFmt                      10a   Value Options(*Nopass)
-      /Free
+       dcl-pi GetTxt;
+        RefObj char(10) value;
+        RefLib char(10) value;
+        RefFmt char(10) value options(*nopass);
+       end-pi;
 ?      //---Create User Space-------------------------------------------------//
        SpaceName = 'USERSPACE';
        SpaceLib = 'QTEMP';
@@ -5289,53 +5112,55 @@ E01    EndIf;
        SpaceLib = 'QTEMP';
        QusDltUs(UserSpace:ApiError);
 
-      /End-Free
-     p GetTxt          e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédures Rec_Mod : Recherche de modules--------------------------**
      ?**----------------------------------------------------------------------**
-     p Rec_Mod         b
-     d Rec_Mod         Pi
-     d  Rec_Lib                      10a   Value
-     d  Rec_Proc                     50a   Value
+       dcl-proc Rec_Mod;
+       dcl-pi Rec_Mod;
+        Rec_Lib char(10) value;
+        Rec_Proc char(50) value;
+       end-pi;
      ?**---User Space Générique-----------------------------------------------**
-     d UserSpace       ds
-     d   SpaceName                   10a   inz('USERSPACE')
-     d   SpaceLib                    10a   inz('QTEMP')
+       dcl-ds UserSpace;
+        SpaceName char(10) inz('USERSPACE');
+        SpaceLib char(10) inz('QTEMP');
+       end-ds;
      ?**---List Data----------------------------------------------------------**
-     d ListData        ds
-     d  List_Size                     6b 0
-     d  List_Module                  10a
-     d                               10a                                        List_ModLib
-     d                                1a                                        List_ProcType
-     d                                4b 0                                      List_OffProc
-     d                                4b 0                                      List_SizProc
-     d                               10a                                        List_ArgProc
-     d  List_ProcName         47    128a
+       dcl-ds ListData;
+        List_Size bindec(6);
+        List_Module char(10);
+        *n char(10); // List_ModLib
+        *n char(1); // List_ProcType
+        *n bindec(4); // List_OffProc
+        *n bindec(4); // List_SizProc
+        *n char(10); // List_ArgProc
+        List_ProcName char(82) pos(47);
+       end-ds;
      ?**---Déclaration des variables------------------------------------------**
-     d SpaceAttr       s             10a
-     d SpaceAuth       s             10a
-     d SpaceReplc      s             10a
-     d SpaceLen        s              9b 0 inz(4096)
-     d SpaceText       s             50a
-     d Format          s             10a
-     d Prg             s             20a
-     d Procedure       s             20a
-     d StartPosit      s              9b 0
-     d StartLen        s              9b 0
-     d i               s                   Like(NumberList)
-     d Cpt_Proc        s                   Like(NumberList)
+       dcl-s SpaceAttr char(10);
+       dcl-s SpaceAuth char(10);
+       dcl-s SpaceReplc char(10);
+       dcl-s SpaceLen bindec(9) inz(4096);
+       dcl-s SpaceText char(50);
+       dcl-s Format char(10);
+       dcl-s Prg char(20);
+       dcl-s Procedure char(20);
+       dcl-s StartPosit bindec(9);
+       dcl-s StartLen bindec(9);
+       dcl-s i like(numberlist);
+       dcl-s Cpt_Proc like(numberlist);
      ?**---Entête d'un User Space---------------------------------------------**
-     d GenHeadDs       ds
-     d                       113    116B 0                                      Taille de l'entête
-     d                       117    120i 0
-     d                       121    124i 0
-     d   ListOffset          125    128B 0                                      Offset des données
-     d                       129    132i 0
-     d                       133    136B 0                                      Nombre de données
-     d                       137    140B 0                                      Taille des données
-      /Free
+       dcl-ds GenHeadDs;
+        *n int(10) pos(113); // Taille de l'entête
+        *n int(10) pos(117);
+        *n int(10) pos(121);
+        ListOffset int(10) pos(125); // Offset des données
+        *n int(10) pos(129);
+        *n int(10) pos(133); // Nombre de données
+        *n int(10) pos(137); // Taille des données
+       end-ds;
 
 ?      //---Create the User Space---------------------------------------------//
        SpaceName  = 'USERSPACE' ;
@@ -5395,30 +5220,27 @@ E01    EndIf;
        SpaceLib = 'QTEMP';
        QusDltUs(UserSpace:ApiError);
 
-      /End-Free
-     p Rec_Mod         e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure Maj_Ref : Mise à jour des références technique-----------**
      ?**----------------------------------------------------------------------**
-     p Maj_Ref         b
+       dcl-proc Maj_Ref;
 
-     d Maj_Ref         Pi
-     d  Libname                      10a   Value
+       dcl-pi Maj_Ref;
+        Libname char(10) value;
+       end-pi;
      ?**---Définition des variables locales-----------------------------------**
-     d OvrCmd          s            200a
-     d OvrLen          s             15  5
-     d Dat_Sys         s             13a
-      /Free
+       dcl-s OvrCmd char(200);
+       dcl-s OvrLen packed(15: 5);
+       dcl-s Dat_Sys char(13);
 
 ?      //---Suppression des anciennes références------------------------------//
        Req_Sql = 'Delete From ' + %trim(ClPgmRef) +
                  '/Pgmref Where whlib = ''' + %Trim(LibName) + '''';
-      /End-Free
-     c/exec sql
-     C+ Execute Immediate :Req_Sql
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  EXECUTE IMMEDIATE :req_sql
+     C/END-EXEC
 ?      //---Contrôle Existence de la bibliothèque et description--------------//
        QusrObjd(Objd0400:%Size(Objd0400):COBJD0200:
                LibName + 'QSYS':'*LIB':ApiError);
@@ -5435,11 +5257,10 @@ E01    EndIf;
                        %subst(%char(Heure):7:2);
        Callp(e) QCmdExc(OvrCmd:OvrLen);
        If %Error;
-      /End-Free
-     c/exec sql
-     C+ Insert Into QTEMP/PgmRef (WhLib, WhDttm) Values(:LibName, :Dat_Sys)
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  INSERT INTO qtemp/pgmref(whlib, whdttm)
+     C+    VALUES (:libname, :dat_sys)
+     C/END-EXEC
        EndIf;
 
 ?      //---Ajout des Querys--------------------------------------------------//
@@ -5490,26 +5311,54 @@ E01    EndIf;
 
 ?      //---Si Fichier en sortie----------------------------------------------//
             If Lib_Out.File <> *Blanks;
-      /End-Free
-     C/Exec Sql
-     C+ INSERT INTO QTEMP/PGMREF VALUES(:LibName, :Qry, :Desc, 0,
-     C+ :Dat_Sys, :Lib_Out.File, :Lib_Out.Lib, ' ', 0, 2, ' ', ' ', 0,
-     C+ 'F', '*FILE', ' ', 'Q', 0)
-     C/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  INSERT INTO qtemp/pgmref
+     C+    VALUES (:libname,
+     C+            :qry,
+     C+            :desc,
+     C+            0,
+     C+            :dat_sys,
+     C+            :lib_out.file,
+     C+            :lib_out.lib,
+     C+            ' ',
+     C+            0,
+     C+            2,
+     C+            ' ',
+     C+            ' ',
+     C+            0,
+     C+            'F',
+     C+            '*FILE',
+     C+            ' ',
+     C+            'Q',
+     C+            0)
+     C/END-EXEC
             EndIf;
 
 ?      //---Traitement fichiers en entrée-------------------------------------//
             For J = 0 to 31;
               Lib_In = %subst(Input:j*40+1:40);
               If Lib_In.File <> *Blanks;
-      /End-Free
-     C/Exec Sql
-     C+ INSERT INTO QTEMP/PGMREF VALUES(:LibName, :Qry, :Desc, 0,
-     C+ :Dat_Sys, :Lib_In.File, :Lib_In.Lib, ' ', 0, 1, :Lib_In.Fmt,
-     C+ ' ', 0, 'F', '*FILE', ' ', 'Q', 0)
-     C/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  INSERT INTO qtemp/pgmref
+     C+    VALUES (:libname,
+     C+            :qry,
+     C+            :desc,
+     C+            0,
+     C+            :dat_sys,
+     C+            :lib_in.file,
+     C+            :lib_in.lib,
+     C+            ' ',
+     C+            0,
+     C+            1,
+     C+            :lib_in.fmt,
+     C+            ' ',
+     C+            0,
+     C+            'F',
+     C+            '*FILE',
+     C+            ' ',
+     C+            'Q',
+     C+            0)
+     C/END-EXEC
               EndIf;
             EndFor;
           EndIf;
@@ -5520,23 +5369,21 @@ E01    EndIf;
        SpaceLib = 'QTEMP';
        QusDltUs(UserSpace:ApiError);
 
-      /End-Free
-     p Maj_Ref         e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure principale-----------------------------------------------**
      ?**----------------------------------------------------------------------**
-     p Algo            b
+       dcl-proc Algo;
 
-     d Algo            Pi
+       dcl-pi Algo end-pi;
      ?**---Définition des variables locales-----------------------------------**
-     d i               s             10i 0
-     d j               s             10i 0
-     d IndRec          s             10i 0
-     d Ind_Suivant     s             10i 0
-     d Ind_Precedent   s             10i 0
-     d Tab3_Libre      s               n
-      /Free
+       dcl-s i int(10);
+       dcl-s j int(10);
+       dcl-s IndRec int(10);
+       dcl-s Ind_Suivant int(10);
+       dcl-s Ind_Precedent int(10);
+       dcl-s Tab3_Libre ind;
        First = *On;
        Nbr_Poste = Tab_Inf('1');
        Tab_Set('3':1:*Blanks);
@@ -5652,20 +5499,18 @@ E01    EndIf;
        EndDo;
        AlgoDessin();
 
-      /End-Free
-     p Algo            e
+       end-proc;
      ?**----------------------------------------------------------------------**
      ?**---Alimentation des tableaux------------------------------------------**
      ?**----------------------------------------------------------------------**
-     p AlgoAlim        b
+       dcl-proc AlgoAlim;
 
-     d AlgoAlim        Pi
+       dcl-pi AlgoAlim end-pi;
 
      ?**---Définition des variables-------------------------------------------**
-     d z               s             10i 0
-     d zz              s             10i 0
-     d Poste           s             10i 0
-      /Free
+       dcl-s z int(10);
+       dcl-s zz int(10);
+       dcl-s Poste int(10);
 
        Poste = 0;
        If First = *On;
@@ -5761,25 +5606,23 @@ E01    EndIf;
          EndIf;
        EndFor;
 
-      /End-Free
-     p AlgoAlim        e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Dessin de la carte ------------------------------------------------**
      ?**----------------------------------------------------------------------**
-     p AlgoDessin      b
+       dcl-proc AlgoDessin;
 
-     d AlgoDessin      Pi
+       dcl-pi AlgoDessin end-pi;
 
      ?**---Définition des variables locales-----------------------------------**
-     d i               s             10i 0
-     d j               s             10i 0
-     d Infx            s             10i 0
-     d Infy            s             10i 0
+       dcl-s i int(10);
+       dcl-s j int(10);
+       dcl-s Infx int(10);
+       dcl-s Infy int(10);
      ?**---Définition des constantes locales----------------------------------**
-     d w0Coin          c                   Const('|...........................')
-     d w0Trait         c                   Const('|')
-      /Free
+       dcl-c w0Coin const('|...........................');
+       dcl-c w0Trait const('|');
 
        Infy = Mat_Infy(1);
        Infx = Mat_Infx(1);
@@ -5820,22 +5663,21 @@ E03        EndIf;
 E02      EndFor;
 E01    EndFor;
 
-      /End-Free
-     p AlgoDessin      e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure Src_Analyse : Analyse du source--------------------------**
      ?**----------------------------------------------------------------------**
-     p Src_Analyse     b                                                        Procédure Analyse
+       dcl-proc Src_Analyse; // Procédure Analyse
      ?**---Prototype d'interface----------------------------------------------**
-     d Src_Analyse     Pi              n                                        Procédure Analyse
-     d   LibA                        10a                                        Bibliothèque Source
-     d   Src                         10a                                        Fichier Source
-     d   Mbr                         10a                                        Membre Source
-     d   ModeDet                      1a   Value
+       dcl-pi Src_Analyse ind; // Procédure Analyse
+        LibA char(10); // Bibliothèque Source
+        Src char(10); // Fichier Source
+        Mbr char(10); // Membre Source
+        ModeDet char(1) value;
+       end-pi;
      ?**---Définition des variables locales-----------------------------------**
-     d CodeRetour      s               n
-      /Free
+       dcl-s CodeRetour ind;
 ?      //---Source en cours---------------------------------------------------//
        Niveau = 1;
        SrcLib = LibA;
@@ -5914,35 +5756,34 @@ X01    Else;
          Return *Off;
 E01    EndIf;
 
-      /End-Free
-     p Src_Analyse     e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure Get_Caractere : Recherche des Caractères spéciaux--------**
      ?**----------------------------------------------------------------------**
-     p Get_Caractere   b                                                        Recherche caractère
+       dcl-proc Get_Caractere; // Recherche caractère
      ?**---Prototype d'interface----------------------------------------------**
-     d Get_Caractere   Pi                                                       Recherche caractère
-     d   SrcDta                      80a                                        Ligne de Code
+       dcl-pi Get_Caractere; // Recherche caractère
+        SrcDta char(80); // Ligne de Code
+       end-pi;
      ?**---Définitions des constantes-----------------------------------------**
-     d Cst_Copy        c                   Const('/COPY')
-     d Cst_Slash       c                   Const('/')
-     d Cst_PtVirg      c                   Const(';')
-     d Cst_FreeBegin   c                   Const('/FREE')
-     d Cst_FreeEnd     c                   Const('/END-FREE')
-     d Cst_comment     c                   Const('//')
-     d Cst_Carte_C     c                   Const('C')
-     d Cst_Carte_D     c                   Const('D')
-     d Cst_Carte_P     c                   Const('P')
-     d Cst_Carte_F     c                   Const('F')
-     d Cst_SsRoutine   c                   Const('BEGSR')
-     d Cst_FiRoutine   c                   Const('ENDSR')
-     d Cst_ExRoutine   c                   Const('EXSR')
-     d Cst_Star        c                   Const('*')
-     d Cst_Proto       c                   Const('PR')
-     d Cst_Libl        c                   Const('*LIBL/')
-     d Cst_Cas         c                   Const('CASEQ')
-      /Free
+       dcl-c Cst_Copy const('/COPY');
+       dcl-c Cst_Slash const('/');
+       dcl-c Cst_PtVirg const(';');
+       dcl-c Cst_FreeBegin const('/FREE');
+       dcl-c Cst_FreeEnd const('/END-FREE');
+       dcl-c Cst_comment const('//');
+       dcl-c Cst_Carte_C const('C');
+       dcl-c Cst_Carte_D const('D');
+       dcl-c Cst_Carte_P const('P');
+       dcl-c Cst_Carte_F const('F');
+       dcl-c Cst_SsRoutine const('BEGSR');
+       dcl-c Cst_FiRoutine const('ENDSR');
+       dcl-c Cst_ExRoutine const('EXSR');
+       dcl-c Cst_Star const('*');
+       dcl-c Cst_Proto const('PR');
+       dcl-c Cst_Libl const('*LIBL/');
+       dcl-c Cst_Cas const('CASEQ');
 ?      //---Recherche des mots spécifiques------------------------------------//
        Car_PtVirg    = %Scan( Cst_PtVirg     : SrcDta );
        Car_FreeBegin = %Scan( Cst_FreeBegin  : SrcDta );
@@ -5991,22 +5832,21 @@ X01      Other;
            Car_Carte_D = *off;
            Car_Carte_P = *off;
 E01    EndSl;
-      /End-Free
-     p Get_Caractere   e                                                        Recherche caractère
+       end-proc; // Recherche caractère
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure Get_Bloc : Recherche des blocs de programme--------------**
      ?**----------------------------------------------------------------------**
-     p Get_Bloc        b                                                        Recherche des blocs
+       dcl-proc Get_Bloc; // Recherche des blocs
      ?**---Prototype d'interface----------------------------------------------**
-     d Get_Bloc        Pi                                                       Recherche des Blocs
-     d   SrcDta                      80a                                        Ligne de Code
+       dcl-pi Get_Bloc; // Recherche des Blocs
+        SrcDta char(80); // Ligne de Code
+       end-pi;
      ?**---Déclaration des variables locales----------------------------------**
-     d i               s              5  0
-     d PosRoutine      s              5  0
-     d LongRoutine     s              5  0
-     d Routine         s             20a
-      /Free
+       dcl-s i packed(5);
+       dcl-s PosRoutine packed(5);
+       dcl-s LongRoutine packed(5);
+       dcl-s Routine char(20);
 ?      //---Liste des Prototypes----------------------------------------------//
 B01    If Car_Carte_D and Car_Proto;
          Proto_Name = %Trim(%Subst(SrcDta:7:15));
@@ -6084,16 +5924,14 @@ B01    If Car_Carte_P and %Subst(SrcDta:8:1) = 'B';
          Proc_Encours = %Trim(%Subst(SrcDta:7:15));
 E01    EndIf;
 
-      /End-Free
-     p Get_Bloc        e                                                        Recherche des Blocs
+       end-proc; // Recherche des Blocs
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure Clr_Car : Reset des indicateurs--------------------------**
      ?**----------------------------------------------------------------------**
-     p Clr_Car         b                                                        Reset des indicateur
+       dcl-proc Clr_Car; // Reset des indicateur
      ?**---Prototype d'interface----------------------------------------------**
-     d Clr_Car         Pi                                                       Reset des indicateur
-      /Free
+       dcl-pi Clr_Car end-pi; // Reset des indicateur
 
        Car_Copy        = 0   ;
        Car_PtVirg      = 0   ;
@@ -6108,22 +5946,21 @@ E01    EndIf;
        Car_Carte_P     = *off;
        Car_Carte_F     = *off;
 
-      /End-Free
-     p Clr_Car         e                                                        Reset des indicateur
+       end-proc; // Reset des indicateur
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure Get_OvrFile : Override des copy source-------------------**
      ?**----------------------------------------------------------------------**
-     p Get_OvrFile     b                                                        Override des copy so
+       dcl-proc Get_OvrFile; // Override des copy so
      ?**---Prototype d'interface----------------------------------------------**
-     d Get_OvrFile     Pi                                                       Override des copy so
-     d   SrcDta                      80a
+       dcl-pi Get_OvrFile; // Override des copy so
+        SrcDta char(80);
+       end-pi;
      ?**---Définition des variables locales-----------------------------------**
-     d Car_Comma       s              3u 0
-     d CodeRetour      s               n
+       dcl-s Car_Comma uns(3);
+       dcl-s CodeRetour ind;
      ?**---Définition des constantes locales----------------------------------**
-     d Cst_Comma       c                   Const(',')
-      /Free
+       dcl-c Cst_Comma const(',');
 
        SrcRrn = Rrn;
        SrcMax = NbrEnregs;
@@ -6177,17 +6014,16 @@ X01    Else;
          DSSource = Tab_Get('SrcCpy':Niveau);
 E01    EndIf;
 
-      /End-Free
-     p Get_OvrFile     e                                                        Override des copy so
+       end-proc; // Override des copy so
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure Ovr_SrcFile : Override des sources-----------------------**
      ?**----------------------------------------------------------------------**
-     p Ovr_SrcFile     b                                                        Override des sources
+       dcl-proc Ovr_SrcFile; // Override des sources
      ?**---Prototype d'interface----------------------------------------------**
-     d Ovr_SrcFile     Pi              n                                        Override des sources
-     d   Source                            LikeDs(DSSource)
-      /Free
+       dcl-pi Ovr_SrcFile ind; // Override des sources
+        Source likeds(dssource);
+       end-pi;
 B01    If %open(file);
          Close File;
 E01    EndIf;
@@ -6210,46 +6046,48 @@ X01    Else;
          Return *On;
 E01    EndIf;
 
-      /End-Free
-     p Ovr_SrcFile     e                                                        Override des sources
+       end-proc; // Override des sources
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure Get_SrcLib : Recherche de la bibliothèque----------------**
      ?**----------------------------------------------------------------------**
-     p Get_SrcLib      b                                                        Recherche Bibliothèq
+       dcl-proc Get_SrcLib; // Recherche Bibliothèq
      ?**---Prototype d'interface----------------------------------------------**
-     d Get_SrcLib      Pi            10a                                        Biblitohèque Source
-     d   SrcFil                      10a                                        Fichier Source
-     d   SrcMbr                      10a                                        Membre Source
-     d StartPosit      s              9b 0                                      Position dans le Use
-     d StartLen        s              9b 0                                      Longueur dans le Use
-     d i               s              5  0 inz(1)                               Compteur
-     d j               s              5  0 inz                                  Compteur
-     d k               s              5  0 inz                                  Compteur
-     d NbrMbr          s              5  0
-     d FormatName      s              8a   inz('OBJL0100')                      Format Liste d'objet
-     d SpaceAttr       s             10a   inz                                  Attribut du User Spa
-     d ObjectType      s             10a   inz('*ALL')                          Type d'objet
-     d SpaceAuth       s             10a   inz('*USE')                          Autorisation User Sp
-     d OverRide        s              1a
-     d SpaceReplc      s             10a   inz('*YES')                          Remplacement du User
-     d SpaceText       s             50a   inz('User Space Temporaire')         Libellé User Space
-     d SpaceLen        s              9b 0 inz(MaxTab)                          Longueur du User Spa
+       dcl-pi Get_SrcLib char(10); // Biblitohèque Source
+        SrcFil char(10); // Fichier Source
+        SrcMbr char(10); // Membre Source
+       end-pi;
+       dcl-s StartPosit bindec(9); // Position dans le Use
+       dcl-s StartLen bindec(9); // Longueur dans le Use
+       dcl-s i packed(5) inz(1); // Compteur
+       dcl-s j packed(5) inz; // Compteur
+       dcl-s k packed(5) inz; // Compteur
+       dcl-s NbrMbr packed(5);
+       dcl-s FormatName char(8) inz('OBJL0100'); // Format Liste d'objet
+       dcl-s SpaceAttr char(10) inz; // Attribut du User Spa
+       dcl-s ObjectType char(10) inz('*ALL'); // Type d'objet
+       dcl-s SpaceAuth char(10) inz('*USE'); // Autorisation User Sp
+       dcl-s OverRide char(1);
+       dcl-s SpaceReplc char(10) inz('*YES'); // Remplacement du User
+       dcl-s SpaceText char(50) inz('User Space Temporaire'); // Libellé User Space
+       dcl-s SpaceLen bindec(9) inz(maxtab); // Longueur du User Spa
      ?**---User Space Générique-----------------------------------------------**
-     d UserSpace       ds
-     d   SpaceName                   10a   inz('USERSPACE')
-     d   SpaceLib                    10a   inz('QTEMP')
+       dcl-ds UserSpace;
+        SpaceName char(10) inz('USERSPACE');
+        SpaceLib char(10) inz('QTEMP');
+       end-ds;
      ?**---Liste des Objets---------------------------------------------------**
-     d DsList          ds                                                       Liste d'objet
-     d  DsListFile                   10                                         Objet
-     d  DsListLib                    10                                         Bibliothèque
-     d                               10                                         Type d'objet  DsList
+       dcl-ds DsList; // Liste d'objet
+        DsListFile char(10); // Objet
+        DsListLib char(10); // Bibliothèque
+        *n char(10); // Type d'objet  DsList
+       end-ds;
      ?**---Description d'un scan----------------------------------------------**
-     d ScanDsRes       ds
-     d  SourcePgm              1     10
-     d                        11     20                                         SourceTyp
-     d                        47     95                                         SourceTxt
-      /Free
+       dcl-ds ScanDsRes;
+        SourcePgm char(10) pos(1);
+        *n char(10) pos(11); // SourceTyp
+        *n char(49) pos(47); // SourceTxt
+       end-ds;
 
        SrcLib = *Blanks;
 
@@ -6355,19 +6193,18 @@ E01    EndFor;
 
        Return SrcLib;
 
-      /End-Free
-     p Get_SrcLib      e                                                        Recherche Bibliothèq
+       end-proc; // Recherche Bibliothèq
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Création et initialisation du tableau------------------**
      ?**----------------------------------------------------------------------**
-     p Tab_Init        b
+       dcl-proc Tab_Init;
      ?**---Définition d'interface de procédure--------------------------------**
-     d Tab_Init        Pi
-     d Tab_Name                      10a   Const
+       dcl-pi Tab_Init;
+        Tab_Name char(10) const;
+       end-pi;
      ?**---Définition des variables locales-----------------------------------**
-     d Cpt1            s             10i 0
-      /Free
+       dcl-s Cpt1 int(10);
 ?      //---Initialisation du Heap Id (Valeur donnée par l'API)---------------//
        HeapId = 0;
 ?      //---Nombre d'éléments par défaut--------------------------------------//
@@ -6390,19 +6227,18 @@ E01    EndFor;
        HeapMax = HeapId;
 ?      //---Sauvegarde du nom du tableau suivant le Heap Id-------------------//
        NameTab(HeapId)= Tab_Name;
-      /End-Free
-     p Tab_Init        e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Suppression du tableau---------------------------------**
      ?**----------------------------------------------------------------------**
-     p Tab_Term        b
+       dcl-proc Tab_Term;
      ?**---Définition d'interface de procédure--------------------------------**
-     d Tab_Term        Pi
-     d   Tab_Name                    10a   Const options(*omit)
+       dcl-pi Tab_Term;
+        Tab_Name char(10) const options(*omit);
+       end-pi;
      ?**---Définition des variables locales-----------------------------------**
-     d Cpt1            s             10i 0
-      /Free
+       dcl-s Cpt1 int(10);
 ?      //---Suppression d'un tableau------------------------------------------//
 B01    If Tab_Name <> *Blanks;
 ?      //---Recherche du Heap Id du tableau-----------------------------------//
@@ -6431,23 +6267,22 @@ B02      For Cpt1 = 1 To HeapMax;
            Clear NameTab(Cpt1);
 E02      EndFor;
 E01    EndIf;
-      /End-Free
-     p Tab_Term        e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Alimentation du tableau--------------------------------**
      ?**----------------------------------------------------------------------**
-     p Tab_Set         b
+       dcl-proc Tab_Set;
 
      ?**---Définition d'interface de procédure--------------------------------**
-     d Tab_Set         Pi
-     d   Tab_Name                    10a   Const
-     d   Index                       10i 0 Value
-     d   Element                           Value Like(£Dyna)
+       dcl-pi Tab_Set;
+        Tab_Name char(10) const;
+        Index int(10) value;
+        Element value like(£dyna);
+       end-pi;
      ?**---Définition des variables locales-----------------------------------**
-     d OldElems        s             10i 0
-     d Cpt1            s             20i 0
-      /Free
+       dcl-s OldElems int(10);
+       dcl-s Cpt1 int(20);
        HeapId = %LookUp(Tab_Name:NameTab);
 ?      //---Contrôle existence du tableau-------------------------------------//
 B01    If HeapId > *Zero;
@@ -6484,19 +6319,18 @@ E02      EndFor;
 E01    EndIf;
 ?      //---Alimentation du tableau-------------------------------------------//
        DynArr(Index) = Element;
-      /End-Free
-     p Tab_Set         e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Incrément d'un tableau---------------------------------**
      ?**----------------------------------------------------------------------**
-     p Tab_Incr        b
+       dcl-proc Tab_Incr;
 
      ?**---Définition d'interface de procédure--------------------------------**
-     d Tab_Incr        Pi
-     d   Tab_Name                    10a   Const
-     d   Index                       10i 0 Const
-      /Free
+       dcl-pi Tab_Incr;
+        Tab_Name char(10) const;
+        Index int(10) const;
+       end-pi;
        HeapId = %LookUp(Tab_Name:NameTab);
 ?      //---Contrôle existence du tableau-------------------------------------//
 B01    If HeapId <> 0 and Index <> 0;
@@ -6511,21 +6345,20 @@ B01    If HeapId <> 0 and Index <> 0;
          HeapTab(HeapId)   = HeapDef;
 E01    EndIf;
 
-      /End-Free
-     p Tab_Incr        e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Récupération d'un élément------------------------------**
      ?**----------------------------------------------------------------------**
-     p Tab_Get         b
+       dcl-proc Tab_Get;
 
      ?**---Définition d'interface de procédure--------------------------------**
-     d Tab_Get         Pi                  like(£Dyna)
-     d   Tab_Name                    10a   Const
-     d   Index                       10i 0 Value
+       dcl-pi Tab_Get like(£dyna);
+        Tab_Name char(10) const;
+        Index int(10) value;
+       end-pi;
      ?**---Définition des variables locales-----------------------------------**
-     d Element         s                   like(£Dyna) inz
-      /Free
+       dcl-s Element like(£dyna) inz;
        HeapId = %LookUp(Tab_Name:NameTab);
 ?      //---Contrôle existence du tableau-------------------------------------//
 B01    If HeapId <> 0;
@@ -6546,24 +6379,23 @@ E02      EndIf;
 E01    EndIf;
 
        Return Element;
-      /End-Free
-     p Tab_Get         e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Recherche d'un élément---------------------------------**
      ?**----------------------------------------------------------------------**
-     p Tab_Srch        b
+       dcl-proc Tab_Srch;
 
      ?**---Définition d'interface de procédure--------------------------------**
-     d Tab_Srch        Pi                  like(Index)
-     d   Tab_Name                    10a   Const
-     d   Element                           Value Like(£Dyna)
-     d   Index                       10i 0 Value
+       dcl-pi Tab_Srch like(index);
+        Tab_Name char(10) const;
+        Element value like(£dyna);
+        Index int(10) value;
+       end-pi;
      ?**---Définition des varaibles locales-----------------------------------**
-     d Ind             s             10i 0
-     d IndRtn          s             10i 0
-     d InfTab          s             10i 0
-      /Free
+       dcl-s Ind int(10);
+       dcl-s IndRtn int(10);
+       dcl-s InfTab int(10);
 
        HeapId   = %LookUp(Tab_Name:NameTab);
 ?      //---Contrôle existence du tableau et de la valeur de l'index----------//
@@ -6594,21 +6426,20 @@ E02      EndIf;
 E01    EndIf;
 
        Return IndRtn;
-      /End-Free
-     p Tab_Srch        e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Information sur le tableau-----------------------------**
      ?**----------------------------------------------------------------------**
-     p Tab_Inf         b
+       dcl-proc Tab_Inf;
 
      ?**---Définition d'interface de procédure--------------------------------**
-     d Tab_Inf         Pi            10i 0
-     d   Tab_Name                    10a   Const
+       dcl-pi Tab_Inf int(10);
+        Tab_Name char(10) const;
+       end-pi;
      ?**---Définition des variables locales-----------------------------------**
-     d Taille          s             10i 0
-     d Cpt1            s             10i 0
-      /Free
+       dcl-s Taille int(10);
+       dcl-s Cpt1 int(10);
        HeapId   = %LookUp(Tab_Name:NameTab);
 ?      //---Contrôle existence du tableau-------------------------------------//
 B01    If HeapId <> 0;
@@ -6625,22 +6456,21 @@ E02      EndFor;
 E01    EndIf;
 
        Return Taille;
-      /End-Free
-     p Tab_Inf         e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Longueur Maxi d'un élément-----------------------------**
      ?**----------------------------------------------------------------------**
-     p Tab_Len         b
+       dcl-proc Tab_Len;
 
      ?**---Définition d'interface de procédure--------------------------------**
-     d Tab_Len         Pi            10i 0
-     d   Tab_Name                    10a   Const
+       dcl-pi Tab_Len int(10);
+        Tab_Name char(10) const;
+       end-pi;
      ?**---Définition des variables locales-----------------------------------**
-     d Taille          s             10i 0 inz(0)
-     d Cpt1            s             10i 0
-     d InfTab          s             10i 0
-      /Free
+       dcl-s Taille int(10) inz(0);
+       dcl-s Cpt1 int(10);
+       dcl-s InfTab int(10);
        HeapId   = %LookUp(Tab_Name:NameTab);
 ?      //---Contrôle existence du tableau-------------------------------------//
 B01    If HeapId <> 0;
@@ -6657,22 +6487,21 @@ E02      EndFor;
 E01    EndIf;
 
        Return Taille;
-      /End-Free
-     p Tab_Len         e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Transfert d'un tableau---------------------------------**
      ?**----------------------------------------------------------------------**
-     p Tab_Trf         b
+       dcl-proc Tab_Trf;
 
      ?**---Définition d'interface de procédure--------------------------------**
-     d Tab_Trf         Pi
-     d   Tab_Name                    10a   Const
-     d   Tab_Save                    10a   Const
+       dcl-pi Tab_Trf;
+        Tab_Name char(10) const;
+        Tab_Save char(10) const;
+       end-pi;
      ?**---Définition des variables locales-----------------------------------**
-     d Cpt1            s             10i 0 inz(0)
-     d InfyTab         s             10i 0 inz(0)
-      /Free
+       dcl-s Cpt1 int(10) inz(0);
+       dcl-s InfyTab int(10) inz(0);
 ?      //---Recherche du Heap du tableau--------------------------------------//
        HeapId   = %LookUp(Tab_Name:NameTab) ;
 ?      //---Contrôle Existence du tableau-------------------------------------//
@@ -6689,23 +6518,22 @@ B02      For Cpt1 = 1 to InfyTab;
            Tab_Set(Tab_Save:Cpt1:Tab_Get(Tab_Name:Cpt1));
 E02      EndFor;
 E01    EndIf;
-      /End-Free
-     p Tab_Trf         e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Alimentation de la matrice-----------------------------**
      ?**----------------------------------------------------------------------**
-     p Mat_Set         b
+       dcl-proc Mat_Set;
 
      ?**---Définition d'interface de procédure--------------------------------**
-     d Mat_Set         Pi
-     d   Matrice                     10i 0 Const
-     d   X                           10i 0 Value
-     d   Y                           10i 0 Value
-     d   Element                           Value Like(£Dyna)
+       dcl-pi Mat_Set;
+        Matrice int(10) const;
+        X int(10) value;
+        Y int(10) value;
+        Element value like(£dyna);
+       end-pi;
      ?**---Définition des variables locales-----------------------------------**
-     d Tab_Name        s             10a
-      /Free
+       dcl-s Tab_Name char(10);
 ?      //---Contrôle indice de la matrice-------------------------------------//
 B01    If Matrice <> 0;
 ?      //---Récupération des informations de la matrice-----------------------//
@@ -6723,22 +6551,21 @@ E02      EndIf;
 ?      //---Alimentation du sous tableau--------------------------------------//
          Tab_Set(NameTab(HeapId):X:Element);
 E01    EndIf;
-      /End-Free
-     p Mat_Set         e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Récupération de la matrice-----------------------------**
      ?**----------------------------------------------------------------------**
-     p Mat_Get         b
+       dcl-proc Mat_Get;
 
      ?**---Définition d'interface de procédure--------------------------------**
-     d Mat_Get         Pi                  Like(£Dyna)
-     d   Matrice                     10i 0 Const
-     d   X                           10i 0 Value
-     d   Y                           10i 0 Value
+       dcl-pi Mat_Get like(£dyna);
+        Matrice int(10) const;
+        X int(10) value;
+        Y int(10) value;
+       end-pi;
      ?**---Définition des variables locales-----------------------------------**
-     d Element         s                   like(£Dyna)
-      /Free
+       dcl-s Element like(£dyna);
 ?      //---Contrôle indice de la matrice-------------------------------------//
 B01    If Matrice <> 0;
 ?      //---Recherche information de la matrice-------------------------------//
@@ -6750,20 +6577,19 @@ B01    If Matrice <> 0;
 E01    EndIf;
 
        Return Element;
-      /End-Free
-     p Mat_Get         e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Taille maximale en Y-----------------------------------**
      ?**----------------------------------------------------------------------**
-     p Mat_Infy        b
+       dcl-proc Mat_Infy;
 
      ?**---Définition d'interface de procédure--------------------------------**
-     d Mat_Infy        Pi            10i 0
-     d   Matrice                     10i 0 Const
+       dcl-pi Mat_Infy int(10);
+        Matrice int(10) const;
+       end-pi;
      ?**---Définition des variables locales-----------------------------------**
-     d Cpt1            s             10i 0 inz(0)
-      /Free
+       dcl-s Cpt1 int(10) inz(0);
 ?      //---Contrôle indice de la matrice-------------------------------------//
 B01    If Matrice <> 0;
          MatriceDs = Mat_Matrice(Matrice);
@@ -6774,22 +6600,21 @@ E02      EndDo;
 E01    EndIf;
 
        Return Cpt1 - 1;
-      /End-Free
-     p Mat_Infy        e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Taille maximale en X-----------------------------------**
      ?**----------------------------------------------------------------------**
-     p Mat_Infx        b
+       dcl-proc Mat_Infx;
 
      ?**---Définition d'interface de procédure--------------------------------**
-     d Mat_Infx        Pi            10i 0
-     d   Matrice                     10i 0 Const
+       dcl-pi Mat_Infx int(10);
+        Matrice int(10) const;
+       end-pi;
      ?**---Définition des variables locales-----------------------------------**
-     d Cpt1            s             10i 0 inz(0)
-     d Max             s             10i 0 inz(0)
-     d InfyMat         s             10i 0 inz(0)
-      /Free
+       dcl-s Cpt1 int(10) inz(0);
+       dcl-s Max int(10) inz(0);
+       dcl-s InfyMat int(10) inz(0);
 
 ?      //---Contrôle indice de la matrice-------------------------------------//
 B01    If Matrice <> 0;
@@ -6806,22 +6631,21 @@ E02      EndFor;
 E01    EndIf;
 
        Return Max;
-      /End-Free
-     p Mat_Infx        e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Longueur d'un élément d'une matrice--------------------**
      ?**----------------------------------------------------------------------**
-     p Mat_Len         b
+       dcl-proc Mat_Len;
 
      ?**---Définition d'interface de procédure--------------------------------**
-     d Mat_Len         Pi            10i 0
-     d   Matrice                     10i 0 Const
+       dcl-pi Mat_Len int(10);
+        Matrice int(10) const;
+       end-pi;
      ?**---Définition des variables locales-----------------------------------**
-     d Taille          s             10i 0 inz(0)
-     d Cpt1            s             10i 0 inz(0)
-     d InfyMat         s             10i 0 inz(0)
-      /Free
+       dcl-s Taille int(10) inz(0);
+       dcl-s Cpt1 int(10) inz(0);
+       dcl-s InfyMat int(10) inz(0);
 ?      //---Contrôle indice de la matrice-------------------------------------//
 B01    If Matrice <> 0;
 ?      //---Récupération des informations-------------------------------------//
@@ -6838,24 +6662,23 @@ E02      EndFor;
 E01    EndIf;
 
        Return Taille;
-      /End-Free
-     p Mat_Len         e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Longueur d'un élément d'une matrice--------------------**
      ?**----------------------------------------------------------------------**
-     p Mat_LenCol      b
+       dcl-proc Mat_LenCol;
 
      ?**---Définition d'interface de procédure--------------------------------**
-     d Mat_LenCol      Pi            10i 0
-     d   Matrice                     10i 0 Const
-     d   X                           10i 0 Value
+       dcl-pi Mat_LenCol int(10);
+        Matrice int(10) const;
+        X int(10) value;
+       end-pi;
      ?**---Définition des variables locales-----------------------------------**
-     d Taille          s             10i 0 inz(0)
-     d InfTab          s             10i 0
-     d InfyMat         s             10i 0 inz(0)
-     d Tab_Name        s             10a
-      /Free
+       dcl-s Taille int(10) inz(0);
+       dcl-s InfTab int(10);
+       dcl-s InfyMat int(10) inz(0);
+       dcl-s Tab_Name char(10);
 ?      //---Contrôle indice de la matrice-------------------------------------//
 B01    If Matrice <> 0;
          MatriceDs = Mat_Matrice(Matrice);
@@ -6880,20 +6703,19 @@ E02      EndFor;
 E01    EndIf;
 
        Return Taille;
-      /End-Free
-     p Mat_LenCol      e
+       end-proc;
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Supression de la Matrice-------------------------------**
      ?**----------------------------------------------------------------------**
-     p Mat_Term        b
+       dcl-proc Mat_Term;
 
      ?**---Définition d'interface de procédure--------------------------------**
-     d Mat_Term        Pi
-     d   Matrice                     10i 0 Const
+       dcl-pi Mat_Term;
+        Matrice int(10) const;
+       end-pi;
      ?**---Définition des variables locales-----------------------------------**
-     d Cpt1            s             10i 0 Inz(1)
-     d Tab_Name        s             10a
-      /Free
+       dcl-s Cpt1 int(10) inz(1);
+       dcl-s Tab_Name char(10);
 ?      //---Contrôle indice matrice-------------------------------------------//
 B01    If Matrice <> *Zeros;
          MatriceDs = Mat_Matrice(Matrice);
@@ -6906,27 +6728,26 @@ E02      EndDo;
 ?      //---Suppression des informations sur la matrice-----------------------//
          Clear Mat_Matrice(Matrice);
 E01    EndIf;
-      /End-Free
-     p Mat_Term        e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Supression de la Matrice-------------------------------**
      ?**----------------------------------------------------------------------**
-     p Tab_Tri2        b
+       dcl-proc Tab_Tri2;
 
-     d Tab_Tri2        pi
-     d  Nom_Tab                      10a   Value
-     d  Pos1                          5  0 Value
-     d  Pos2                          5  0 Value
+       dcl-pi Tab_Tri2;
+        Nom_Tab char(10) value;
+        Pos1 packed(5) value;
+        Pos2 packed(5) value;
+       end-pi;
 ?     **---Définition des variables locales-----------------------------------**
-     d NbrTab          s              5  0
-     d swap            s                   Like(£Dyna)
-     d i               s             10i 0
-     d j               s             10i 0
-     d k               s             10i 0 inz
-     d ok              s               n
+       dcl-s NbrTab packed(5);
+       dcl-s swap like(£dyna);
+       dcl-s i int(10);
+       dcl-s j int(10);
+       dcl-s k int(10) inz;
+       dcl-s ok ind;
 
-      /Free
 
        j = 1;
        k = 0;
@@ -6960,24 +6781,23 @@ E01    EndIf;
 
        EndDo;
 
-      /End-Free
-     p Tab_Tri2        e
+       end-proc;
      ?**----------------------------------------------------------------------**
      ?**---Filtre des zones textes--------------------------------------------**
      ?**----------------------------------------------------------------------**
-     p Filtre          b
+       dcl-proc Filtre;
 
-     d Filtre          pi         10000a
-     d  Texte_In                  10000a   Value
-     d  Exclus                    10000a   Options(*Omit)
-     d  Rempla                    10000a   Options(*Omit)
+       dcl-pi Filtre char(10000);
+        Texte_In char(10000) value;
+        Exclus char(10000) options(*omit);
+        Rempla char(10000) options(*omit);
+       end-pi;
 ?     **---Définition des variables locales-----------------------------------**
-     d i               s              5  0
-     d j               s              5  0
-     d Pos             s              5  0
-     d Len             s              5  0
-     d Texte           s          10000a
-      /Free
+       dcl-s i packed(5);
+       dcl-s j packed(5);
+       dcl-s Pos packed(5);
+       dcl-s Len packed(5);
+       dcl-s Texte char(10000);
 B01    If %Addr(Exclus) = *Null or Exclus = *Blanks;
          Texte = Texte_In;
          Texte = %Xlate(x'00':x'40':Texte);
@@ -7031,20 +6851,18 @@ B01    If %Addr(Rempla) <> *Null;
 E01    EndIf;
        return texte;
 
-      /End-Free
-     p Filtre          e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Contrôle de la résolution de l'écran-------------------------------**
      ?**----------------------------------------------------------------------**
 
-     p Ctl_Dsp         b
+       dcl-proc Ctl_Dsp;
      ?**---Définition du prototype d'interface--------------------------------**
-     d Ctl_Dsp         Pi              n
+       dcl-pi Ctl_Dsp ind end-pi;
 
      ?**---Définition des variables locales-----------------------------------**
-     d Rtcd            s               n
-      /Free
+       dcl-s Rtcd ind;
 
        Rtcd = *Off;
 
@@ -7073,23 +6891,21 @@ E01    EndIf;
 
        Return Rtcd;
 
-      /End-Free
-     p Ctl_Dsp         e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---[F23] : Gestion des analyses---------------------------------------**
      ?**----------------------------------------------------------------------**
 
-     p Gst_Analyse     b
+       dcl-proc Gst_Analyse;
      ?**---Définition du prototype d'interface--------------------------------**
-     d Gst_Analyse     Pi
+       dcl-pi Gst_Analyse end-pi;
 
      ?**---Définition des variables locales-----------------------------------**
-     d Zzflds          s            250a
-     d ZzComp          s             10a
-     d ZzBib           s             10a
-     d ZzType          s             10a
-      /Free
+       dcl-s Zzflds char(250);
+       dcl-s ZzComp char(10);
+       dcl-s ZzBib char(10);
+       dcl-s ZzType char(10);
 
 B01    Dow Retour = *Off;
 ?      //---Requete sur fichier ZZ01OUT---------------------------------------//
@@ -7103,22 +6919,20 @@ B01    Dow Retour = *Off;
          SflInd = *Off;
 
 ?      //---Préparation, déclaration, ouverture, ....-------------------------//
-      /End-Free
-     c/Exec sql
-     C+ Prepare S4 From :Requete4
-     c/end-exec
-     c/Exec sql
-     C+ Declare C4 Cursor For S4
-     c/end-exec
-     c/Exec sql
-     C+ OPEN C4
-     c/end-exec
+     C/EXEC SQL
+     C+  PREPARE s4 FROM :requete4
+     C/END-EXEC
+     C/EXEC SQL
+     C+  DECLARE c4 CURSOR FOR s4
+     C/END-EXEC
+     C/EXEC SQL
+     C+  OPEN c4
+     C/END-EXEC
 
-     c/Exec sql
-     c+ Fetch Next From C4 INTO :Tmst04, :Obj04, :Type04, :Lib04,
-     c+ :Fonc04, :Mode04
-     c/end-exec
-      /Free
+     C/EXEC SQL
+     C+  FETCH NEXT FROM c4
+     C+    INTO :tmst04, :obj04, :type04, :lib04, :fonc04, :mode04
+     C/END-EXEC
 
          Cpt1 = 0;
 ?      //---Alimentation du sous-fichier résumé-------------------------------//
@@ -7129,25 +6943,25 @@ B03        If Entry_OutPut = '*DISPLAY' or Entry_OutPut = '*PRINTER';
              Write F04Sfl;
 X03        Else;
              Fld = F04_Ds;
-      /End-Free
-     c/Exec Sql
-     c+ INSERT INTO ZZ01OUT (ZZTMST, ZZCOMP, ZZTYPE, ZZBIB, ZZFONC, ZZMODE,
-     c+ ZZFLD) VALUES(:zztmst, :zzcomp, :zztype, :zzbib, :zzfonc, :Trt, :Fld)
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  INSERT INTO zz01out(zztmst,
+     C+                      zzcomp,
+     C+                      zztype,
+     C+                      zzbib,
+     C+                      zzfonc,
+     C+                      zzmode,
+     C+                      zzfld)
+     C+    VALUES (:zztmst, :zzcomp, :zztype, :zzbib, :zzfonc, :trt, :fld)
+     C/END-EXEC
 E03        EndIf;
-      /End-Free
-     c/Exec Sql
-     c+ Fetch Next From C4 INTO :Tmst04, :Obj04, :Type04, :Lib04,
-     c+ :Fonc04, :Mode04
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  FETCH NEXT FROM c4
+     C+    INTO :tmst04, :obj04, :type04, :lib04, :fonc04, :mode04
+     C/END-EXEC
 E02      EndDo;
-      /End-Free
-     c/Exec Sql
-     c+ CLOSE C4
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  CLOSE c4
+     C/END-EXEC
 
 B02      If Entry_OutPut = '*DISPLAY';
 ?      //---Affichage du sous-fichier-----------------------------------------//
@@ -7169,21 +6983,19 @@ B06              If Opt04 = '5';
                    Requete5 = 'select ZzFld, ZzFonc, ZzComp, ZzType, ZzBib ' +
                    'from zz01out where zztmst = '''+Tmst04 + '''';
 ?      //---Préparation, déclaration, ouverture, ....-------------------------//
-      /End-Free
-     c/Exec Sql
-     C+ Prepare S6 From :Requete5
-     c/End-Exec
-     c/Exec Sql
-     C+ Declare C6 Cursor For S6
-     c/End-Exec
-     c/Exec Sql
-     C+ OPEN C6
-     c/End-Exec
+     C/EXEC SQL
+     C+  PREPARE s6 FROM :requete5
+     C/END-EXEC
+     C/EXEC SQL
+     C+  DECLARE c6 CURSOR FOR s6
+     C/END-EXEC
+     C/EXEC SQL
+     C+  OPEN c6
+     C/END-EXEC
 
-     c/Exec Sql
-     C+ Fetch Next From C6 INTO :ZzFlds, :ZzFonc, :ZzComp, :ZzType, :ZzBib
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  FETCH NEXT FROM c6 INTO :zzflds, :zzfonc, :zzcomp, :zztype, :zzbib
+     C/END-EXEC
 ?      //---Alimentation des informations composants--------------------------//
                    Titre = Tab_Get('Fonction':Tab_Srch('Fonc':ZzFonc:1));
                    FzzDesc = Rtv_entete(ZzFonc);
@@ -7208,27 +7020,21 @@ B07                Dow Sqlcod <> EndOfFile;
                      Cpt_I += 1;
                      Tab_Set2('££WRK':Cpt_I:FzzZone);
 
-      /End-Free
-     c/Exec Sql
-     C+ Fetch Next From C6 INTO :ZzFlds, :ZzFonc, :ZzComp, :ZzType, :ZzBib
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  FETCH NEXT FROM c6 INTO :zzflds, :zzfonc, :zzcomp, :zztype, :zzbib
+     C/END-EXEC
 E07                EndDo;
 
-      /End-Free
-     C/Exec Sql
-     C+ Close C6
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  CLOSE c6
+     C/END-EXEC
 
 E06              EndIf;
 
 B06              If Opt04 = '4';
-      /End-Free
-     c/Exec Sql
-     C+ Delete From Zz01out where zztmst = :tmst04
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  DELETE FROM zz01out WHERE zztmst = :tmst04
+     C/END-EXEC
 E06              EndIf;
 E05            EndFor;
 E04          EndIf;
@@ -7244,22 +7050,21 @@ E01    EndDo;
        Exit = *Off;
        Retour = *Off;
 
-      /End-Free
-     p Gst_Analyse     e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Gestion de l'entête de sous-fichier--------------------------------**
      ?**----------------------------------------------------------------------**
 
-     p Rtv_Entete      b
+       dcl-proc Rtv_Entete;
      ?**---Définition du prototype d'interface--------------------------------**
-     d Rtv_Entete      Pi                  Like(FzzDesc)
-     d Fonction                            Like(ZzFonc) Value
+       dcl-pi Rtv_Entete like(fzzdesc);
+        Fonction like(zzfonc) value;
+       end-pi;
 
      ?**---Définition des variables locales-----------------------------------**
-     d Entete          s                   Like(FzzDesc)
-     d i               s              5  0
-      /Free
+       dcl-s Entete like(fzzdesc);
+       dcl-s i packed(5);
        i = Tab_Srch('Fonc':fonction:1);
        If i > 0;
          Entete = Desc_Entete(i) + Desc_Entete(i+24);
@@ -7267,19 +7072,17 @@ E01    EndDo;
          Entete = *Blanks;
        EndIf;
        return Entete;
-      /End-Free
-     p Rtv_Entete      e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Création et initialisation du tableau------------------**
      ?**----------------------------------------------------------------------**
-     p Tab_Init2       b
+       dcl-proc Tab_Init2;
      ?**---Définition d'interface de procédure--------------------------------**
-     d Tab_Init2       pi                  Like(£Heap)
+       dcl-pi Tab_Init2 like(£heap) end-pi;
 
      ?**---Définition des variables locales-----------------------------------**
-     d Cpt1            s                   Like(£Index)
-      /Free
+       dcl-s Cpt1 like(£index);
 
        HeapId = *Zero;
 ?      //---Nombre d'éléments par défaut--------------------------------------//
@@ -7300,20 +7103,19 @@ E01    EndDo;
        Heap_Tab(HeapId) = HeapDef;
 
        Return HeapId;
-      /End-Free
-     p Tab_Init2       e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Création et initialisation du tableau------------------**
      ?**----------------------------------------------------------------------**
-     p Tab_Make2       b
+       dcl-proc Tab_Make2;
      ?**---Définition d'interface de procédure--------------------------------**
-     d Tab_Make2       pi                  Like(£Heap)
-     d   Tab_Name                          Const Like(£Tab)
-     d   Index                             Const Like(£Index)
-     d   StTab_Name                        Const Like(£StTab)
-     d CptMake2        s              5  0
-      /Free
+       dcl-pi Tab_Make2 like(£heap);
+        Tab_Name const like(£tab);
+        Index const like(£index);
+        StTab_Name const like(£sttab);
+       end-pi;
+       dcl-s CptMake2 packed(5);
 
 ?      //---Tableau des sous-tableau------------------------------------------//
        If %LookUp(StTab_Name:Name_Tab) = 0;
@@ -7346,27 +7148,26 @@ E01    EndDo;
 
        Return HeapId;
 
-      /End-Free
-     p Tab_Make2       e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Alimentation du tableau--------------------------------**
      ?**----------------------------------------------------------------------**
-     p Tab_Set2        b
+       dcl-proc Tab_Set2;
 
      ?**---Définition d'interface de procédure--------------------------------**
-     d Tab_Set2        Pi
-     d   Tab_Name                          Const Like(£Tab)
-     d   Index                             Value Like(£Index)
-     d   Element                           Value Like(£Dyna)
+       dcl-pi Tab_Set2;
+        Tab_Name const like(£tab);
+        Index value like(£index);
+        Element value like(£dyna);
+       end-pi;
 
      ?**---Définition des variables locales-----------------------------------**
-     d IndexReduit     s                   Like(£Index)
-     d OldElems        s                   Like(£Index)
-     d NumSousTabl     s                   Like(£StIndex)
-     d StTab_Name      s                   Like(£StTab)
+       dcl-s IndexReduit like(£index);
+       dcl-s OldElems like(£index);
+       dcl-s NumSousTabl like(£stindex);
+       dcl-s StTab_Name like(£sttab);
 
-      /Free
 
 ?      //---Tableau des sous-tableau------------------------------------------//
        StTab_Name = Tab_Format2(Tab_Name:Index:IndexReduit:NumSousTabl);
@@ -7408,25 +7209,24 @@ E01    EndDo;
          Master_Tab(Identifiant) = Tab_Name;
        EndIf;
 
-      /End-Free
-     p Tab_Set2        e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Récupération d'un élément------------------------------**
      ?**----------------------------------------------------------------------**
-     p Tab_Get2        b
+       dcl-proc Tab_Get2;
 
      ?**---Définition d'interface de procédure--------------------------------**
-     d Tab_Get2        Pi                  Like(£Dyna)
-     d   Tab_Name                          Const Like(£Tab)
-     d   Index                             Value Like(£Index)
+       dcl-pi Tab_Get2 like(£dyna);
+        Tab_Name const like(£tab);
+        Index value like(£index);
+       end-pi;
      ?**---Définition des variables locales-----------------------------------**
-     d NumSousTabl     s                   Like(£StIndex)
-     d StTab_Name      s                   Like(£StTab)
-     d Element         s                   like(£Dyna) inz
-     d IndexReduit     s                   Like(£Index)
+       dcl-s NumSousTabl like(£stindex);
+       dcl-s StTab_Name like(£sttab);
+       dcl-s Element like(£dyna) inz;
+       dcl-s IndexReduit like(£index);
 
-      /Free
 ?      //---Contrôle existence du Master Tableau------------------------------//
        StTab_Name = Tab_Format2(Tab_Name:Index:IndexReduit:NumSousTabl);
        HeapId   = %LookUp(StTab_Name:Name_Tab);
@@ -7444,44 +7244,42 @@ E01    EndDo;
        EndIf;
 
        Return Element;
-      /End-Free
-     p Tab_Get2        e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Définition des propriétés du tableau-------------------**
      ?**----------------------------------------------------------------------**
-     p Tab_Format2     b
+       dcl-proc Tab_Format2;
 
      ?**---Définition d'interface de procédure--------------------------------**
-     d Tab_Format2     Pi                  Like(£StTab)
-     d   Tab_Name                          Const Like(£Tab)
-     d   Index                             Value Like(£Index)
-     d   IndexReduit                       Like(£Index)                          Index réduit
-     d   NumSousTabl                       Like(£StIndex)                        Numéro de sous-tabl
+       dcl-pi Tab_Format2 like(£sttab);
+        Tab_Name const like(£tab);
+        Index value like(£index);
+        IndexReduit like(£index); // Index réduit
+        NumSousTabl like(£stindex); // Numéro de sous-tabl
+       end-pi;
      ?**---Définition des variables locales-----------------------------------**
-     d StTab_Name      s                   Like(£StTab)
+       dcl-s StTab_Name like(£sttab);
 
-      /Free
 
        Tab_IdxRed2(Index:IndexReduit:NumSousTabl);
        StTab_Name = Tab_StName2(Tab_Name:NumSousTabl);
 
        Return StTab_Name;
-      /End-Free
-     p Tab_Format2     e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Calcul de l'index réduit et numéro de sous tableau-----**
      ?**----------------------------------------------------------------------**
-     p Tab_IdxRed2     b
+       dcl-proc Tab_IdxRed2;
 
      ?**---Définition d'interface de procédure--------------------------------**
-     d Tab_IdxRed2     Pi
-     d   Index                             Const Like(£Index)                    Index
-     d   IndexReduit                       Like(£Index)                          Index réduit
-     d   NumSousTabl                       Like(£StIndex)                        Numéro de sous-tabl
+       dcl-pi Tab_IdxRed2;
+        Index const like(£index); // Index
+        IndexReduit like(£index); // Index réduit
+        NumSousTabl like(£stindex); // Numéro de sous-tabl
+       end-pi;
 
-      /Free
 
 ?      //---Numéro de Sous-tableau est un multiple de MaxTab------------------//
        If %Rem(Index:MaxTab) <> 0;
@@ -7493,25 +7291,24 @@ E01    EndDo;
 ?      //---Calcul de l'index Réduit------------------------------------------//
        IndexReduit = Index - ((NumSousTabl - 1) * MaxTab);
 
-      /End-Free
-     p Tab_IdxRed2     e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Incrément d'un tableau---------------------------------**
      ?**----------------------------------------------------------------------**
-     p Tab_Incr2       b
+       dcl-proc Tab_Incr2;
 
      ?**---Définition d'interface de procédure--------------------------------**
-     d Tab_Incr2       Pi
-     d   Tab_Name                          Const Like(£Tab)
-     d   Index                             Const Like(£Index)
+       dcl-pi Tab_Incr2;
+        Tab_Name const like(£tab);
+        Index const like(£index);
+       end-pi;
 
      ?**---Définition des variables locales-----------------------------------**
-     d IndexReduit     s                   Like(£Index)
-     d NumSousTabl     s                   Like(£StIndex)
-     d StTab_Name      s                   Like(£StTab)
+       dcl-s IndexReduit like(£index);
+       dcl-s NumSousTabl like(£stindex);
+       dcl-s StTab_Name like(£sttab);
 
-      /Free
 ?      //---Tableau des sous-tableau------------------------------------------//
        StTab_Name = Tab_Format2(Tab_Name:Index:IndexReduit:NumSousTabl);
        HeapId     = %LookUp(StTab_Name:Name_Tab);
@@ -7524,22 +7321,21 @@ E01    EndDo;
        DynArrDsà(HeapId)  = DynArrà;
        Heap_Tab(HeapId)   = HeapDef;
 
-      /End-Free
-     p Tab_Incr2       e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Information sur le tableau-----------------------------**
      ?**----------------------------------------------------------------------**
-     p Tab_Inf2        b
+       dcl-proc Tab_Inf2;
 
      ?**---Définition d'interface de procédure--------------------------------**
-     d Tab_Inf2        Pi                  Like (£Index)
-     d   Tab_Name                          Const Like(£Tab)
+       dcl-pi Tab_Inf2 like (£index);
+        Tab_Name const like(£tab);
+       end-pi;
      ?**---Définition des variables locales-----------------------------------**
-     d Index_Master    s                   Like(£Index)
-     d Taille          s                   Like(£MasterTaille)
+       dcl-s Index_Master like(£index);
+       dcl-s Taille like(£mastertaille);
 
-      /Free
        Index_Master = %LookUp(Tab_Name:Master_Tab);
        If Index_Master > *Zero;
          Taille = Master_Size(Index_Master);
@@ -7549,22 +7345,21 @@ E01    EndDo;
 
        Return Taille;
 
-      /End-Free
-     p Tab_Inf2        e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Nom du Sous-Tableau------------------------------------**
      ?**----------------------------------------------------------------------**
-     p Tab_StName2     b
+       dcl-proc Tab_StName2;
 
      ?**---Définition d'interface de procédure--------------------------------**
-     d Tab_StName2     Pi                  Like (£StTab)
-     d   Tab_Name                          Const Like(£Tab)
-     d   NumSousTabl                       Const Like(£StIndex)
+       dcl-pi Tab_StName2 like (£sttab);
+        Tab_Name const like(£tab);
+        NumSousTabl const like(£stindex);
+       end-pi;
 
      ?**---Définition des variables locales-----------------------------------**
-     d   StTab_Name    s                   Like(£StTab)
-      /Free
+       dcl-s StTab_Name like(£sttab);
 
 ?      //---Tableau des sous-tableau------------------------------------------//
        %Subst(StTab_Name:1:10) = *All'à';
@@ -7573,28 +7368,27 @@ E01    EndDo;
 
        Return StTab_Name;
 
-      /End-Free
-     p Tab_StName2     e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Longueur de poste d'un tableau-------------------------**
      ?**----------------------------------------------------------------------**
-     p Tab_Len2        b
+       dcl-proc Tab_Len2;
 
      ?**---Définition d'interface de procédure--------------------------------**
-     d Tab_Len2        Pi                  Like (£Index)
-     d   Tab_Name                          Const Like(£Tab)
+       dcl-pi Tab_Len2 like (£index);
+        Tab_Name const like(£tab);
+       end-pi;
 
      ?**---Définition des variables locales-----------------------------------**
-     d StTab_Name      s                   Like(£StTab)
-     d Long_Name       s                   Like(£Index)
-     d Num_StMax       s                   Like(£StIndex)
-     d InfTab          s                   Like(£Index)
-     d Index_Reduit    s                   Like(£Index)
-     d Taille          s                   Like(£Index)
-     d I               s                   Like(£Index)
-     d J               s                   Like(£Index)
-      /Free
+       dcl-s StTab_Name like(£sttab);
+       dcl-s Long_Name like(£index);
+       dcl-s Num_StMax like(£stindex);
+       dcl-s InfTab like(£index);
+       dcl-s Index_Reduit like(£index);
+       dcl-s Taille like(£index);
+       dcl-s I like(£index);
+       dcl-s J like(£index);
 
 ?      //---Si le tableau existe----------------------------------------------//
        If %LookUp(Tab_Name:Master_Tab) > *Zero;
@@ -7629,23 +7423,22 @@ E01    EndDo;
 
        Return Long_Name;
 
-      /End-Free
-     p Tab_Len2        e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Information sur le sous-tableau------------------------**
      ?**----------------------------------------------------------------------**
-     p Tab_StInf2      b
+       dcl-proc Tab_StInf2;
 
      ?**---Définition d'interface de procédure--------------------------------**
-     d Tab_StInf2      Pi                  Like(£Index)
-     d   StTab_Name                        Const Like(£StTab)
+       dcl-pi Tab_StInf2 like(£index);
+        StTab_Name const like(£sttab);
+       end-pi;
 
      ?**---Définition des variables locales-----------------------------------**
-     d Taille          s                   Like(£Index)
-     d I               s                   Like(£Index)
+       dcl-s Taille like(£index);
+       dcl-s I like(£index);
 
-      /Free
        HeapId   = %LookUp(StTab_Name:Name_Tab);
        HeapDef  = Heap_Tab(HeapId);
        DynArrà  = DynArrDsà(HeapId);
@@ -7659,31 +7452,30 @@ E01    EndDo;
 
        Return Taille;
 
-      /End-Free
-     p Tab_StInf2      e
+       end-proc;
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Recherche d'un élément---------------------------------**
      ?**----------------------------------------------------------------------**
-     p Tab_Srch2       b
+       dcl-proc Tab_Srch2;
 
      ?**---Définition d'interface de procédure--------------------------------**
-     d Tab_Srch2       Pi                  Like(£Index)
-     d   Tab_Name                          Const like(£Tab)
-     d   Element                           Value Like(£Dyna)
-     d   Index                             Value Like(£Index)
+       dcl-pi Tab_Srch2 like(£index);
+        Tab_Name const like(£tab);
+        Element value like(£dyna);
+        Index value like(£index);
+       end-pi;
 
      ?**---Définition des variables locales-----------------------------------**
-     d StTab_Name      s                   Like(£StTab)
-     d Num_StMax       s                   Like(£StIndex)
-     d Num_StDeb       s                   Like(£StIndex)
-     d InfTab          s                   Like(£Index)
-     d Index_Reduit    s                   Like(£Index)
-     d Taille          s                   Like(£Index)
-     d I               s                   Like(£Index)
-     d J               s                   Like(£Index)
-     d IndRtn          s                   Like(£Index)
+       dcl-s StTab_Name like(£sttab);
+       dcl-s Num_StMax like(£stindex);
+       dcl-s Num_StDeb like(£stindex);
+       dcl-s InfTab like(£index);
+       dcl-s Index_Reduit like(£index);
+       dcl-s Taille like(£index);
+       dcl-s I like(£index);
+       dcl-s J like(£index);
+       dcl-s IndRtn like(£index);
 
-      /Free
 
 ?      //---Si variable à rechercher est différente de *blanks----------------//
        If Element <> *Blanks;
@@ -7726,27 +7518,26 @@ E01    EndDo;
 
        Return IndRtn;
 
-      /End-Free
-     p Tab_Srch2       e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Suppression du tableau---------------------------------**
      ?**----------------------------------------------------------------------**
-     p Tab_Term2       b
+       dcl-proc Tab_Term2;
      ?**---Définition d'interface de procédure--------------------------------**
-     d Tab_Term2       Pi
-     d   Tab_Name                          Like(£Tab) Value
+       dcl-pi Tab_Term2;
+        Tab_Name like(£tab) value;
+       end-pi;
 
      ?**---Définition des variables locales-----------------------------------**
-     d HeapId          s                   Like(£Heap)
-     d StTab_Name      s                   Like(£StTab)
-     d Num_StMax       s                   Like(£StIndex)
-     d Index_Reduit    s                   Like(£Index)
-     d Taille          s                   Like(£Index)
-     d I               s                   Like(£Index)
-     d Pt              s               *
+       dcl-s HeapId like(£heap);
+       dcl-s StTab_Name like(£sttab);
+       dcl-s Num_StMax like(£stindex);
+       dcl-s Index_Reduit like(£index);
+       dcl-s Taille like(£index);
+       dcl-s I like(£index);
+       dcl-s Pt pointer;
 
-      /Free
 
 ?      //---Adresse du nom de tableau-----------------------------------------//
        Pt = %Addr(Tab_Name);
@@ -7792,24 +7583,23 @@ B02      For HeapId = 1 To HeapMax;
 E02      EndFor;
 
 E01    EndIf;
-      /End-Free
-     p Tab_Term2       e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Transfert d'un tableau---------------------------------**
      ?**----------------------------------------------------------------------**
-     p Tab_Trf2        b
+       dcl-proc Tab_Trf2;
 
      ?**---Définition d'interface de procédure--------------------------------**
-     d Tab_Trf2        Pi
-     d   Tab_Name                          Const Like (£Tab)
-     d   Tab_Save                          Const Like (£Tab)
+       dcl-pi Tab_Trf2;
+        Tab_Name const like (£tab);
+        Tab_Save const like (£tab);
+       end-pi;
 
      ?**---Définition des variables locales-----------------------------------**
-     d Cpt1            s                   Like(£Index) inz(0)
-     d InfyTab         s                   Like(£Index) inz(0)
+       dcl-s Cpt1 like(£index) inz(0);
+       dcl-s InfyTab like(£index) inz(0);
 
-      /Free
 ?      //---Suppression du tableau de sauvegarde s'il existe------------------//
        If %LookUp(Tab_Save:Master_Tab) > 0;
          Tab_Term2(Tab_Save);
@@ -7819,31 +7609,30 @@ E01    EndIf;
        For Cpt1 = 1 to InfyTab;
          Tab_Set2(Tab_Save:Cpt1:Tab_Get2(Tab_Name:Cpt1));
        EndFor;
-      /End-Free
-     p Tab_Trf2        e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Récupération du pointeur de procédure------------------------------**
      ?**----------------------------------------------------------------------**
-     p GetProcPtr      b
+       dcl-proc GetProcPtr;
      ?**---Définition du prototype d'interface--------------------------------**
-     D GetProcPtr      Pi              *   ProcPtr
-     D   Procedure                  100a   Varying Const
-     D   Srvpgm                      10a   Const
-     D   Library                     10a   Const
+       dcl-pi GetProcPtr pointer(*proc);
+        Procedure varchar(100) const;
+        Srvpgm char(10) const;
+        Library char(10) const;
+       end-pi;
      ?**---Définition des variables locales-----------------------------------**
-     d LibPtr          s                   Like(£SysPtr)
-     d SrvpgmPtr       s                   Like(£SysPtr)
-     d ActMark         s             10i 0
-     d ProcPtr         s               *   ProcPtr
-     d ExportType      s             10i 0
+       dcl-s LibPtr like(£sysptr);
+       dcl-s SrvpgmPtr like(£sysptr);
+       dcl-s ActMark int(10);
+       dcl-s ProcPtr pointer(*proc);
+       dcl-s ExportType int(10);
      ?**---Définition des constantes locales----------------------------------**
-     d EX_NOT_FOUND    c                   0
-     d EX_PROC         c                   1
-     d EX_DATA         c                   2
-     d EX_NO_ACCESS    c                   3
+       dcl-c EX_NOT_FOUND 0;
+       dcl-c EX_PROC 1;
+       dcl-c EX_DATA 2;
+       dcl-c EX_NO_ACCESS 3;
 
-      /Free
 ?      //---First, get the pointer to the service program---------------------//
        If Library = '*LIBL';
 ?      //---They specified *LIBL----------------------------------------------//
@@ -7876,66 +7665,71 @@ E01    EndIf;
        Else;
          Return *Null;
        EndIf;
-      /End-Free
-     P GetProcPtr      e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Récupération des infos Querys--------------------------------------**
      ?**----------------------------------------------------------------------**
-     p RtvQryf         b
-     d RtvQryf         Pi
-     d  QryName                      10a
-     d  QryLib                       10a
-     d  QryIn                      1280a
-     d  QryOut                       30a
-     d  ErrCode                       1a
+       dcl-proc RtvQryf;
+       dcl-pi RtvQryf;
+        QryName char(10);
+        QryLib char(10);
+        QryIn char(1280);
+        QryOut char(30);
+        ErrCode char(1);
+       end-pi;
 
      ?**---Définition des constantes locales----------------------------------**
-     d QryOutTypeOff   c                   Const(261)
-     d QryOutOffOff    c                   Const(381)
-     d QryInCountOff   c                   Const(559)
-     d QryInOff        c                   Const(563)
+       dcl-c QryOutTypeOff const(261);
+       dcl-c QryOutOffOff const(381);
+       dcl-c QryInCountOff const(559);
+       dcl-c QryInOff const(563);
 
      ?**---Définition des variables locales-----------------------------------**
-     d  QryOut1        ds
-     d  QryOutFile                   10a
-     d  QryOutFileLib                10a
-     d  QryOutFileMbr                10a
-     d Idx             s             10i 0
-     d QUsQName        s             20a   Inz('QRYDMP    QTEMP     ')
-     d QUsExtAtr       s             10a   Inz('QryDump')
-     d QUsInzSiz       s              9b 0 Inz(x'1000')
-     d QUsInzVal       s              1a   Inz(x'00')
-     d QUsAut          s             10a   Inz('*ALL')
-     d QUsTxt          s             50a   Inz('User Space for RtvQryF')
-     d QUsLib          s             10a
-     d QUsErrCode      s               *   Inz(*Null)
-     d QMhErrCode      s               *   Inz(*Null)
-     d QryOutType      s              1a
-     d QryOutTmp       s             34a
-     d QryInTmp        s             80a
-     d QryAut          s               n   Inz( *Off )
-     d QryOutOffDS     Ds
-     d  QryOutOff                    10U 0
-     d QryInCountDS    Ds
-     d  QryInCount                    5U 0
-     d QUsAttr         Ds
-     d                               10i 0 Inz(1)                               QUsNumRec
-     d                               10i 0 Inz(3)                               QUsKey
-     d                               10i 0 Inz(1)                               QUsRecLen
-     d                                1a   Inz('1')                             QUsRecData
-     d QUsRtvUs        Pr                  ExtPgm('QUSRTVUS')
-     d  QualifiedName                20a   Const
-     d  StartingPos                  10i 0 Const
-     d  DataRcvLength                10i 0 Const
-     d  DataRcv                    9999a   Options(*Varsize)
-     d QMhRmvPm        Pr                  ExtPgm('QMHRMVPM')
-     d  CSE                          16a   Const
-     d  CSECtr                       10i 0 Const
-     d  MessageKey                    4a   Const
-     d  MsgToRmv                     10a   Const
-     d  ErrCode                        *
-      /Free
+       dcl-ds QryOut1;
+        QryOutFile char(10);
+        QryOutFileLib char(10);
+        QryOutFileMbr char(10);
+       end-ds;
+       dcl-s Idx int(10);
+       dcl-s QUsQName char(20) inz('QRYDMP    QTEMP     ');
+       dcl-s QUsExtAtr char(10) inz('QryDump');
+       dcl-s QUsInzSiz bindec(9) inz(x'1000');
+       dcl-s QUsInzVal char(1) inz(x'00');
+       dcl-s QUsAut char(10) inz('*ALL');
+       dcl-s QUsTxt char(50) inz('User Space for RtvQryF');
+       dcl-s QUsLib char(10);
+       dcl-s QUsErrCode pointer inz(*null);
+       dcl-s QMhErrCode pointer inz(*null);
+       dcl-s QryOutType char(1);
+       dcl-s QryOutTmp char(34);
+       dcl-s QryInTmp char(80);
+       dcl-s QryAut ind inz( *off );
+       dcl-ds QryOutOffDS;
+        QryOutOff uns(10);
+       end-ds;
+       dcl-ds QryInCountDS;
+        QryInCount uns(5);
+       end-ds;
+       dcl-ds QUsAttr;
+        *n int(10) inz(1); // QUsNumRec
+        *n int(10) inz(3); // QUsKey
+        *n int(10) inz(1); // QUsRecLen
+        *n char(1) inz('1'); // QUsRecData
+       end-ds;
+       dcl-pr QUsRtvUs extpgm('QUSRTVUS');
+        *n char(20) const; // QualifiedName
+        *n int(10) const; // StartingPos
+        *n int(10) const; // DataRcvLength
+        *n char(9999) options(*varsize); // DataRcv
+       end-pr;
+       dcl-pr QMhRmvPm extpgm('QMHRMVPM');
+        *n char(16) const; // CSE
+        *n int(10) const; // CSECtr
+        *n char(4) const; // MessageKey
+        *n char(10) const; // MsgToRmv
+        *n pointer; // ErrCode
+       end-pr;
        ErrCode = '0';
 ?      //---Création du User Space--------------------------------------------//
        QusCrtUs(QUsQName:QUsExtAtr:QUsInzSiz:QUsInzVal:QUsAut:QUsTxt
@@ -7998,41 +7792,42 @@ E01    EndIf;
        QusDltUs(QusQName:ApiError);
        EndSr;
 
-      /End-Free
-     p RtvQryf         e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : DmpQry Dump d'un Query---------------------------------**
      ?**----------------------------------------------------------------------**
-     p DmpQry          b
-     d DmpQry          Pi
-     d  QueryName                    10a   Const
-     d  QueryLib                     10a   Const
-     d  QUSName                      20a   Const
-     d  QryAut                         n
+       dcl-proc DmpQry;
+       dcl-pi DmpQry;
+        QueryName char(10) const;
+        QueryLib char(10) const;
+        QUSName char(20) const;
+        QryAut ind;
+       end-pi;
 
      ?**---Définition des variables locales-----------------------------------**
-     d Cmd             S            100a
-     d VerRelMod       S             10i 0
-     d RcdNbr          S             10i 0
-     d QUsStrPos       s             10i 0 Inz(1)
-     d QUsDataForce    s              1a   Inz('1')
+       dcl-s Cmd char(100);
+       dcl-s VerRelMod int(10);
+       dcl-s RcdNbr int(10);
+       dcl-s QUsStrPos int(10) inz(1);
+       dcl-s QUsDataForce char(1) inz('1');
      ?**---Définition des constantes locales----------------------------------**
-     d QMHRSNEM        c                   'QMHRSNEM'
+       dcl-c QMHRSNEM 'QMHRSNEM';
 
-     d QUsChgUs        PR                  ExtPgm('QUSCHGUS')
-     d  QualifiedName                20a   Const
-     d  StartingPos                  10i 0 Const
-     d  DataLength                   10i 0 Const
-     d  Data                       9999    Options(*VarSize)
-     d  ForceChanges                  1a
+       dcl-pr QUsChgUs extpgm('QUSCHGUS');
+        *n char(20) const; // QualifiedName
+        *n int(10) const; // StartingPos
+        *n int(10) const; // DataLength
+        *n char(9999) options(*varsize); // Data
+        *n char(1); // ForceChanges
+       end-pr;
 
-     d SysCmd          Pr                  ExtPgm('QCMDEXC')
-     d  CmdString                   300a   Options(*VarSize) Const
-     d  CmdStringSize                15P 5 Const
-     d  CmdOptions                    3a   Options(*NoPass) Const
+       dcl-pr SysCmd extpgm('QCMDEXC');
+        *n char(300) options(*varsize) const; // CmdString
+        *n packed(15: 5) const; // CmdStringSize
+        *n char(3) options(*nopass) const; // CmdOptions
+       end-pr;
 
-      /Free
 
 ?      //---Sauvegarde du Query dans un savf----------------------------------//
        Cmd = 'CRTSAVF FILE(QTEMP/DMPFIL)';
@@ -8089,120 +7884,133 @@ E01    EndIf;
 
        EndSr;
 
-      /End-Free
-     P DmpQry          e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure Lib_Size : Taille d'une bibliothèque---------------------**
      ?**----------------------------------------------------------------------**
-     p Taille_Bib      b
+       dcl-proc Taille_Bib;
 
-     d Taille_Bib      Pi
-     d   ParamPlug                 1024a
+       dcl-pi Taille_Bib;
+        ParamPlug char(1024);
+       end-pi;
      ?**---Liste des objets---------------------------------------------------**
-     d QUsLObj         Pr                  ExtPgm('QUSLOBJ')
-     d  parm                         20a
-     d  parm                          8a
-     d  parm                         20a
-     d  parm                         10a
+       dcl-pr QUsLObj extpgm('QUSLOBJ');
+        *n char(20); // parm
+        *n char(8); // parm
+        *n char(20); // parm
+        *n char(10); // parm
+       end-pr;
      ?**---Création d'un User Space-------------------------------------------**
-     d QusCrtUs        Pr                  ExtPgm('QUSCRTUS')
-     d  parm                         20a
-     d  parm                         10a
-     d  parm                          9b 0
-     d  parm                          1a
-     d  parm                         10a
-     d  parm                         50a
-     d  parm                         10a
-     d  parm                               like(ApiError)
+       dcl-pr QusCrtUs extpgm('QUSCRTUS');
+        *n char(20); // parm
+        *n char(10); // parm
+        *n bindec(9); // parm
+        *n char(1); // parm
+        *n char(10); // parm
+        *n char(50); // parm
+        *n char(10); // parm
+        *n like(apierror); // parm
+       end-pr;
      ?**---Description d'une bibliothèque-------------------------------------**
-     d QLirLibd        Pr                  Extpgm('QLIRLIBD')
-     d  parm                      32767a         Options(*Varsize)              RcvVar
-     d  parm                         10i 0 Const                                RcvVarLen
-     d  parm                         10a   Const                                Library
-     d  parm                      32767a   Const                                AtrToRtv
-     d  parm                               Likeds(ApiError)                     Parm
+       dcl-pr QLirLibd extpgm('QLIRLIBD');
+        *n char(32767) options(*varsize); // parm  RcvVar
+        *n int(10) const; // parm  RcvVarLen
+        *n char(10) const; // parm  Library
+        *n char(32767) const; // parm  AtrToRtv
+        *n likeds(apierror); // parm  Parm
+       end-pr;
      ?**---Recherche de l'adresse d'un User Space-----------------------------**
-     d Qusptrus        Pr                  ExtPgm('QUSPTRUS')
-     d  parm                         20a
-     d  parm                           *
+       dcl-pr Qusptrus extpgm('QUSPTRUS');
+        *n char(20); // parm
+        *n pointer; // parm
+       end-pr;
      ?**---Réception d'un User Space------------------------------------------**
-     d Qusrtvus        Pr                  ExtPgm('QUSRTVUS')
-     d  parm                         20a
-     d  parm                          9b 0
-     d  parm                          9b 0
-     d  parm                       2000a   Options(*Varsize)
+       dcl-pr Qusrtvus extpgm('QUSRTVUS');
+        *n char(20); // parm
+        *n bindec(9); // parm
+        *n bindec(9); // parm
+        *n char(2000) options(*varsize); // parm
+       end-pr;
      ?**---Définition des Constantes------------------------------------------**
-     d MaxTab          c                   Const(32767)                         Taille Max tableau
+       dcl-c MaxTab const(32767); // Taille Max tableau
      ?**---Entête d'un User Space---------------------------------------------**
-     d GenHeadDs       ds                  based(pUserSpace)
-     d                       113    116b 0                                      Taille de l'entête
-     d                       117    120i 0                                      Offset de l'entête
-     d                       121    124i 0                                      Taille de l'entête
-     d  ListOffset           125    128b 0                                      Offset des données
-     d                       129    132i 0                                      Taille de la liste
-     d  NumberList           133    136b 0                                      Nombre de données
-     d  EntrySize            137    140b 0                                      Taille des données
+       dcl-ds GenHeadDs based(puserspace);
+        *n int(10) pos(113); // Taille de l'entête
+        *n int(10) pos(117); // Offset de l'entête
+        *n int(10) pos(121); // Taille de l'entête
+        ListOffset int(10) pos(125); // Offset des données
+        *n int(10) pos(129); // Taille de la liste
+        NumberList int(10) pos(133); // Nombre de données
+        EntrySize int(10) pos(137); // Taille des données
+       end-ds;
      ?**---User Space Générique-----------------------------------------------**
-     d UserSpace       ds
-     d  SpaceName                    10a
-     d  SpaceLib                     10a
+       dcl-ds UserSpace;
+        SpaceName char(10);
+        SpaceLib char(10);
+       end-ds;
      ?**---Code Erreur standard API : ERRC0100--------------------------------**
-     d ApiError        ds
-     d                               10i 0 Inz(%Size(ApiError))
-     d                               10i 0 Inz                                  Bytes Available
-     d                                7a                                        Exception Id
-     d                                1a                                        Reserved
-     d                              128a                                        Exception Data
+       dcl-ds ApiError;
+        *n int(10) inz(%size(apierror));
+        *n int(10) inz; // Bytes Available
+        *n char(7); // Exception Id
+        *n char(1); // Reserved
+        *n char(128); // Exception Data
+       end-ds;
      ?**---Liste des Objets---------------------------------------------------**
-     d DsList          ds                                                       Liste d'objet
-     d  DsListFile                   10                                         Objet
-     d                               10                                         Bibliothèque
-     d                               10                                         Type d'objet
+       dcl-ds DsList; // Liste d'objet
+        DsListFile char(10); // Objet
+        *n char(10); // Bibliothèque
+        *n char(10); // Type d'objet
+       end-ds;
      ?**---Description d'un composant-----------------------------------------**
-     d Composant       ds                                                       Composant
-     d  Obj                          10a                                        Objet
-     d  Lib                          10a                                        Bibliothèque
+       dcl-ds Composant; // Composant
+        Obj char(10); // Objet
+        Lib char(10); // Bibliothèque
+       end-ds;
 
-     d AtrToRtvDS      ds
-     d                               10i 0 Inz(1)
-     d   Elm                         10i 0 Dim(1)
+       dcl-ds AtrToRtvDS;
+        *n int(10) inz(1);
+        Elm int(10) dim(1);
+       end-ds;
       *
-     d QLirr           ds         32767
-     d                               10i 0
-     d                               10i 0
-     d                               10i 0
-     d                               10i 0
+       dcl-ds QLirr len(32767);
+        *n int(10);
+        *n int(10);
+        *n int(10);
+        *n int(10);
+       end-ds;
       *
-     d LibSizeDS       ds
-     d   LibSize                     10i 0
-     d   LibSizeMult                 10i 0
-     d                                 n
-     d                                3A
-     d VarLenDS        ds                  Based(VarLenà)
-     d   VLRtnDtaLen                 10i 0
-     d   VLKeyID                     10i 0
-     d   VLFldSize                   10i 0
-     d   VLFldValue                1000a
+       dcl-ds LibSizeDS;
+        LibSize int(10);
+        LibSizeMult int(10);
+        *n ind;
+        *n char(3);
+       end-ds;
+       dcl-ds VarLenDS based(varlenà);
+        VLRtnDtaLen int(10);
+        VLKeyID int(10);
+        VLFldSize int(10);
+        VLFldValue char(1000);
+       end-ds;
      ?**---Définition des variables-------------------------------------------**
-     d k               s              5  0 inz                                  Compteur
-     d NbrMbr          s              5  0
-     d Taille          s             15  0
-     d FormatName      s              8a
-     d SpaceValue      s              1a   inz(X'00')                           Valeur du User Space
-     d ObjectType      s             10a   inz('*ALL')                          Type d'objet
-     d SpaceAuth       s             10a   inz('*USE')                          Autorisation User Sp
-     d SpaceReplc      s             10a   inz('*YES')                          Remplacement du User
-     d SpaceAttr       s             10a   inz                                  Attribut du User Spa
-     d SpaceText       s             50a   inz('User Space Temporaire')         Libellé User Space
-     d SpaceLen        s              9b 0 inz(MaxTab)                          Longueur du User Spa
-     d StartPosit      s              9b 0                                      Position dans le Use
-     d StartLen        s              9b 0                                      Longueur dans le Use
-     d LibName         s             10a   inz                                  Bibliothèque
-     d LibTotsize      s             20i 0
-     d VarLenà         s               *
+       dcl-s k packed(5) inz; // Compteur
+       dcl-s NbrMbr packed(5);
+       dcl-s Taille packed(15);
+       dcl-s FormatName char(8);
+       dcl-s SpaceValue char(1) inz(x'00'); // Valeur du User Space
+       dcl-s ObjectType char(10) inz('*ALL'); // Type d'objet
+       dcl-s SpaceAuth char(10) inz('*USE'); // Autorisation User Sp
+       dcl-s SpaceReplc char(10) inz('*YES'); // Remplacement du User
+       dcl-s SpaceAttr char(10) inz; // Attribut du User Spa
+       dcl-s SpaceText char(50) inz('User Space Temporaire'); // Libellé User Space
+       dcl-s SpaceLen bindec(9) inz(maxtab); // Longueur du User Spa
+       dcl-s StartPosit bindec(9); // Position dans le Use
+       dcl-s StartLen bindec(9); // Longueur dans le Use
+       dcl-s LibName char(10) inz; // Bibliothèque
+       dcl-s LibTotsize int(20);
+       dcl-s VarLenà pointer;
 
-      /Free
 
 ?      //---Récupération paramètres-------------------------------------------//
        DataPlugin = ParamPlug;
@@ -8267,62 +8075,71 @@ E01    EndIf;
 ?      //---Retour paramètres-------------------------------------------------//
        ParamPlug = DataPlugin;
 
-      /End-Free
-     p Taille_Bib      e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure Suppression des enregistrement de PGMREF-----------------**
      ?**----------------------------------------------------------------------**
-     p Net_Pgmref      b
+       dcl-proc Net_Pgmref;
 
      ?**---Lancement de Commande----------------------------------------------**
-     d QCmdExc         Pr                  ExtPgm('QCMDEXC')
-     d  parm                        100a                                        Commande
-     d  parm                         15  5                                      Longueur de la Cde
+       dcl-pr QCmdExc extpgm('QCMDEXC');
+        *n char(100); // parm  Commande
+        *n packed(15: 5); // parm  Longueur de la
+       end-pr;
      ?**---Définition des variables locales-----------------------------------**
-     d OvrCmd          s            100a                                        Commande AS400
-     d OvrCmdLen       s             15  5                                      Longueur de la comma
-     d Nbr_Enr         s              9  0
+       dcl-s OvrCmd char(100); // Commande AS400
+       dcl-s OvrCmdLen packed(15: 5); // Longueur de la comma
+       dcl-s Nbr_Enr packed(9);
 
-     d Net_Pgmref      Pi
-     d   ParamPlug                 1024a
-     c/Exec Sql
-     c+ delete from zz01pf where zzvaleur in
-     c+ (select whlib from pgmref group by whlib having count(*) = 0)
-     c/End-exec
-     c/Exec Sql
-     c+ delete from pgmref where whlib not in
-     c+ (select zzvaleur from zz01pf where zztype ='OBLIB')
-     c/End-exec
-     c/Exec Sql
-     c+ Select count(*) into :Nbr_Enr from pgmref
-     c/end-Exec
-      /Free
+       dcl-pi Net_Pgmref;
+        ParamPlug char(1024);
+       end-pi;
+     C/EXEC SQL
+     C+  DELETE FROM zz01pf
+     C+    WHERE zzvaleur IN
+     C+      (SELECT whlib
+     C+         FROM pgmref
+     C+         GROUP BY whlib
+     C+         HAVING COUNT(*) = 0)
+     C/END-EXEC
+     C/EXEC SQL
+     C+  DELETE FROM pgmref
+     C+    WHERE whlib NOT IN
+     C+      (SELECT zzvaleur
+     C+         FROM zz01pf
+     C+         WHERE zztype = 'OBLIB')
+     C/END-EXEC
+     C/EXEC SQL
+     C+  SELECT COUNT(*)
+     C+    INTO :nbr_enr
+     C+    FROM pgmref
+     C/END-EXEC
        If Nbr_Enr > 0;
          OvrCmd = 'RGZPFM PGMREF';
          OvrCmdLen = 15;
          QCmdExc(OvrCmd:OvrcmdLen);
        EndIf;
-      /End-Free
-     p Net_PgmRef      e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Liste des zones dans un programme----------------------**
      ?**----------------------------------------------------------------------**
-     p Zone_Prog       b
-     d Zone_Prog       Pi
-     d   ParamPlug                 1024a
+       dcl-proc Zone_Prog;
+       dcl-pi Zone_Prog;
+        ParamPlug char(1024);
+       end-pi;
      ?**---Définition des variables-------------------------------------------**
-     d Requete         s           1000a
+       dcl-s Requete char(1000);
      d*SrcSeq12        s              8a
      d*SrcDta12        s             83a
-     d OvrCmd          s            200a                                        Commande AS400
-     d OvrCmdLen       s             15  5                                      Longueur de la comma
+       dcl-s OvrCmd char(200); // Commande AS400
+       dcl-s OvrCmdLen packed(15: 5); // Longueur de la comma
      ?**---Lancement de Commande----------------------------------------------**
-     d QCmdExc         Pr                  ExtPgm('QCMDEXC')
-     d  parm                        100a                                        Commande
-     d  parm                         15  5                                      Longueur de la Cde
-      /Free
+       dcl-pr QCmdExc extpgm('QCMDEXC');
+        *n char(100); // parm  Commande
+        *n packed(15: 5); // parm  Longueur de la
+       end-pr;
 
 ?      //---Récupération paramètres-------------------------------------------//
        DataPlugin = ParamPlug;
@@ -8368,19 +8185,15 @@ E01    EndIf;
             and F01LSrc <> *Blanks and F01FSrc <> *Blanks and F01MSrc <> *Blanks
             and F01File <> *Blanks and F01Libl <> *Blanks;
 ?      //---Suppression de l'alias--------------------------------------------//
-      /End-Free
-     c/Exec Sql
-     c+ drop alias qtemp/recherche
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  DROP ALIAS qtemp / recherche
+     C/END-EXEC
 ?      //---Creation de l'alias-----------------------------------------------//
            Requete = 'Create Alias Qtemp/Recherche For ' + F01LSrc + '/'
                      + F01FSrc + '(' + F01MSrc + ')';
-      /End-Free
-     c/Exec Sql
-     c+ Execute Immediate :Requete
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  EXECUTE IMMEDIATE :requete
+     C/END-EXEC
 ?      //---Définition de la requête principale-------------------------------//
            Requete = 'Select SRCSEQ, SRCDTA, COLUMN_NAME, TABLE_NAME,          -
            POSITION(TRIM(COLUMN_NAME) IN UPPER(SRCDTA)) AS PST FROM            -
@@ -8389,44 +8202,36 @@ E01    EndIf;
            'AND (POSITION(COLUMN_NAME IN UPPER(SRCDTA)) <> 0                   -
             OR POSITION(TRIM(COLUMN_NAME) IN UPPER(SRCDTA)) <> 0)';
 ?      //---Préparation, déclaration, ouverture, ....-------------------------//
-      /End-Free
-     c/Exec Sql
-     c+ Prepare S From :Requete
-     c/End-Exec
-     c/Exec Sql
-     c+ Declare C Cursor For S
-     c/End-Exec
-     c/Exec Sql
-     c+  Open C
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  PREPARE s FROM :requete
+     C/END-EXEC
+     C/EXEC SQL
+     C+  DECLARE c CURSOR FOR s
+     C/END-EXEC
+     C/EXEC SQL
+     C+  OPEN c
+     C/END-EXEC
 ?      //---Clear du sous-fichier---------------------------------------------//
             SflClr = *On;
             Write F12Ctl;
             SflClr = *Off;
             f12rrn = 0;
 ?      //---Lecture du premier enregistrement---------------------------------//
-      /End-Free
-     c/Exec Sql
-     c+ FETCH NEXT FROM C INTO :SrcSeq12, :SrcDta12, :Column, :Tablen, :Pst
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  FETCH NEXT FROM c INTO :srcseq12, :srcdta12, :column, :tablen, :pst
+     C/END-EXEC
 ?      //---Boucle sur la requête---------------------------------------------//
             Dow sqlcod <> 100;
               f12rrn += 1;
               Write F12Sfl;
-      /End-Free
-     c/Exec Sql
-     c+ FETCH NEXT FROM C INTO :SrcSeq12, :SrcDta12, :Column, :Tablen, :Pst
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  FETCH NEXT FROM c INTO :srcseq12, :srcdta12, :column, :tablen, :pst
+     C/END-EXEC
             EndDo;
 ?      //---Fermeture du curseur----------------------------------------------//
-      /End-Free
-     c/Exec Sql
-     c+ Close C
-     c/End-Exec
-      /Free
+     C/EXEC SQL
+     C+  CLOSE c
+     C/END-EXEC
 ?      //---Si rien trouvé----------------------------------------------------//
             If f12rrn = 0;
               f12rrn +=1;
@@ -8444,138 +8249,151 @@ E01    EndIf;
           EndIf;
        EndDo;
 
-      /End-Free
-     p Zone_Prog       e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure : Archivage d'un fichier par trigger---------------------**
      ?**----------------------------------------------------------------------**
-     p Arc_Trigg       b
-     d Arc_Trigg       Pi
-     d   ParamPlug                 1024a
+       dcl-proc Arc_Trigg;
+       dcl-pi Arc_Trigg;
+        ParamPlug char(1024);
+       end-pi;
      ?**---Définition des variables-------------------------------------------**
-     d Action          s              1a
-     d Bib             s             10a
-     d Fic             s             10a
-     d Fic_Log         s             10a
-     d Requete2        s          32766a
-     d Lst_Zone        s          32766a
-     d OvrCmd          s           2800a                                        Commande AS400
-     d OvrCmdLen       s             15  5                                      Longueur de la comma
+       dcl-s Action char(1);
+       dcl-s Bib char(10);
+       dcl-s Fic char(10);
+       dcl-s Fic_Log char(10);
+       dcl-s Requete2 char(32766);
+       dcl-s Lst_Zone char(32766);
+       dcl-s OvrCmd char(2800); // Commande AS400
+       dcl-s OvrCmdLen packed(15: 5); // Longueur de la comma
      ?**---User Space Générique-----------------------------------------------**
-     d UserSpace       ds
-     d  SpaceName                    10a
-     d  SpaceLib                     10a
+       dcl-ds UserSpace;
+        SpaceName char(10);
+        SpaceLib char(10);
+       end-ds;
      ?**---Création d'un User Space-------------------------------------------**
-     d QusCrtUs        Pr                  ExtPgm('QUSCRTUS')
-     d  parm                         20a
-     d  parm                         10a
-     d  parm                          9b 0
-     d  parm                          1a
-     d  parm                         10a
-     d  parm                         50a
-     d  parm                         10a
-     d  parm                               like(ApiError)
+       dcl-pr QusCrtUs extpgm('QUSCRTUS');
+        *n char(20); // parm
+        *n char(10); // parm
+        *n bindec(9); // parm
+        *n char(1); // parm
+        *n char(10); // parm
+        *n char(50); // parm
+        *n char(10); // parm
+        *n like(apierror); // parm
+       end-pr;
      ?**---Suppression d'un User Space----------------------------------------**
-     d QusdltUs        Pr                  ExtPgm('QUSDLTUS')
-     d  parm                         20a
-     d  parm                               like(ApiError)
+       dcl-pr QusdltUs extpgm('QUSDLTUS');
+        *n char(20); // parm
+        *n like(apierror); // parm
+       end-pr;
      ?**---Liste des formats--------------------------------------------------**
-     d QUsLRcd         Pr                  ExtPgm('QUSLRCD')
-     d  parm                         20a
-     d  parm                          8a
-     d  parm                         20a
-     d  parm                          1a
+       dcl-pr QUsLRcd extpgm('QUSLRCD');
+        *n char(20); // parm
+        *n char(8); // parm
+        *n char(20); // parm
+        *n char(1); // parm
+       end-pr;
      ?**---Affichage des zones d'un fichier-----------------------------------**
-     d Quslfld         Pr                  ExtPgm('QUSLFLD')
-     d  parm                         20a
-     d  parm                         10a
-     d  parm                         20a
-     d  parm                         10a
-     d  parm                          1a
+       dcl-pr Quslfld extpgm('QUSLFLD');
+        *n char(20); // parm
+        *n char(10); // parm
+        *n char(20); // parm
+        *n char(10); // parm
+        *n char(1); // parm
+       end-pr;
      ?**---Code Erreur standard API : ERRC0100--------------------------------**
-     d ApiError        ds
-     d  AeBytPro                     10i 0 Inz(%Size(ApiError))
-     d  AeBytAvl                     10i 0 Inz                                  Bytes Available
-     d  AeMsgId                       7a                                        Exception Id
-     d                                1a                                        Reserved
-     d  AeMsgDta                    128a                                        Exception Data
+       dcl-ds ApiError;
+        AeBytPro int(10) inz(%size(apierror));
+        AeBytAvl int(10) inz; // Bytes Available
+        AeMsgId char(7); // Exception Id
+        *n char(1); // Reserved
+        AeMsgDta char(128); // Exception Data
+       end-ds;
      ?**---Description d'un composant-----------------------------------------**
-     d Composant       ds                                                       Composant
-     d  Obj                          10a                                        Objet
-     d  Lib                          10a                                        Bibliothèque
+       dcl-ds Composant; // Composant
+        Obj char(10); // Objet
+        Lib char(10); // Bibliothèque
+       end-ds;
      ?**---Entête d'un User Space---------------------------------------------**
-     d GenHeadDs       ds                  based(pUserSpace)
-     d  InputSize            113    116b 0                                      Taille de l'entête
-     d  HeaderOffset         117    120i 0                                      Offset de l'entête
-     d  HeaderSize           121    124i 0                                      Taille de l'entête
-     d  ListOffset           125    128b 0                                      Offset des données
-     d  ListSize             129    132i 0                                      Taille de la liste
-     d  NumberList           133    136b 0                                      Nombre de données
-     d  EntrySize            137    140b 0                                      Taille des données
+       dcl-ds GenHeadDs based(puserspace);
+        InputSize int(10) pos(113); // Taille de l'entête
+        HeaderOffset int(10) pos(117); // Offset de l'entête
+        HeaderSize int(10) pos(121); // Taille de l'entête
+        ListOffset int(10) pos(125); // Offset des données
+        ListSize int(10) pos(129); // Taille de la liste
+        NumberList int(10) pos(133); // Nombre de données
+        EntrySize int(10) pos(137); // Taille des données
+       end-ds;
      ?**---Description d'un fichier-------------------------------------------**
-     d                 ds                           based(pEntry)
-     d FieldName               1     10
-     d DataType               11     11
-     d Use                    12     12
-     d OutBufPos              13     16i 0
-     d InBufPos               17     20i 0
-     d ByteLeng               21     24i 0
-     d Digits                 25     28i 0
-     d DecPos                 29     32i 0
-     d FieldText              33     82
-     d EditCode               83     84
-     d EditWordLen            85     88i 0
-     d EditWord               89    152
-     d ColHead1              153    172
-     d ColHead2              173    192
-     d ColHead3              193    212
-     d IntName               213    222
-     d AltName               223    252
-     d LenAltFld             253    256i 0
-     d NumDBCS               257    260i 0
-     d AlwNull               261    261n
-     d HostVarInd            262    262n
-     d DatTimFmt             263    266
-     d DatTimSep             267    267
-     d VaryingInd            268    268n
-     d fmt             s             10a
-     d Format          s             10a
-     d FormatName      s              8a
-     d i               s              5  0 inz(1)                               Compteur
-     d MaxTab          c                   Const(32767)                         Taille Max tableau
-     d OverRide        s              1a
-     d SpaceAttr       s             10a   inz                                  Attribut du User Spa
-     d SpaceAuth       s             10a   inz('*USE')                          Autorisation User Sp
-     d SpaceReplc      s             10a   inz('*YES')                          Remplacement du User
-     d SpaceLen        s              9b 0 inz(MaxTab)                          Longueur du User Spa
-     d SpaceValue      s              1a   inz(X'00')                           Valeur du User Space
-     d SpaceText       s             50a   inz('User Space Temporaire')         Libellé User Space
-     d StartLen        s              9b 0                                      Longueur dans le Use
-     d StartPosit      s              9b 0                                      Position dans le Use
+       dcl-ds *n based(pentry);
+        FieldName char(10) pos(1);
+        DataType char(1) pos(11);
+        Use char(1) pos(12);
+        OutBufPos int(10) pos(13);
+        InBufPos int(10) pos(17);
+        ByteLeng int(10) pos(21);
+        Digits int(10) pos(25);
+        DecPos int(10) pos(29);
+        FieldText char(50) pos(33);
+        EditCode char(2) pos(83);
+        EditWordLen int(10) pos(85);
+        EditWord char(64) pos(89);
+        ColHead1 char(20) pos(153);
+        ColHead2 char(20) pos(173);
+        ColHead3 char(20) pos(193);
+        IntName char(10) pos(213);
+        AltName char(30) pos(223);
+        LenAltFld int(10) pos(253);
+        NumDBCS int(10) pos(257);
+        AlwNull ind pos(261);
+        HostVarInd ind pos(262);
+        DatTimFmt char(4) pos(263);
+        DatTimSep char(1) pos(267);
+        VaryingInd ind pos(268);
+       end-ds;
+       dcl-s fmt char(10);
+       dcl-s Format char(10);
+       dcl-s FormatName char(8);
+       dcl-s i packed(5) inz(1); // Compteur
+       dcl-c MaxTab const(32767); // Taille Max tableau
+       dcl-s OverRide char(1);
+       dcl-s SpaceAttr char(10) inz; // Attribut du User Spa
+       dcl-s SpaceAuth char(10) inz('*USE'); // Autorisation User Sp
+       dcl-s SpaceReplc char(10) inz('*YES'); // Remplacement du User
+       dcl-s SpaceLen bindec(9) inz(maxtab); // Longueur du User Spa
+       dcl-s SpaceValue char(1) inz(x'00'); // Valeur du User Space
+       dcl-s SpaceText char(50) inz('User Space Temporaire'); // Libellé User Space
+       dcl-s StartLen bindec(9); // Longueur dans le Use
+       dcl-s StartPosit bindec(9); // Position dans le Use
      ?**---Recherche de l'adresse d'un User Space-----------------------------**
-     d Qusptrus        Pr                  ExtPgm('QUSPTRUS')
-     d  parm                         20a
-     d  parm                           *
+       dcl-pr Qusptrus extpgm('QUSPTRUS');
+        *n char(20); // parm
+        *n pointer; // parm
+       end-pr;
      ?**---Réception d'un User Space------------------------------------------**
-     d Qusrtvus        Pr                  ExtPgm('QUSRTVUS')
-     d  parm                         20a
-     d  parm                          9b 0
-     d  parm                          9b 0
-     d  parm                       2000a   Options(*Varsize)
+       dcl-pr Qusrtvus extpgm('QUSRTVUS');
+        *n char(20); // parm
+        *n bindec(9); // parm
+        *n bindec(9); // parm
+        *n char(2000) options(*varsize); // parm
+       end-pr;
      ?**---Lancement de Commande----------------------------------------------**
-     d QCmdExc         Pr                  ExtPgm('QCMDEXC')
-     d  parm                        100a                                        Commande
-     d  parm                         15  5                                      Longueur de la Cde
-      /Free
+       dcl-pr QCmdExc extpgm('QCMDEXC');
+        *n char(100); // parm  Commande
+        *n packed(15: 5); // parm  Longueur de la
+       end-pr;
 
 ?      //---Création du fichier ZZ03PF----------------------------------------//
        Requete2 = 'Create table zz03pf (FIC03 CHAR(10), BIB03 CHAR(10), ' +
         'USR03 CHAR(10), TMSP03 TIMESTAMP, FICH03 CHAR(10))';
-       Exec Sql execute immediate :requete2;
+       EXEC SQL
+         EXECUTE IMMEDIATE :requete2;
        Requete2 = 'LABEL ON TABLE zz03pf IS ' +
        '''X-Ref - Liste des Fichiers Historiques''';
-       Exec Sql execute immediate :Requete2;
+       EXEC SQL
+         EXECUTE IMMEDIATE :requete2;
 
 ?      //---Récupération paramètres-------------------------------------------//
        DataPlugin = ParamPlug;
@@ -8592,7 +8410,8 @@ E01    EndIf;
 ?      //---Suppression Enregistrement dans ZZ03PF----------------------------//
        Requete2= 'Delete from zz03pf where fic03 =''' + Fic + ''' and bib03' +
        ' =''' + bib + '''';
-       Exec Sql execute immediate :requete2;
+       EXEC SQL
+         EXECUTE IMMEDIATE :requete2;
 
        If Action = *Blanks;
 ?      //---Nom du fichier historique-----------------------------------------//
@@ -8600,17 +8419,21 @@ E01    EndIf;
 
 ?      //---Creation du fichier Historique------------------------------------//
          Requete2= 'Create table ' + %Trim(Bib)+ '/' + Fic_Log + ' like ' + Fic;
-         Exec Sql execute immediate :requete2;
+         EXEC SQL
+           EXECUTE IMMEDIATE :requete2;
 ?      //---Ajout des zones Historique----------------------------------------//
          Requete2= 'Alter Table ' + Fic_Log + ' add column TMSP TIMESTAMP not  -
                     null with default';
-         Exec Sql execute immediate :requete2;
+         EXEC SQL
+           EXECUTE IMMEDIATE :requete2;
          Requete2= 'Alter table ' + Fic_Log +' add column usr char(10) not null-
                     with default';
-         Exec Sql execute immediate :requete2;
+         EXEC SQL
+           EXECUTE IMMEDIATE :requete2;
          Requete2= 'Alter table ' + Fic_Log + ' add column Typ char(1) not null-
                     with default';
-         Exec Sql execute immediate :requete2;
+         EXEC SQL
+           EXECUTE IMMEDIATE :requete2;
 
 ?      //---Recherche des zones présentes dans le fichier---------------------//
          Obj = Fic;
@@ -8685,7 +8508,8 @@ E01    EndIf;
          ' REFERENCING NEW AS o FOR EACH ROW MODE DB2ROW' +
          ' insert into ' + Fic_Log + 'values(' + %trim(Lst_Zone) +
          ', current_timestamp, user, ''U'')';
-         Exec Sql Execute immediate :requete2;
+         EXEC SQL
+           EXECUTE IMMEDIATE :requete2;
 
 ?      //---Trigger d'insertion-----------------------------------------------//
          Requete2= 'Create Trigger Ins_'+ %Trim(Fic) + '_' + %Trim(Fic_Log) +
@@ -8693,7 +8517,8 @@ E01    EndIf;
          ' REFERENCING NEW AS o FOR EACH ROW MODE DB2ROW' +
          ' insert into ' + Fic_Log + 'values(' + %trim(Lst_Zone) +
          ', current_timestamp, user, ''A'')';
-         Exec Sql Execute immediate :requete2;
+         EXEC SQL
+           EXECUTE IMMEDIATE :requete2;
 
 ?      //---Trigger de suppression--------------------------------------------//
          Requete2= 'Create Trigger Dlt_'+ %Trim(Fic) + '_' + %Trim(Fic_Log) +
@@ -8701,33 +8526,35 @@ E01    EndIf;
          ' REFERENCING Old AS o FOR EACH ROW MODE DB2ROW' +
          ' insert into ' + Fic_Log + 'values(' + %trim(Lst_Zone) +
          ', current_timestamp, user, ''D'')';
-         Exec Sql Execute immediate :requete2;
+         EXEC SQL
+           EXECUTE IMMEDIATE :requete2;
 
 ?      //---Initialisation du fichier Log-------------------------------------//
          Requete2='INSERT INTO ' + Fic_Log + ' SELECT a.*, current_timestamp,' +
           'user   ,''X'' FROM ' + Fic + ' a';
-         Exec Sql Execute immediate :requete2;
+         EXEC SQL
+           EXECUTE IMMEDIATE :requete2;
 
 ?      //---Inscription dans le fichier zz03pf--------------------------------//
          Requete2= 'INSERT INTO ZZ03PF (FIC03, BIB03, USR03, TMSP03, FICH03) ' +
          'VALUES(''' + Fic + ''',''' + bib + ''',''' + user +
          ''', Current_Timestamp ,'''
          + fic_Log + ''')';
-         Exec Sql Execute immediate :requete2;
+         EXEC SQL
+           EXECUTE IMMEDIATE :requete2;
        EndIf;
 
-      /End-Free
-     p Arc_Trigg       e
+       end-proc;
 
      ?**----------------------------------------------------------------------**
      ?**---Procédure Rec_Avc : Ajout de critère de recherche------------------**
      ?**----------------------------------------------------------------------**
-     p Rec_Avc         b
+       dcl-proc Rec_Avc;
 
-     d Rec_Avc         Pi
-     d   ParamPlug                 1024a
-     d zz              s                   Like(£Dyna)
-      /Free
+       dcl-pi Rec_Avc;
+        ParamPlug char(1024);
+       end-pi;
+       dcl-s zz like(£dyna);
 
        ExFmt F14;
 
@@ -8786,8 +8613,7 @@ E01    EndIf;
          Tab_Set('Rappel5':Ind_Rappel:ZzFonc);
          Tab_Trf2('££WRK':%Char(Ind_Rappel));
 
-      /End-Free
-     p Rec_Avc         e
+       end-proc;
 
 ** ctdata
 Recherche avancée
