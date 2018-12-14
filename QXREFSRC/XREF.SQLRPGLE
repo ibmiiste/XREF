@@ -1,19 +1,19 @@
-      * >>PRE-COMPILER<<                                              */
-      *   >>CRTCMD<<  CRTSQLRPGI SRCFILE(&SL/&SF) SRCMBR(&SM);        */
-      *   >>IMPORTANT<<                                               */
-      *     >>PARM<<  OBJ(&LI/&OB);                                   */
-      *     >>PARM<<  COMMIT(*NONE);                                  */
-      *     >>PARM<<  OBJTYPE(*PGM);                                  */
-      *     >>PARM<<  OPTION(*EVENTF);                                */
-      *     >>PARM<<  RPGPPOPT(*LVL2);                                */
-      *     >>PARM<<  CLOSQLCSR(*ENDACTGRP);                          */
-      *     >>PARM<<  DATFMT(*ISO);                                   */
-      *     >>PARM<<  TIMFMT(*ISO);                                   */
-      *     >>PARM<<  COMPILEOPT('OPTIMIZE(*FULL)');                  */
-      *   >>END-IMPORTANT<<                                           */
+       // >>PRE-COMPILER<<                                            */
+       // >>CRTCMD<<  CRTSQLRPGI SRCFILE(&SL/&SF) SRCMBR(&SM);        */
+       // >>IMPORTANT<<                                               */
+       //   >>PARM<<  OBJ(&LI/&OB);                                   */
+       //   >>PARM<<  COMMIT(*NONE);                                  */
+       //   >>PARM<<  OBJTYPE(*PGM);                                  */
+       //   >>PARM<<  OPTION(*EVENTF);                                */
+       //   >>PARM<<  RPGPPOPT(*LVL2);                                */
+       //   >>PARM<<  CLOSQLCSR(*ENDACTGRP);                          */
+       //   >>PARM<<  DATFMT(*ISO);                                   */
+       //   >>PARM<<  TIMFMT(*ISO);                                   */
+       //   >>PARM<<  COMPILEOPT(&U0);                                */
+       // >>END-IMPORTANT<<                                           */
+       //  >>EXECUTE<<                                                */
+       // >>END-PRE-COMPILER<<                                        */
 
-      *   >>EXECUTE<<                                                 */
-      * >>END-PRE-COMPILER<<                                          */
        ctl-opt debug option( *srcstmt: *nodebugio )
        copyright('Olivier Drubigny 2017-2018 X-Ref <Version v1.9.3>')
        datfmt(*eur) timfmt(*hms) datedit(*ymd) actgrp(*new) dftactgrp(*no);
