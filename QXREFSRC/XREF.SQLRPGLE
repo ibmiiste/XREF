@@ -3103,34 +3103,44 @@ E01    EndIf;
        Tab_Set2('££WRK':Cpt_I:FzzZone);
 ?      //---Info Création/Modification/Source--------------------------Lig. 8-//
        FzzZone = 'Création';
-       %Subst(fzzZone:36:12)= 'Modification';
-       %Subst(fzzZone:71:6)= 'Source';
+       %Subst(fzzZone:33:12)= 'Modification';
+       %Subst(fzzZone:65:20)= 'Dernière utilisation';
+       %Subst(fzzZone:93:6)= 'Source';
        Cpt_I += 1;
        Tab_Set2('££WRK':Cpt_I:FzzZone);
 ?      //---Date création----------------------------------------------Lig. 9-//
        FzzZone = '    Date........:' + x'22'+
-       %subst(OdObjCrtDts:6:2) + '/' + %Subst(OdObjCrtDts:4:2) + '/' +
+       %subst(OdObjCrtDts:4:2) + '/' + %Subst(OdObjCrtDts:4:2) + '/' +
        %char(%Dec(%Subst(OdObjCrtDts:1:1):1:0) + 19) + %Subst(OdObjCrtDts:2:2);
-       %subst(FzzZone:36:28) =  x'20' + '   Date........:' + x'22'+
+       %subst(FzzZone:33:28) =  x'20' + '   Date........:' + x'22'+
        %subst(OdObjChgDts:6:2) + '/' + %Subst(OdObjChgDts:4:2) + '/' +
        %char(%Dec(%Subst(OdObjChgDts:1:1):1:0) + 19) + %Subst(OdObjChgDts:2:2);
-       %subst(FzzZone:71:35) = x'20' + '   Fichier.........:' + x'22'
+       //---Date Dernière utilisation----------------------------------Lig. 9-//
+       %subst(FzzZone:65:17) = x'20' + '  Date........:' + x'22';
+       IF OdObjLast<>*Blank;
+         %subst(FzzZone:82:10) = %subst(OdObjLast:6:2) + '/' +
+         %Subst(OdObjLast:4:2) + '/' +  %char(%Dec(%Subst(OdObjLast:1:1):1:0)
+          + 19) + %Subst(OdObjLast:2:2);
+       Endif;
+
+       %subst(FzzZone:93:35) = x'20' + '   Fichier.........:' + x'22'
                                + OdObjSrcFil;
        Cpt_I += 1;
        Tab_Set2('££WRK':Cpt_I:FzzZone);
 ?      //---Heure création---------------------------------------------Lig. 10//
        FzzZone = '    Heure.......:' + x'22'+ %Subst(OdObjCrtDts:8:2) +
        'h' + %Subst(OdObjCrtDts:10:2) + 'mn'+%subst(OdObjCrtDts:12:2) + 's';
-       %subst(FzzZone:36:28) = x'20' + '   Heure.......:' +
+       %subst(FzzZone:33:28) = x'20' + '   Heure.......:' +
         x'22'+ %Subst(OdObjChgDts:8:2) +
        'h' + %Subst(OdObjChgDts:10:2) + 'mn'+%subst(OdObjChgDts:12:2) + 's';
-       %subst(FzzZone:71:35) = x'20' + '   Bibliothèque....:' + x'22'
+       %subst(FzzZone:93:35) = x'20' + '   Bibliothèque....:' + x'22'
                                + OdObjSrcLib;
+
        Cpt_I += 1;
        Tab_Set2('££WRK':Cpt_I:FzzZone);
 ?      //---Membre Source----------------------------------------------Lig. 11//
        FzzZone = *Blanks;
-       %subst(FzzZone:71:35) = '    Membre..........:' + x'22'+ OdObjSrcMbr;
+       %subst(FzzZone:93:35) = '    Membre..........:' + x'22'+ OdObjSrcMbr;
        Cpt_I += 1;
        Tab_Set2('££WRK':Cpt_I:FzzZone);
 
