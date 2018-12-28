@@ -10,17 +10,18 @@
 BEGIN
    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
       BEGIN END;
-   DROP TABLE zz03pf;
+   DROP TABLE zz01pf;
 END;
 
-CREATE TABLE zz03pf(fic03 CHAR(10) CCSID 297 DEFAULT NULL,
-                         bib03 CHAR(10) CCSID 297 DEFAULT NULL,
-                         usr03 CHAR(10) CCSID 297 DEFAULT NULL,
-                         tmsp03 TIMESTAMP DEFAULT NULL,
-                         fich03 CHAR(10) CCSID 297 DEFAULT NULL)
-    RCDFMT zz03pf;
+CREATE TABLE zz01pf(
+type_enregistrement FOR COLUMN zztype CHAR(5) CCSID 297 NOT NULL DEFAULT '',
+valeur_enregistrement FOR COLUMN zzvaleur
+                                     CHAR(30) CCSID 297 NOT NULL DEFAULT '',
+CONSTRAINT q_qgpl_zz01pf_zztype_00001 PRIMARY
+                             KEY(type_enregistrement , valeur_enregistrement))
+RCDFMT zz01pf;
 
-LABEL ON TABLE zz03pf IS 'X-Ref - Liste des Fichiers Historiques';
+LABEL ON TABLE zz01pf IS 'X-Ref - Fichier paramètre';
 
 GRANT ALTER,
       DELETE,
@@ -28,7 +29,7 @@ GRANT ALTER,
       INSERT,
       REFERENCES,
       SELECT,
-      UPDATE ON zz03pf TO PUBLIC
+      UPDATE ON zz01pf TO PUBLIC
     WITH GRANT OPTION;
 
 GRANT ALTER,
@@ -37,5 +38,5 @@ GRANT ALTER,
       INSERT,
       REFERENCES,
       SELECT,
-      UPDATE ON zz03pf TO qpgmr
+      UPDATE ON zz01pf TO qpgmr
     WITH GRANT OPTION;
